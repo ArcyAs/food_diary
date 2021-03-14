@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using FoodDiary.Data;
+using FoodDiary.Extensions;
 using FoodDiary.MapperProfiles;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -31,26 +32,15 @@ namespace FoodDiary
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.ConfigureDatabaseContext(Configuration);
             services.AddControllersWithViews();
-
-            services.AddMediatR(typeof(Startup));
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(IdentityUsersMapperProfile)));        }
+            services.ConfigureDependencies();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope())
-            {
-                var context = serviceScope?.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                context?.Database.Migrate();
-            }
+            app.CreateDatabase();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
