@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "32BAC24z0CIrMzqPou6of/sUleAXoqArHKRrFomPG6ahVJJQrUPrj720ieY8jDlrDuULOMrrtMRAbB+PRKhWZQ==",
+  "dgSpecHash": "y9mS5ARgn19btEivE5JPoDlxytjwd4v/QIkSzJLMQ5ZJKS1TWxveu58I3s0zavwHnx5ipQfnyP6DZcJW6EFN/g==",
   "success": true,
   "projectFilePath": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jakub\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\jakub\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.4\\microsoft.aspnetcore.cryptography.internal.5.0.4.nupkg.sha512",
     "C:\\Users\\jakub\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.4\\microsoft.aspnetcore.cryptography.keyderivation.5.0.4.nupkg.sha512",
     "C:\\Users\\jakub\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\5.0.4\\microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.4.nupkg.sha512",
