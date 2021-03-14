@@ -7,3 +7,4 @@
 5. Dodano Automapper:
    1. koncepcja https://www.youtube.com/watch?v=ncRjahgY6hs
    2. przykład wykorzystania **MediatRExampleController**, oraz stworzyłem *Profile*, który definiuje nam sposób mapowania obieków **IdentityUsersMapperProfile**
+6. Podpiąłem CI (Buddy): reaguje na tag ***deploy***: buduje apkę i robi deploy na azure: **https://fooddiarypzpp.azurewebsites.net/**
