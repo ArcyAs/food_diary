@@ -7939,19 +7939,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jakub\\.nuget\\packages\\": {}
+    "C:\\Users\\Komputer\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "projectUniqueName": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
       "projectName": "FoodDiary",
-      "projectPath": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
-      "packagesPath": "C:\\Users\\jakub\\.nuget\\packages\\",
-      "outputPath": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\obj\\",
+      "projectPath": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jakub\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Komputer\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8040,7 +8040,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }

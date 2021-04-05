@@ -17,17 +17,17 @@ using Microsoft.Extensions.Logging;
 namespace FoodDiary.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public class Register : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
+        private readonly ILogger<Register> _logger;
         private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public Register(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
+            ILogger<Register> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
