@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AutoMapper;
+using FoodDiary.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,16 +23,17 @@ namespace FoodDiary.Areas.Identity.Pages.Account
     {
 
         private readonly ILogger<CalculatorBMI> _logger;
+        private readonly IMapper _mapper;
 
 
         public CalculatorBMI(
 
             ILogger<CalculatorBMI> logger,
-            IEmailSender emailSender)
+            IMapper mapper)
         {
 
             _logger = logger;
-
+            _mapper = mapper;
         }
 
         [BindProperty]
@@ -43,37 +46,45 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
             [Display(Name = "Age")]
             public int Age { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Height")]
-            public int Height { get; set; }
+            public double Height { get; set; }
 
-    
+            [Required]
             [Display(Name = "Weight")]
-            public string Weight { get; set; }
-        }
+            public double Weight { get; set; }
 
-        public async Task OnGetAsync(string returnUrl = null)
-        {
-            ReturnUrl = returnUrl;
-         //   ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            [Display(Name = "Result")]
+            public double Result { get; set; }
         }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-         //   ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
+
+                var result =Input.Weight/((Input.Height/100)*(Input.Height/100));
+                if (result>0)
+                {
+                    ModelState.AddModelError(string.Empty, "BMI="+ result.ToString("0.00"));
+                    return Page();
+                }
               
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid Data.");
+                    return Page();
+                }
             }
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+
     }
 }
