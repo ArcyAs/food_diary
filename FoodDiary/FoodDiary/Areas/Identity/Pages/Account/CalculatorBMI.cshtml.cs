@@ -57,9 +57,17 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             [Display(Name = "Weight")]
             public double Weight { get; set; }
 
-            [Display(Name = "Result")]
-            public double Result { get; set; }
+            [Display(Name = "Gender")]
+            [EnumDataType(typeof(Gender))]
+            public Gender GenderType { get; set; }
+
+                  public enum Gender
+        {
+            Male = 1,
+            Female = 2
         }
+        }
+  
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
