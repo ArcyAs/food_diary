@@ -35,9 +35,20 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Input.GenderType" class="control-label"></label>
-                <select asp-for="Input.GenderType" asp-items="Html.GetEnumSelectList<CalculatorBMI.InputModel.Gender>()" class="form-control"></select>
-                <span asp-validation-for="Input.GenderType" class="text-danger"></span>
+                <label>Gender</label>
+                <br />
+                @Html.RadioButtonFor(m => m.Input.Gender, "Man")Man
+
+                @Html.RadioButtonFor(m => m.Input.Gender, "Woman")Woman
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Activities</label>
+                <br />
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.2)L
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.5)M
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.8)H
+                <span asp-validation-for="Input.Activities" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Show</button>

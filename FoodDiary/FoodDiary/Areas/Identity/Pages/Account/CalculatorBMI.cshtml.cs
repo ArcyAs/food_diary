@@ -43,6 +43,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+
         public class InputModel
         {
             [Required]
@@ -57,15 +58,17 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             [Display(Name = "Weight")]
             public double Weight { get; set; }
 
-            [Display(Name = "Gender")]
-            [EnumDataType(typeof(Gender))]
-            public Gender GenderType { get; set; }
+            [Required]
+            [Display(Name = "Gender")]  
+            public string Gender { get; set; }
 
-                  public enum Gender
-        {
-            Male = 1,
-            Female = 2
-        }
+            [Required]
+            [Display(Name = "Activities")]
+            public double Activities { get; set; }
+
+
+
+
         }
   
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -75,18 +78,33 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
 
-                var result =Input.Weight/((Input.Height/100)*(Input.Height/100));
-                if (result>0)
+
+
+
+                //if (resultBMI>0)
+                //{
+                //    ModelState.AddModelError(string.Empty, "BMI="+ resultBMI.ToString("0.00"));
+                //    return Page();
+                //}
+                var resultBMI = Input.Weight / ((Input.Height / 100) * (Input.Height / 100));
+                if (Input.Gender == "Woman")
                 {
-                    ModelState.AddModelError(string.Empty, "BMI="+ result.ToString("0.00"));
-                    return Page();
-                }
               
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid Data.");
+                    var resultBMR = (655 + (9.6 * Input.Weight) + (1.8 * Input.Height ) - (4.7 * Input.Age)) * Input.Activities;
+
+                    ModelState.AddModelError(string.Empty, "BMI=" + resultBMI.ToString("0.00"));
+                    ModelState.AddModelError(string.Empty, "BMR=" + resultBMR.ToString("0.0" + " kcal"));
                     return Page();
                 }
+               else if (Input.Gender == "Man")
+                {
+                    var resultBMR = (5 + (9.99 * Input.Weight) + (6.25 * Input.Height) - (4.92 * Input.Age)) * Input.Activities;
+                    ModelState.AddModelError(string.Empty, "BMI=" + resultBMI.ToString("0.00"+ " kcal"));
+                    ModelState.AddModelError(string.Empty, "BMR=" + resultBMR.ToString("0.0" + " kcal"));
+                    return Page();
+                }
+
+
             }
 
             // If we got this far, something failed, redisplay form

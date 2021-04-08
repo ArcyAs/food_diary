@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {}
+    "C:\\Users\\Komputer\\Desktop\\Projekt\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {
+    "C:\\Users\\Komputer\\Desktop\\Projekt\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+        "projectUniqueName": "C:\\Users\\Komputer\\Desktop\\Projekt\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
         "projectName": "FoodDiary",
-        "projectPath": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+        "projectPath": "C:\\Users\\Komputer\\Desktop\\Projekt\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
         "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
+        "outputPath": "C:\\Users\\Komputer\\Desktop\\Projekt\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Komputer\\AppData\\Roaming\\NuGet\\NuGet.Config",

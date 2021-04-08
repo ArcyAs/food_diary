@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mF0ut4vUKc4JKEpYCrbHYrl+5SwvY3u/mdRt5uSQkfbp42vHFj8BiegNFA3NIKryskjsQHFfIjZ+qOWUCDjByg==",
+  "dgSpecHash": "erDwBEH1R48tSoWAMGChA7zsuOT/HVAIHWgC/AojESIYgI1OJ9jA3kMfcvt48c9Aej0/CndKK5v9LE0sv91Yjw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Komputer\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+  "projectFilePath": "C:\\Users\\Komputer\\Desktop\\Projekt\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Komputer\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Komputer\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
