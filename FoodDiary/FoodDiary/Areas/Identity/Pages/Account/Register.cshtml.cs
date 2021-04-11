@@ -5,6 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FoodDiary.Builders;
+using FoodDiary.Factories;
+using FoodDiary.Models;
+using FoodDiary.Models.Enums;
+using Humanizer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,25 +24,30 @@ namespace FoodDiary.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class Register : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<Register> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUserNameBuilder _userNameBuilder;
+        private readonly IBmiFactory _bmiFactory;
 
         public Register(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
             ILogger<Register> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserNameBuilder userNameBuilder,
+            IBmiFactory bmiFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _userNameBuilder = userNameBuilder;
+            _bmiFactory = bmiFactory;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -46,9 +56,42 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Gender")]
+            public int Gender { get; set; }
+
+            [Required]
+            [Display(Name = "Height")]
+            public int Height { get; set; }
+
+            [Required]
+            [Display(Name = "Age")]
+            public int Age { get; set; }
+
+            [Required]
+            [Display(Name = "Weight")]
+            public double Weight { get; set; }
+            
+            // [Required]
+            // [EmailAddress]
+            // [Display(Name = "BMI")]
+            // public double Bmi { get; set; }
+            //
+            // [Required]
+            // [EmailAddress]
+            // [Display(Name = "BMR")]
+            // public double Bmr { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -60,6 +103,10 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Activities")]
+            public double Activities { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -74,7 +121,19 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new AppUser {
+                    UserName = Input.Email,
+                    NormalizedUserName = _userNameBuilder.Build(Input),
+                    Email = Input.Email, 
+                    Age = Input.Age, 
+                    Gender = Input.Gender, 
+                    Height = Input.Height,
+                    Weight = Input.Height,
+                    ActivityLevel = Input.Activities,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Bmi = _bmiFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).Calculate(Input.Weight, Input.Height, Input.Age, Input.Activities)
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -85,7 +144,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new {area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl},
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -93,7 +152,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
                     }
                     else
                     {
@@ -101,6 +160,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

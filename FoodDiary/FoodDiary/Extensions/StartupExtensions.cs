@@ -37,13 +37,13 @@ namespace FoodDiary.Extensions
                     configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
         }
-
+        
         public static void SeedData(this IApplicationBuilder app)
         {
             SeedDefaultUsers(app);
@@ -53,7 +53,7 @@ namespace FoodDiary.Extensions
         {
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
             var roleManager = serviceScope?.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceScope?.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceScope?.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
             Task<IdentityResult> roleResult;
             const string email = "user@user.com";
 
@@ -68,7 +68,7 @@ namespace FoodDiary.Extensions
             var testUser = userManager.FindByEmailAsync(email).Result;
 
             if (testUser != null) return;
-            var administrator = new IdentityUser {Email = email, UserName = email, EmailConfirmed = true};
+            var administrator = new AppUser {Email = email, UserName = email, EmailConfirmed = true};
 
             var newUser = userManager.CreateAsync(administrator, "zaq1@WSX");
             newUser.Wait();

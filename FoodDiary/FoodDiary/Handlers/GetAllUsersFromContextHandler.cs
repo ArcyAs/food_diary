@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FoodDiary.Models;
 using FoodDiary.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -11,10 +12,10 @@ namespace FoodDiary.Handlers
 {
     public class GetAllUsersFromContextHandler : IRequestHandler<GetAllUsersFromContextRequest, IEnumerable<IdentityUserDto>>
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public GetAllUsersFromContextHandler(UserManager<IdentityUser> userManager, IMapper mapper)
+        public GetAllUsersFromContextHandler(UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
