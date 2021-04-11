@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
 using System.Threading.Tasks;
+using FoodDiary.Builders;
 using FoodDiary.Data;
+using FoodDiary.Factories;
 using FoodDiary.MapperProfiles;
+using FoodDiary.Models;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -27,6 +30,9 @@ namespace FoodDiary.Extensions
             services.AddMediatR(typeof(Startup));
             services.AddAutoMapper(Assembly.GetAssembly(typeof(IdentityUsersMapperProfile)));
 
+            services.AddTransient<IUserNameBuilder, UserNameBuilder>();
+            services.AddTransient<IBmiFactory, BmiFactory>();
+            
             return services;
         }
 
