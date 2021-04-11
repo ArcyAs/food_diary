@@ -68,6 +68,8 @@ namespace FoodDiary
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            
+            app.SeedData();
         }
     }
 }
