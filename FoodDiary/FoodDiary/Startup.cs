@@ -33,7 +33,8 @@ namespace FoodDiary
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureDatabaseContext(Configuration);
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
             services.ConfigureDependencies();
         }
 
