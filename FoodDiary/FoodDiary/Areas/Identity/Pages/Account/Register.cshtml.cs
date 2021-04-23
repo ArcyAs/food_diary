@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FoodDiary.Builders;
+using FoodDiary.Data;
+using FoodDiary.Entities;
 using FoodDiary.Factories;
 using FoodDiary.Models;
 using FoodDiary.Models.Enums;
@@ -30,6 +33,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IUserNameBuilder _userNameBuilder;
         private readonly IBmiBmrFactory _bmibmrFactory;
+        private readonly ApplicationDbContext _context;
 
         public Register(
             UserManager<AppUser> userManager,
@@ -37,7 +41,8 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             ILogger<Register> logger,
             IEmailSender emailSender,
             IUserNameBuilder userNameBuilder,
-            IBmiBmrFactory bmiFactory)
+            IBmiBmrFactory bmiFactory,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,6 +50,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _userNameBuilder = userNameBuilder;
             _bmibmrFactory = bmiFactory;
+            _context = context;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -125,17 +131,14 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     NormalizedUserName = _userNameBuilder.Build(Input),
                     Email = Input.Email, 
-                    Age = Input.Age, 
-                    Gender = Input.Gender, 
-                    Height = Input.Height,
-                    Weight = Input.Height,
+                    Age = Input.Age,
                     ActivityLevel = Input.Activities,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
-                    Bmi = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight,Input.Height)
                 };
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -151,15 +154,25 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    var userDetails = new UserDetailsEntity()
+                    {
+                        Gender = Input.Gender,
+                        Height = Input.Height,
+                        Weight = Input.Height,
+                        Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
+                        Bmi = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height),
+                        Id = Guid.NewGuid(),
+                        UserId = Guid.Parse(user.Id) 
+                    };
+
+                    _context.UserDetailsEntities.Add(userDetails);
+                    await _context.SaveChangesAsync();
+                    
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
                         return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
 
                 foreach (var error in result.Errors)
