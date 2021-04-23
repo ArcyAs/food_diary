@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FoodDiary.Entities
+namespace Repositories.Entities
 {
     public class UserDetailsEntity
     {

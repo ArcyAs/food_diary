@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FoodDiary.Entities;
-using FoodDiary.Models;
+﻿using FoodDiary.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Entities;
 
 namespace FoodDiary.Data
 {

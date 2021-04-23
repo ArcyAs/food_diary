@@ -8,7 +8,6 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FoodDiary.Builders;
 using FoodDiary.Data;
-using FoodDiary.Entities;
 using FoodDiary.Factories;
 using FoodDiary.Models;
 using FoodDiary.Models.Enums;
@@ -21,6 +20,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Repositories.Abstract;
+using Repositories.Entities;
 
 namespace FoodDiary.Areas.Identity.Pages.Account
 {
@@ -33,6 +34,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly IUserNameBuilder _userNameBuilder;
         private readonly IBmiBmrFactory _bmibmrFactory;
+        private readonly IRepositoryFactory _repositoryFactory;
         private readonly ApplicationDbContext _context;
 
         public Register(
@@ -42,7 +44,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             IUserNameBuilder userNameBuilder,
             IBmiBmrFactory bmiFactory,
-            ApplicationDbContext context)
+            IRepositoryFactory repositoryFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -50,7 +52,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _userNameBuilder = userNameBuilder;
             _bmibmrFactory = bmiFactory;
-            _context = context;
+            _repositoryFactory = repositoryFactory;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -164,9 +166,8 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                         Id = Guid.NewGuid(),
                         UserId = Guid.Parse(user.Id) 
                     };
-
-                    _context.UserDetailsEntities.Add(userDetails);
-                    await _context.SaveChangesAsync();
+                    
+                    await _repositoryFactory.GetUserRepository().AddUserDetails(userDetails);
                     
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
