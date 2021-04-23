@@ -4,7 +4,7 @@
     {
         public double CalculateBMI(double weight, double height)
         {
-            return (weight / ((height / 100) * (height / 100)));
+            return (weight / ((height) * (height )));
         }
 
         public double CalculateBMR(double weight, double height, int age, double activityLevel)
