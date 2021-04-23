@@ -1,12 +1,12 @@
 ﻿using System;
-using FoodDiary.Factories.BmiCalculator;
+using FoodDiary.Factories.BmiBmrCalculator;
 using FoodDiary.Models.Enums;
 
 namespace FoodDiary.Factories
 {
-    public class BmiFactory: IBmiFactory
+    public class BmiBmrFactory: IBmiBmrFactory
     {
-        public IBmiCalculator GetCalculator(Gender gender)
+        public IBmiBmrCalculator GetCalculator(Gender gender)
         {
             return gender switch
             {

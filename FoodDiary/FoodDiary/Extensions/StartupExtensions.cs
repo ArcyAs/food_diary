@@ -31,7 +31,7 @@ namespace FoodDiary.Extensions
             services.AddAutoMapper(Assembly.GetAssembly(typeof(IdentityUsersMapperProfile)));
 
             services.AddTransient<IUserNameBuilder, UserNameBuilder>();
-            services.AddTransient<IBmiFactory, BmiFactory>();
+            services.AddTransient<IBmiBmrFactory, BmiBmrFactory>();
             
             return services;
         }

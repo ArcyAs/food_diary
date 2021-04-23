@@ -29,7 +29,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         private readonly ILogger<Register> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IUserNameBuilder _userNameBuilder;
-        private readonly IBmiFactory _bmiFactory;
+        private readonly IBmiBmrFactory _bmibmrFactory;
 
         public Register(
             UserManager<AppUser> userManager,
@@ -37,14 +37,14 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             ILogger<Register> logger,
             IEmailSender emailSender,
             IUserNameBuilder userNameBuilder,
-            IBmiFactory bmiFactory)
+            IBmiBmrFactory bmiFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _userNameBuilder = userNameBuilder;
-            _bmiFactory = bmiFactory;
+            _bmibmrFactory = bmiFactory;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -132,7 +132,8 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     ActivityLevel = Input.Activities,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Bmi = _bmiFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).Calculate(Input.Weight, Input.Height, Input.Age, Input.Activities)
+                    Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
+                    Bmi = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight,Input.Height)
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
