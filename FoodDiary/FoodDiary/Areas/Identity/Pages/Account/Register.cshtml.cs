@@ -11,6 +11,7 @@ using FoodDiary.Data;
 using FoodDiary.Factories;
 using FoodDiary.Models;
 using FoodDiary.Models.Enums;
+using FoodDiary.Repositories.Entities;
 using Humanizer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Repositories.Abstract;
-using Repositories.Entities;
 
 namespace FoodDiary.Areas.Identity.Pages.Account
 {
@@ -164,7 +164,8 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                         Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
                         Bmi = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height),
                         Id = Guid.NewGuid(),
-                        UserId = Guid.Parse(user.Id) 
+                        UserId = Guid.Parse(user.Id),
+                        AddDate = DateTime.Now
                     };
                     
                     await _repositoryFactory.GetUserRepository().AddUserDetails(userDetails);

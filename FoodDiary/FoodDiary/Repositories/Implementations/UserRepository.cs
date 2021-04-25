@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FoodDiary.Data;
+using FoodDiary.Repositories.Entities;
 using Repositories.Abstract;
-using Repositories.Entities;
 
 namespace FoodDiary.Repositories.Implementations
 {

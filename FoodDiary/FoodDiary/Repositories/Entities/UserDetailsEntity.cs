@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Repositories.Entities
+namespace FoodDiary.Repositories.Entities
 {
     public class UserDetailsEntity
     {
@@ -15,5 +15,6 @@ namespace Repositories.Entities
         public double Bmi { get; set; }
         public double Bmr { get; set; }
         public double Weight { get; set; }
+        public DateTime AddDate { get; set; }
     }
 }

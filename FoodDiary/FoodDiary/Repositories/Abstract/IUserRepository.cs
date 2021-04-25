@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Repositories.Entities;
+using FoodDiary.Repositories.Entities;
 
 namespace Repositories.Abstract
 {
