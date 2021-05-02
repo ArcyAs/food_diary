@@ -33,13 +33,14 @@ namespace FoodDiary
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureDatabaseContext(Configuration);
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.ConfigureDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             app.CreateDatabase();
             if (env.IsDevelopment())
@@ -69,7 +70,7 @@ namespace FoodDiary
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-            
+            serviceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
             app.SeedData();
         }
     }

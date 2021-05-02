@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FoodDiary.Data;
 using FoodDiary.Repositories.Entities;
 using Repositories.Abstract;
@@ -17,6 +19,11 @@ namespace FoodDiary.Repositories.Implementations
         {
             _context.UserDetailsEntities.Add(userDetailsEntity);
             await _context.SaveChangesAsync();
+        }
+
+        public IEnumerable<UserDetailsEntity> GetAll()
+        {
+            return _context.UserDetailsEntities.ToList();
         }
     }
 }

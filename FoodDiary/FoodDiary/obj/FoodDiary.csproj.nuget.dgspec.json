@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {}
+    "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {}
   },
   "projects": {
-    "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {
+    "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+        "projectUniqueName": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
         "projectName": "FoodDiary",
-        "projectPath": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
-        "packagesPath": "C:\\Users\\jakub\\.nuget\\packages\\",
-        "outputPath": "D:\\Szkoła\\PZPP\\FoodDiary\\FoodDiary\\obj\\",
+        "projectPath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+        "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jakub\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Komputer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Szkoła\\PZPP\\FoodDiary\\Repositories\\Repositories.csproj": {
-                "projectPath": "D:\\Szkoła\\PZPP\\FoodDiary\\Repositories\\Repositories.csproj"
+              "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj": {
+                "projectPath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj"
               }
             }
           }
@@ -88,6 +88,10 @@
               "target": "Package",
               "version": "[5.0.4, )"
             },
+            "Microsoft.SqlServer.Types": {
+              "target": "Package",
+              "version": "[14.0.1016.290, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.2, )"
@@ -111,61 +115,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "D:\\Szkoła\\PZPP\\FoodDiary\\Repositories\\Repositories.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\Szkoła\\PZPP\\FoodDiary\\Repositories\\Repositories.csproj",
-        "projectName": "Repositories",
-        "projectPath": "D:\\Szkoła\\PZPP\\FoodDiary\\Repositories\\Repositories.csproj",
-        "packagesPath": "C:\\Users\\jakub\\.nuget\\packages\\",
-        "outputPath": "D:\\Szkoła\\PZPP\\FoodDiary\\Repositories\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\jakub\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }

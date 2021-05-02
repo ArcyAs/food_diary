@@ -35,6 +35,7 @@ namespace FoodDiary.Extensions
             services.AddTransient<IUserNameBuilder, UserNameBuilder>();
             services.AddTransient<IBmiBmrFactory, BmiBmrFactory>();
             services.AddTransient<IRepositoryFactory, RepositoriesFactory>();
+            services.AddTransient<IUserRepository, UserRepository>();
             
             return services;
         }
