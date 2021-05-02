@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodDiary.Data;
 using FoodDiary.Repositories.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
 
 namespace FoodDiary.Repositories.Implementations
@@ -10,10 +11,12 @@ namespace FoodDiary.Repositories.Implementations
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
+        private DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
 
         public UserRepository(ApplicationDbContext context)
         {
             _context = context;
+            UserDetailsEntities = _context.UserDetailsEntities;
         }
         public async Task AddUserDetails(UserDetailsEntity userDetailsEntity)
         {
@@ -23,7 +26,7 @@ namespace FoodDiary.Repositories.Implementations
 
         public IEnumerable<UserDetailsEntity> GetAll()
         {
-            return _context.UserDetailsEntities.ToList();
+            return UserDetailsEntities.ToList();
         }
     }
 }

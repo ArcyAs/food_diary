@@ -18,5 +18,13 @@ namespace FoodDiary.Controllers
             _configuration = configuration;
             _userRepository = userRepository;
         }
+        [HttpGet]
+        [Route("getUserDetails")]
+        public IActionResult GetUserDetails()
+        {
+            var result = _userRepository.GetAll();
+            return Ok();
+        }
+
     }
 }
