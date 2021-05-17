@@ -23,8 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Addons\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\Repositories\Repositories.csproj" />

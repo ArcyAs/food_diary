@@ -14,7 +14,7 @@ namespace FoodDiary.Controllers
 {
     [ApiController]
     [Route("User")]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
 
         private readonly IConfiguration _configuration;
@@ -42,10 +42,10 @@ namespace FoodDiary.Controllers
 
         }
 
-        //public ActionResult UserDiary()
-        //{
-        //    return View();
-        //}
+        public ActionResult UserDiary()
+        {
+            return View();
+        }
 
 
 

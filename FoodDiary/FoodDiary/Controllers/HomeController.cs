@@ -12,18 +12,25 @@ using FoodDiary.Data;
 using FoodDiary.Repositories.Entities;
 using System.Net;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Controllers
 {
     public class HomeController : Controller
     {
 
+        private readonly ApplicationDbContext _context;
+        private DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
+
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
-     
+            _context = context;
+            UserDetailsEntities = _context.UserDetailsEntities;
+
         }
 
         public IActionResult Index()
@@ -36,10 +43,13 @@ namespace FoodDiary.Controllers
             return View();
         }
 
-        public ActionResult GetAllPersonalDetails()
+        public IActionResult PersonalDetails()
         {
-            return View();
+            var result = _context.UserDetailsEntities.ToList();
+            return View(result);
         }
+
+      
         public ActionResult GetJsonDataModel()
         {
             var webClient = new WebClient();
