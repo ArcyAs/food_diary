@@ -25,6 +25,7 @@
     <Folder Include="Areas\Identity\Pages\Addons\" />
   </ItemGroup>
 
+
   <ItemGroup>
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>

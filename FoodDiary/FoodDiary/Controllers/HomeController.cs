@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using FoodDiary.Data;
 using FoodDiary.Repositories.Entities;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace FoodDiary.Controllers
 {
@@ -32,6 +34,20 @@ namespace FoodDiary.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public ActionResult GetAllPersonalDetails()
+        {
+            return View();
+        }
+        public ActionResult GetJsonDataModel()
+        {
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.Cookie, "cookievalue");
+            var json = webClient.DownloadString(@"https://jsonplaceholder.typicode.com/todos/1");
+            Models.AppUser objJson = JsonConvert.DeserializeObject < Models.AppUser> (json);
+
+            return View(objJson);
         }
 
 

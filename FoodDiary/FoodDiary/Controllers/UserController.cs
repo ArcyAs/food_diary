@@ -1,15 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FoodDiary.Repositories.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+
 
 namespace FoodDiary.Controllers
 {
+    [ApiController]
+    [Route("User")]
     public class UserController : ControllerBase
     {
+
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
 
@@ -20,11 +27,27 @@ namespace FoodDiary.Controllers
         }
         [HttpGet]
         [Route("getUserDetails")]
-        public IActionResult GetUserDetails()
+        public ActionResult<IEnumerable<UserDetailsEntity>> GetUserDetails()
         {
             var result = _userRepository.GetAll();
-            return Ok();
+
+            return Ok(result);
         }
+
+        [Route("getPersonalDetails")]
+        public ActionResult GetAllPersonalDetails()
+        {
+            var result = _userRepository.GetAllPersonals();
+            return Ok(result);
+
+        }
+
+        //public ActionResult UserDiary()
+        //{
+        //    return View();
+        //}
+
+
 
     }
 }
