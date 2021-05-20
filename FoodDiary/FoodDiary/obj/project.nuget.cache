@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "F/z3QsLsmoV9dASGfUsiUdR93M0+jc+mo/0dQWEk54mLrJQ8gwcQmwMPLx9iyBS4d5gqwSgeA066ywYFc74ZeA==",
-  "success": false,
+  "dgSpecHash": "WOtOLMrbG3NyznZ8axsNAiEDulmv1Y85AYSwtCZcCF/RfmcGdRTyXtMDzEPcD7TBsVHXLCF/M72Yxyne7bXjMw==",
+  "success": true,
   "projectFilePath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Komputer\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
@@ -155,15 +155,6 @@
     "C:\\Users\\Komputer\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Nie można znaleźć projektu „C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj”. Sprawdź, czy odwołanie projektu jest prawidłowe i czy plik projektu istnieje.",
-      "libraryId": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",

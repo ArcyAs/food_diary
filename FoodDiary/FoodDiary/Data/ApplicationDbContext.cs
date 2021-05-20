@@ -8,6 +8,7 @@ namespace FoodDiary.Data
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

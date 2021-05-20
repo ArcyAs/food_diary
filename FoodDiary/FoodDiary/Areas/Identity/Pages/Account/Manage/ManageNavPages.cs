@@ -12,6 +12,8 @@ namespace FoodDiary.Areas.Identity.Pages.Account.Manage
 
         public static string Email => "Email";
 
+        public static string CalculatorBMI => "CalculatorBMI";
+
         public static string ChangePassword => "ChangePassword";
 
         public static string DownloadPersonalData => "DownloadPersonalData";
@@ -27,6 +29,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account.Manage
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
+        public static string CalculatorBMIClass(ViewContext viewContext) => PageNavClass(viewContext, CalculatorBMI);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 

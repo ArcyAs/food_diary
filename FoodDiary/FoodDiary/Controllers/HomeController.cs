@@ -13,6 +13,8 @@ using FoodDiary.Repositories.Entities;
 using System.Net;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace FoodDiary.Controllers
 {
@@ -20,15 +22,17 @@ namespace FoodDiary.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        UserManager<AppUser> _userManager;
         private DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
 
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
             UserDetailsEntities = _context.UserDetailsEntities;
 
         }
@@ -43,10 +47,21 @@ namespace FoodDiary.Controllers
             return View();
         }
 
-        public IActionResult PersonalDetails()
+        public async Task<IActionResult> PersonalDetailsAsync()
         {
-            var result = _context.UserDetailsEntities.ToList();
-            return View(result);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result_user = _context.UserDetailsEntities
+            .Where(x => x.UserId == Guid.Parse(userId));
+            var result = await _userManager.FindByIdAsync(userId);
+            var model = new UserDetailsEntities_view()
+            {
+                AppUser = result,
+                UserDetailsEntity = result_user.ToList()
+
+            };
+
+            //return View(model);
+            return View(model);
         }
 
       
@@ -66,5 +81,12 @@ namespace FoodDiary.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+
+        
+    }
+    public class UserDetailsEntities_view
+    {
+        public AppUser AppUser { get; set; }
+        public List<UserDetailsEntity> UserDetailsEntity { get; set; }
     }
 }
