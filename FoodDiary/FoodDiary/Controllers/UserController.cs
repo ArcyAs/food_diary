@@ -42,10 +42,6 @@ namespace FoodDiary.Controllers
 
         }
 
-        public ActionResult UserDiary()
-        {
-            return View();
-        }
 
 
 

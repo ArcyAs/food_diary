@@ -50,17 +50,15 @@ namespace FoodDiary.Controllers
         public async Task<IActionResult> PersonalDetailsAsync()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result_user = _context.UserDetailsEntities
-            .Where(x => x.UserId == Guid.Parse(userId));
+            var result_user = _context.UserDetailsEntities.FirstOrDefault(x => x.UserId == Guid.Parse(userId));
             var result = await _userManager.FindByIdAsync(userId);
             var model = new UserDetailsEntities_view()
             {
-                AppUser = result,
-                UserDetailsEntity = result_user.ToList()
+                appUser = result,
+                userDetailsEntity = result_user,
 
             };
 
-            //return View(model);
             return View(model);
         }
 
@@ -86,7 +84,7 @@ namespace FoodDiary.Controllers
     }
     public class UserDetailsEntities_view
     {
-        public AppUser AppUser { get; set; }
-        public List<UserDetailsEntity> UserDetailsEntity { get; set; }
+        public AppUser appUser { get; set; }
+        public UserDetailsEntity userDetailsEntity { get; set; }
     }
 }
