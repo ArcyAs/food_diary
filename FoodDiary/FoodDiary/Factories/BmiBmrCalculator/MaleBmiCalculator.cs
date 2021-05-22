@@ -11,7 +11,5 @@
         {
             return (5 + (9.99 * weight) + (6.25 * height) - (4.92 * age)) * activityLevel;
         }
-
-
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using FluentAssertions;
-using FoodDiary.Factories;
 using FoodDiary.Factories.BmiBmrCalculator;
 using FoodDiary.Models.Enums;
 using NSubstitute;

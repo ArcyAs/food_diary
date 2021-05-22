@@ -8022,7 +8022,6 @@
     "net5.0": [
       "AutoMapper >= 10.1.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.1",
-      "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj",
       "MediatR >= 9.0.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 9.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 5.0.4",
@@ -8037,20 +8036,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Komputer\\.nuget\\packages\\": {}
+    "C:\\Users\\Grzesiek\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "projectUniqueName": "C:\\Users\\Grzesiek\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
       "projectName": "FoodDiary",
-      "projectPath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
-      "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
+      "projectPath": "C:\\Users\\Grzesiek\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "packagesPath": "C:\\Users\\Grzesiek\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Grzesiek\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Komputer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Grzesiek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -8062,11 +8066,7 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {
-            "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj": {
-              "projectPath": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -8150,25 +8150,16 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   },
   "logs": [
     {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Nie można znaleźć projektu „C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj”. Sprawdź, czy odwołanie projektu jest prawidłowe i czy plik projektu istnieje.",
-      "libraryId": "C:\\Users\\Komputer\\source\\repos\\food_diary\\FoodDiary\\Repositories\\Repositories.csproj",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    },
-    {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Pakiet „Microsoft.SqlServer.Types 14.0.1016.290” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8” zamiast platformy docelowej projektu „net5.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
+      "message": "Package 'Microsoft.SqlServer.Types 14.0.1016.290' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.SqlServer.Types",
       "targetGraphs": [
         "net5.0"

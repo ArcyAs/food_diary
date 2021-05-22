@@ -15,6 +15,7 @@ namespace FoodDiary.Repositories.Entities
         public double Bmi { get; set; }
         public double Bmr { get; set; }
         public double Weight { get; set; }
+        public int Target { get; set; }
         public DateTime AddDate { get; set; }
     }
 }

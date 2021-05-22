@@ -90,7 +90,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Weight")]
             public double Weight { get; set; }
-            
+
             // [Required]
             // [EmailAddress]
             // [Display(Name = "BMI")]
@@ -129,18 +129,19 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser {
+                var user = new AppUser
+                {
                     UserName = Input.Email,
                     NormalizedUserName = _userNameBuilder.Build(Input),
-                    Email = Input.Email, 
+                    Email = Input.Email,
                     Age = Input.Age,
                     ActivityLevel = Input.Activities,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                 };
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -150,7 +151,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new {area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl},
+                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -161,18 +162,18 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                         Gender = Input.Gender,
                         Height = Input.Height,
                         Weight = Input.Height,
-                        Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
-                        Bmi = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height),
+                        Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
+                        Bmi = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height),
                         Id = Guid.NewGuid(),
                         UserId = Guid.Parse(user.Id),
                         AddDate = DateTime.Now
                     };
-                    
+
                     await _repositoryFactory.GetUserRepository().AddUserDetails(userDetails);
-                    
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                        return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
-                    
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

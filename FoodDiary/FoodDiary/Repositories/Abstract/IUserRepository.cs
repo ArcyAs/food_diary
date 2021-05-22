@@ -8,5 +8,6 @@ namespace Repositories.Abstract
     {
         Task AddUserDetails(UserDetailsEntity userDetailsEntity);
         IEnumerable<UserDetailsEntity> GetAll();
+
     }
 }

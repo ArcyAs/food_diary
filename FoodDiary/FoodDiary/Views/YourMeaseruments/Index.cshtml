@@ -1,0 +1,45 @@
+﻿@model FoodDiary.Repositories.Entities.UserDetailsEntity
+
+@{
+    ViewData["Title"] = "Your measurements";
+}
+<h1>Manage</h1>
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id">
+            <div class="form-group">
+                <label asp-for="Weight" class="form-label">
+                </label>
+                <input asp-for="Weight" class="form-control">
+                <span asp-validation-for="Weight" class="text-danger">
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height" class="form-label"></label>
+                <input asp-for="Height" class="form-control">
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p style="font-size:xx-large"><label asp-for="Target" class="form-label"></label><br></p>
+                <input type="radio" asp-for="Target" name="target" value="0">
+                <label for="0">Gain mass</label><br>
+                <input type="radio" asp-for="Target" name="target" value="1">
+                <label for="1">Lose fat</label><br>
+                <input type="radio" asp-for="Target" name="target" value="2">
+                <label for="2">Maintain current weight</label>
+                <span asp-validation-for="Target" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+}
+

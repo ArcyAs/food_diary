@@ -22,5 +22,9 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\FoodDiary\FoodDiary.csproj" />
+    </ItemGroup>
+
 
 </Project>

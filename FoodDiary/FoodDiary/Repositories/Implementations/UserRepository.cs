@@ -22,8 +22,8 @@ namespace FoodDiary.Repositories.Implementations
         {
             _context.UserDetailsEntities.Add(userDetailsEntity);
             await _context.SaveChangesAsync();
+            
         }
-
         public IEnumerable<UserDetailsEntity> GetAll()
         {
             return UserDetailsEntities.ToList();
