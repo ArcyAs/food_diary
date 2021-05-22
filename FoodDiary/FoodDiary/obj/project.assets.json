@@ -8042,11 +8042,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Grzesiek\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "projectUniqueName": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
       "projectName": "FoodDiary",
-      "projectPath": "C:\\Users\\Grzesiek\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
-      "packagesPath": "C:\\Users\\Grzesiek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Grzesiek\\Source\\Repos\\jakubzahrandikath\\food_diary\\FoodDiary\\FoodDiary\\obj\\",
+      "projectPath": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

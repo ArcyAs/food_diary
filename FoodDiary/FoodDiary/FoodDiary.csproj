@@ -23,6 +23,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Pages\Addons\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
+
+
+
 
 </Project>

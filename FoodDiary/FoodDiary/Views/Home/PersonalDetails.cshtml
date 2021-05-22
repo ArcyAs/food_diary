@@ -1,0 +1,28 @@
+﻿@model FoodDiary.Controllers.UserDetailsEntities_view
+
+@{
+    ViewData["Title"] = "Personal Details";
+}
+
+<h2>Personal Details</h2>
+<table class="table table-hover">
+
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Activity Level</td>
+            <td>BMI </td>
+            <td>BMR </td>
+            <td>Weight </td>
+            <td>AddDate </td>
+        </tr>
+        <tr>
+            <td>@Model.appUser.FirstName</td>
+            <td>@Model.appUser.LastName</td>
+            <td>@Model.appUser.ActivityLevel</td>
+            <td>@Model.userDetailsEntity.Bmi.ToString("0.00")</td>
+            <td>@Model.userDetailsEntity.Bmr.ToString("0.0" + " kcal")</td>
+            <td>@Model.userDetailsEntity.Weight</td>
+            <td>@Model.userDetailsEntity.AddDate</td>
+        </tr>
+    </table>

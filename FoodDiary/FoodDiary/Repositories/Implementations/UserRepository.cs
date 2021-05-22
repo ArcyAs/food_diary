@@ -26,7 +26,26 @@ namespace FoodDiary.Repositories.Implementations
         }
         public IEnumerable<UserDetailsEntity> GetAll()
         {
-            return UserDetailsEntities.ToList();
+            var userdetails = _context.UserDetailsEntities.ToList();
+            return userdetails;
+        }
+
+        public List<UserDetailsEntity> GetAllPersonals()
+        {
+            var user_personal_details = _context.UserDetailsEntities
+                .Select(x => new UserDetailsEntity()
+                {
+                    Id = x.Id,
+                    UserId = x.UserId,
+                    Gender = x.Gender,
+                    Height = x.Height,
+                    Bmi = x.Bmi,
+                    Bmr = x.Bmr,
+                    Weight = x.Weight,
+                    AddDate = x.AddDate
+
+                }).ToList();
+            return user_personal_details;
         }
     }
 }
