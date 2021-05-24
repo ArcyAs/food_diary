@@ -46,11 +46,18 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+        public string showBMI { get; set; }
+
+        public string showBMR { get; set; }
+        public string showInformation { get; set; }
+        public string information { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public class InputModel
         {
+
+
             [Required]
             [Display(Name = "Age")]
             public int Age { get; set; }
@@ -71,11 +78,6 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             [Display(Name = "Activities")]
             public double Activities { get; set; }
 
-            [Display(Name = "ShowBMI")]
-            public string ShowBMI = "";
-
-            [Display(Name = "ShowBMR")]
-            public string ShowBMR { get; set; }
 
         }
 
@@ -85,28 +87,31 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                //var resultBMI = Input.Weight / ((Input.Height / 100) * (Input.Height / 100));
-                //if (Input.Gender == "Woman")
-                //{
 
-                //    var resultBMR = (655 + (9.6 * Input.Weight) + (1.8 * Input.Height) - (4.7 * Input.Age)) * Input.Activities;
-                //    var showBMI = "BMI=" + resultBMI.ToString("0.00");
-                //    var showBMR = "BMR=" + resultBMR.ToString("0.0" + " kcal");
-                //    Input.ShowBMI = showBMI;
-                //    Input.ShowBMR = showBMR;
+              showBMI = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height).ToString("0.00");
+              showBMR = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities).ToString("0.0" + " kcal");
 
-                //}
-                //else if (Input.Gender == "Man")
-                //{
-                //    var resultBMR = (5 + (9.99 * Input.Weight) + (6.25 * Input.Height) - (4.92 * Input.Age)) * Input.Activities;
-                //    var showBMI = "BMI=" + resultBMI.ToString("0.00");
-                //    var showBMR = "BMR=" + resultBMR.ToString("0.0" + " kcal");
-                //    Input.ShowBMI = showBMI;
-                //    Input.ShowBMR = showBMR;
+                var showBMI_value = double.Parse(showBMI);
 
-                //}
-                Input.ShowBMI = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height).ToString("0.00");
-                Input.ShowBMR = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities).ToString("0.0" + " kcal");
+       
+                    if (showBMI_value>25)
+                    {
+                        information = " Overweight , normal BMI in range 18-25";
+                        showInformation = information;
+                    }
+                else if (showBMI_value<18)
+                {
+                    information = "Underweight ,normal BMI in range 18-25";
+                    showInformation = information;
+                }
+                else
+                {
+                    information = "Normal BMI";
+                    showInformation = information;
+                }
+       
+
+       
             }
 
             // If we got this far, something failed, redisplay form

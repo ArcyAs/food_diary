@@ -47,12 +47,11 @@
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Activities</label>
+                <label>Activities</label>
                 <br />
-
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.2)<label data-toggle="tooltip" title="Low Activities">Low</label>
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.5)<label data-toggle="tooltip" title="Medium Activities">Medium</label>
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.8)<label data-toggle="tooltip" title="Hight Activities">Hight</label>
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.2)Low
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.5)Medium
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.8)High
                 <span asp-validation-for="Input.Activities" class="text-danger"></span>
             </div>
 
@@ -64,26 +63,13 @@
         <section>
             <h4>Info</h4>
             <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                                    <p>
-                                        <label>BMI: </label> @Html.ValueFor(v => v.Input.ShowBMI)
-                                        <br />
-                                        <label>BMR: </label>@Html.ValueFor(v => v.Input.ShowBMR)
+            <label>BMI: </label> @Html.ValueFor(v => v.showBMI)
+            <br />
+            <label>BMR: </label>@Html.ValueFor(v => v.showBMR)
+            <br />
+            <label>Information:  </label>@Html.ValueFor(v => v.showInformation)
 
-                                    </p>
-
-                    </div>
-                }
-
-            }
         </section>
     </div>
 </div>
 
-@section Scripts {
-
-
-}
