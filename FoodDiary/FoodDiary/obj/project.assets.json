@@ -8036,25 +8036,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Grzesiek\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Komputer\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "projectUniqueName": "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
       "projectName": "FoodDiary",
-      "projectPath": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+      "projectPath": "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
       "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\obj\\",
+      "outputPath": "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Grzesiek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Komputer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -8150,7 +8145,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -8159,7 +8154,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.SqlServer.Types 14.0.1016.290' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "message": "Pakiet „Microsoft.SqlServer.Types 14.0.1016.290” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8” zamiast platformy docelowej projektu „net5.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
       "libraryId": "Microsoft.SqlServer.Types",
       "targetGraphs": [
         "net5.0"
