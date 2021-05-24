@@ -60,19 +60,7 @@ namespace FoodDiary.Controllers
 
             return View(model);
         }
-
-      
-        public ActionResult GetJsonDataModel()
-        {
-            var webClient = new WebClient();
-            webClient.Headers.Add(HttpRequestHeader.Cookie, "cookievalue");
-            var json = webClient.DownloadString(@"https://jsonplaceholder.typicode.com/todos/1");
-            Models.AppUser objJson = JsonConvert.DeserializeObject < Models.AppUser> (json);
-
-            return View(objJson);
-        }
-
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
