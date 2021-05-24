@@ -6,7 +6,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AutoMapper;
+using FoodDiary.Factories;
 using FoodDiary.Models;
+using FoodDiary.Models.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,16 +26,20 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
         private readonly ILogger<CalculatorBMI> _logger;
         private readonly IMapper _mapper;
+        private readonly IBmiBmrFactory _bmibmrFactory;
 
 
         public CalculatorBMI(
 
             ILogger<CalculatorBMI> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IBmiBmrFactory bmibmrFactory
+            )
         {
 
             _logger = logger;
             _mapper = mapper;
+            _bmibmrFactory = bmibmrFactory;
         }
 
         [BindProperty]
@@ -42,7 +48,6 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
 
         public class InputModel
         {
@@ -60,7 +65,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Gender")]
-            public string Gender { get; set; }
+            public int Gender { get; set; }
 
             [Required]
             [Display(Name = "Activities")]
@@ -80,26 +85,28 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var resultBMI = Input.Weight / ((Input.Height / 100) * (Input.Height / 100));
-                if (Input.Gender == "Woman")
-                {
+                //var resultBMI = Input.Weight / ((Input.Height / 100) * (Input.Height / 100));
+                //if (Input.Gender == "Woman")
+                //{
 
-                    var resultBMR = (655 + (9.6 * Input.Weight) + (1.8 * Input.Height) - (4.7 * Input.Age)) * Input.Activities;
-                    var showBMI = "BMI=" + resultBMI.ToString("0.00");
-                    var showBMR = "BMR=" + resultBMR.ToString("0.0" + " kcal");
-                    Input.ShowBMI = showBMI;
-                    Input.ShowBMR = showBMR;
+                //    var resultBMR = (655 + (9.6 * Input.Weight) + (1.8 * Input.Height) - (4.7 * Input.Age)) * Input.Activities;
+                //    var showBMI = "BMI=" + resultBMI.ToString("0.00");
+                //    var showBMR = "BMR=" + resultBMR.ToString("0.0" + " kcal");
+                //    Input.ShowBMI = showBMI;
+                //    Input.ShowBMR = showBMR;
 
-                }
-                else if (Input.Gender == "Man")
-                {
-                    var resultBMR = (5 + (9.99 * Input.Weight) + (6.25 * Input.Height) - (4.92 * Input.Age)) * Input.Activities;
-                    var showBMI = "BMI=" + resultBMI.ToString("0.00");
-                    var showBMR = "BMR=" + resultBMR.ToString("0.0" + " kcal");
-                    Input.ShowBMI = showBMI;
-                    Input.ShowBMR = showBMR;
+                //}
+                //else if (Input.Gender == "Man")
+                //{
+                //    var resultBMR = (5 + (9.99 * Input.Weight) + (6.25 * Input.Height) - (4.92 * Input.Age)) * Input.Activities;
+                //    var showBMI = "BMI=" + resultBMI.ToString("0.00");
+                //    var showBMR = "BMR=" + resultBMR.ToString("0.0" + " kcal");
+                //    Input.ShowBMI = showBMI;
+                //    Input.ShowBMR = showBMR;
 
-                }
+                //}
+                Input.ShowBMI = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height).ToString("0.00");
+                Input.ShowBMR = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities).ToString("0.0" + " kcal");
             }
 
             // If we got this far, something failed, redisplay form
