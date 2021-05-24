@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {}
+    "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {
+    "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\FoodDiary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+        "projectUniqueName": "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
         "projectName": "FoodDiary",
-        "projectPath": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
+        "projectPath": "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\FoodDiary.csproj",
         "packagesPath": "C:\\Users\\Komputer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Komputer\\Desktop\\add2\\FoodDiary\\FoodDiary\\obj\\",
+        "outputPath": "C:\\Users\\Komputer\\Desktop\\Nowy folder\\FoodDiary\\FoodDiary\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Grzesiek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Komputer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -115,7 +111,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
