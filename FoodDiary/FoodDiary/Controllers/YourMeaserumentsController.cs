@@ -1,5 +1,8 @@
 ﻿using FoodDiary.Data;
+using FoodDiary.Factories;
+using FoodDiary.Factories.BmiBmrCalculator;
 using FoodDiary.Models;
+using FoodDiary.Models.Enums;
 using FoodDiary.Repositories.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +18,14 @@ namespace FoodDiary.Controllers
     public class YourMeaserumentsController : Controller
     {
         private readonly ApplicationDbContext _applicationDbContext;
-        private readonly UserManager<AppUser> userManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IBmiBmrFactory _bmibmrFactory;
 
-        public YourMeaserumentsController(ApplicationDbContext applicationDbContext, UserManager<AppUser> userManager)
+        public YourMeaserumentsController(ApplicationDbContext applicationDbContext, UserManager<AppUser> userManager, IBmiBmrFactory bmibmrFactory)
         {
             this._applicationDbContext = applicationDbContext;
-            this.userManager = userManager;
+            this._userManager = userManager;
+            _bmibmrFactory = bmibmrFactory;
         }
         public IActionResult Index()
         {
@@ -32,12 +37,26 @@ namespace FoodDiary.Controllers
         }
         
         [HttpPost]
-        public IActionResult Edit(UserDetailsEntity userDetailsEntity)
+        public async Task<IActionResult> EditAsync(UserDetailsEntity userDetailsEntity)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userAppDetails = await _userManager.FindByIdAsync(userId);
             var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.Id == userDetailsEntity.Id).FirstOrDefault();
             userDetails.Weight = userDetailsEntity.Weight;
             userDetails.Height = userDetailsEntity.Height;
             userDetails.Target = userDetailsEntity.Target;
+            if (userDetails.Target == 0)
+            {
+                userDetails.Bmr += 200;
+            }
+            else if (userDetails.Target == 1)
+            {
+                userDetails.Bmr -= 200;
+            }
+            else if (userDetails.Target == 2)
+            {
+                userDetails.Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), userDetails.Gender)).CalculateBMR(userDetails.Weight, userDetails.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
+            }
 
             _applicationDbContext.SaveChanges();
 
