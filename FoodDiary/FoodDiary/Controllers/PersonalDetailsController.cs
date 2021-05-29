@@ -43,7 +43,6 @@ namespace FoodDiary.Controllers
             {
                 appUser = result,
                 userDetailsEntity = result_user,
-
             };
 
             return View(model);
