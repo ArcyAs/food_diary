@@ -28,9 +28,5 @@
       <ProjectReference Include="..\FoodDiary\FoodDiary.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="e2e" />
-    </ItemGroup>
-
 
 </Project>

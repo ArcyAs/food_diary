@@ -4,6 +4,7 @@ using FoodDiary.Factories;
 using FoodDiary.Factories.BmiBmrCalculator;
 using FoodDiary.Models.Enums;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Xunit;
 
 namespace FoodDiary.Tests
@@ -14,28 +15,77 @@ namespace FoodDiary.Tests
 
         public BmiBriFactoryTests()
         {
-            _factory = Substitute.For<IBmiBmrFactory>();
+            _factory = new BmiBmrFactory();
         }
 
         [Fact]
-        public void GetBmiBriCalculatorForFemale_ShouldNotThrowNotException()
+        public void GetBmiCalculatorForFemale_ShouldNotThrowNotExceptionAndBeSpecifiedType()
         {
-            Action act = () => _factory.GetCalculator(Gender.Female);
-            act.Should().NotThrow<ArgumentOutOfRangeException>();
+            var result = _factory.GetCalculator(Gender.Female);
+            result.Should().BeOfType<WomenBmiCalculator>();
+            result.Should().NotBeOfType<MaleBmiCalculator>();
+            result.Should().NotBeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public void GetBmiBriCalculatorForMale_ShouldNotThrowNotException()
+        public void GetBmiCalculatorForMale_ShouldNotThrowNotExceptionAndBeSpecifiedType()
         {
-            Action act = () => _factory.GetCalculator(Gender.Male);
-            act.Should().NotThrow<ArgumentOutOfRangeException>();
+            var result = _factory.GetCalculator(Gender.Male);
+            result.Should().BeOfType<MaleBmiCalculator>();
+            result.Should().NotBeOfType<WomenBmiCalculator>();
+            result.Should().NotBeOfType<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void GetBmiCalculatorForFemale_ShouldProperlyCalculateBmi()
+        {
+            var result = _factory.GetCalculator(Gender.Female).CalculateBMI(90, 180);
+            result.Should().BeOfType(typeof(double));
+            result.Should().NotBeOfType(typeof(string));
+            result.Should().NotBeOfType(typeof(decimal));
+            result.Should().BeGreaterThan(27);
+            result.Should().BeLessThan(28);
+            result.Should().Be(27.777777777777775);
+        }  
+        
+        [Fact]
+        public void GetBmiCalculatorForMale_ShouldProperlyCalculateBmi()
+        {
+            var result = _factory.GetCalculator(Gender.Male).CalculateBMI(90, 180);
+            result.Should().BeOfType(typeof(double));
+            result.Should().NotBeOfType(typeof(string));
+            result.Should().NotBeOfType(typeof(decimal));
+            result.Should().BeGreaterThan(27);
+            result.Should().BeLessThan(28);
+            result.Should().Be(27.777777777777775);
+        }
+
+        [Fact]
+        public void GetBmiCalculator_ShouldThrowNotException()
+        {
+            Action act = () => _factory.GetCalculator(Gender.TestValue);
+            act.Should().Throw<ArgumentOutOfRangeException>();
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("Selected gender is not supported (Parameter 'gender')");
+        } 
+        
+        [Fact]
+        public void GetBmrCalculatorForMale_ShouldProperlyCalculateBmi()
+        {
+            var result = _factory.GetCalculator(Gender.Male).CalculateBMR(90, 180, 25, 1.2);
+            result.Should().BeOfType(typeof(double));
+            result.Should().NotBeOfType(typeof(string));
+            result.Should().NotBeOfType(typeof(decimal));
+            result.Should().Be(2287.3199999999997);
         }
         
         [Fact]
-        public void GetBmiBriCalculatorForFemale_ShouldProperlyCalculateBmi()
+        public void GetBmrCalculatorForFemale_ShouldProperlyCalculateBmi()
         {
-             _factory.GetCalculator(Gender.Female).CalculateBMI(90, 180).Returns(27.8);
-             Assert.Equal(27.8,  _factory.GetCalculator(Gender.Female).CalculateBMI(90, 180));
+            var result = _factory.GetCalculator(Gender.Female).CalculateBMR(90, 180, 25, 1.2);
+            result.Should().BeOfType(typeof(double));
+            result.Should().NotBeOfType(typeof(string));
+            result.Should().NotBeOfType(typeof(decimal));
+            result.Should().Be(2181.5999999999999);
         }
     }
 }

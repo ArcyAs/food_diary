@@ -12,7 +12,7 @@ namespace FoodDiary.Factories
             {
                 Gender.Female => new WomenBmiCalculator(),
                 Gender.Male => new MaleBmiCalculator(),
-                _ => throw new ArgumentOutOfRangeException(nameof(gender), gender, "Selected gender is not supported")
+                _ => throw new ArgumentOutOfRangeException(nameof(gender), "Selected gender is not supported")
             };
         }
     }
