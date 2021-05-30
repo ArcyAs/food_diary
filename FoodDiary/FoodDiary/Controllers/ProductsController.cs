@@ -34,14 +34,8 @@ namespace FoodDiary.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UserDetailsEntity userDetailsEntity)
         {
-            var userDetails = _repositoryFactory.GetUserRepository().GetUserDetailsByUserId(userDetailsEntity.UserId);
-            await _repositoryFactory.GetUserRepository().UpdateUserDetails(new UserDetailsEntity()
-                {
-                    Height = userDetailsEntity.Height,
-                    Weight = userDetailsEntity.Weight,
-                    Target = userDetailsEntity.Target
-                },
-                userDetailsEntity);
+            var userDetails = await _repositoryFactory.GetUserRepository().GetUserDetailsByUserId(userDetailsEntity.UserId);
+            await _repositoryFactory.GetUserRepository().UpdateUserDetails(userDetailsEntity, userDetails);
 
             return RedirectToAction("Index");
         }
