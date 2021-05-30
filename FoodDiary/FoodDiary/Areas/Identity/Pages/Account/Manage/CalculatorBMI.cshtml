@@ -7,10 +7,7 @@
     ViewData["ActivePage"] = ManageNavPages.CalculatorBMI;
 }
 
-
 <h1>@ViewData["Title"]</h1>
-
-
 
 <div class="row">
     <div class="col-md-4">
@@ -53,9 +50,7 @@
                 @Html.RadioButtonFor(m => m.Input.Activities, 1.8)<label data-toggle="tooltip" title="Hight Activities">Hight</label>
                 <span asp-validation-for="Input.Activities" class="text-danger"></span>
             </div>
-
             <button type="submit" class="btn btn-primary">Show</button>
-
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">

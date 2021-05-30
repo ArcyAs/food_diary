@@ -87,5 +87,6 @@ namespace FoodDiary.Extensions
             var newUserRole = userManager.AddToRoleAsync(administrator, "User");
             newUserRole.Wait();
         }
+
     }
 }

@@ -27,7 +27,6 @@ namespace FoodDiary.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userDetails = _applicationDbContext.UserDetailsEntities.Where(x=>x.UserId == Guid.Parse(userId)).OrderByDescending(x => x.AddDate).FirstOrDefault();
 
-
             return View(userDetails);
         }
         
