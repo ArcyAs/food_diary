@@ -11,7 +11,7 @@ namespace FoodDiary.Repositories.Implementations
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
-        private DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
+        private DbSet<UserDetailsEntity> UserDetailsEntities { get; }
 
         public UserRepository(ApplicationDbContext context)
         {
