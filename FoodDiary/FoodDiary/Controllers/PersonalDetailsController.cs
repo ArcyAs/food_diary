@@ -18,17 +18,14 @@ using System.Security.Claims;
 
 namespace FoodDiary.Controllers
 {
-    public class HomeController : Controller
+    public class PersonalDetailsController : Controller
     {
-
         private readonly ApplicationDbContext _context;
         UserManager<AppUser> _userManager;
+
         private DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
-
-
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<AppUser> userManager)
+        public PersonalDetailsController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _logger = logger;
             _context = context;
@@ -36,16 +33,7 @@ namespace FoodDiary.Controllers
             UserDetailsEntities = _context.UserDetailsEntities;
 
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+        
         public async Task<IActionResult> PersonalDetailsAsync()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -55,23 +43,15 @@ namespace FoodDiary.Controllers
             {
                 appUser = result,
                 userDetailsEntity = result_user,
-
             };
 
             return View(model);
         }
-        
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
-        }
 
-        
-    }
-    public class UserDetailsEntities_view
-    {
-        public AppUser appUser { get; set; }
-        public UserDetailsEntity userDetailsEntity { get; set; }
+        public class UserDetailsEntities_view
+        {
+            public AppUser appUser { get; set; }
+            public UserDetailsEntity userDetailsEntity { get; set; }
+        }
     }
 }
