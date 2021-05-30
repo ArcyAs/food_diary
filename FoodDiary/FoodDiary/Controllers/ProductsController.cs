@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FoodDiary.Repositories.Entities;
 
 namespace FoodDiary.Controllers
 {
@@ -29,18 +30,18 @@ namespace FoodDiary.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Edit(UserDetailsEntity userDetailsEntity)
-        //{
-        //    var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.Id == userDetailsEntity.Id).FirstOrDefault();
-        //    userDetails.Weight = userDetailsEntity.Weight;
-        //    userDetails.Height = userDetailsEntity.Height;
-        //    userDetails.Target = userDetailsEntity.Target;
+        [HttpPost]
+        public IActionResult Edit(UserDetailsEntity userDetailsEntity)
+        {
+            var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.Id == userDetailsEntity.Id).FirstOrDefault();
+            userDetails.Weight = userDetailsEntity.Weight;
+            userDetails.Height = userDetailsEntity.Height;
+            userDetails.Target = userDetailsEntity.Target;
 
-        //    _applicationDbContext.SaveChanges();
+            _applicationDbContext.SaveChanges();
 
-        //    return RedirectToAction("Index");
-        //}
+            return RedirectToAction("Index");
+        }
     }
 
 }
