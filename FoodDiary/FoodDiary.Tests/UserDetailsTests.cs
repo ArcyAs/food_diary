@@ -109,7 +109,7 @@ namespace FoodDiary.Tests
             };
 
             var userRepository = new UserRepository(_context);
-            await userRepository.AddUserDetails(data);
+            var t= userRepository.AddUserDetails(data);
 
             userRepository.GetAll().Should().HaveCount(3);
             var newData = userRepository.GetAll().LastOrDefault();
@@ -123,6 +123,17 @@ namespace FoodDiary.Tests
             newData.Weight.Should().Be(data.Weight);
             newData.AddDate.Should().Be(data.AddDate);
             newData.UserId.Should().Be(data.UserId);
+        }
+
+        [Fact]
+        public async Task ShouldReturnCorrectUser()
+        {
+            var userRepository = new UserRepository(_context);
+            var result = await userRepository.GetUserDetailsByUserId(_userDetailsEntities[0].UserId);
+            
+            result.Should().BeEquivalentTo(_userDetailsEntities[0]);
+            
+
         }
     }
 }

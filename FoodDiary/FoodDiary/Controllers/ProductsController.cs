@@ -8,20 +8,21 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodDiary.Repositories.Entities;
+using Repositories.Abstract;
 
 namespace FoodDiary.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-        private readonly UserManager<AppUser> userManager;
+        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ProductsController(ApplicationDbContext applicationDbContext, UserManager<AppUser> userManager)
+        public ProductsController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager)
         {
-            this._applicationDbContext = applicationDbContext;
-            this.userManager = userManager;
-
+            _repositoryFactory = repositoryFactory;
+            this._userManager = userManager;
         }
+
         public IActionResult Index()
         {
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -31,17 +32,18 @@ namespace FoodDiary.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(UserDetailsEntity userDetailsEntity)
+        public async Task<IActionResult> Edit(UserDetailsEntity userDetailsEntity)
         {
-            var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.Id == userDetailsEntity.Id).FirstOrDefault();
-            userDetails.Weight = userDetailsEntity.Weight;
-            userDetails.Height = userDetailsEntity.Height;
-            userDetails.Target = userDetailsEntity.Target;
-
-            _applicationDbContext.SaveChanges();
+            var userDetails = _repositoryFactory.GetUserRepository().GetUserDetailsByUserId(userDetailsEntity.UserId);
+            await _repositoryFactory.GetUserRepository().UpdateUserDetails(new UserDetailsEntity()
+                {
+                    Height = userDetailsEntity.Height,
+                    Weight = userDetailsEntity.Weight,
+                    Target = userDetailsEntity.Target
+                },
+                userDetailsEntity);
 
             return RedirectToAction("Index");
         }
     }
-
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodDiary.Data;
@@ -18,12 +19,13 @@ namespace FoodDiary.Repositories.Implementations
             _context = context;
             UserDetailsEntities = _context.UserDetailsEntities;
         }
+
         public async Task AddUserDetails(UserDetailsEntity userDetailsEntity)
         {
             _context.UserDetailsEntities.Add(userDetailsEntity);
             await _context.SaveChangesAsync();
-            
         }
+
         public IEnumerable<UserDetailsEntity> GetAll()
         {
             var userdetails = _context.UserDetailsEntities.ToList();
@@ -43,9 +45,23 @@ namespace FoodDiary.Repositories.Implementations
                     Bmr = x.Bmr,
                     Weight = x.Weight,
                     AddDate = x.AddDate
-
                 }).ToList();
             return user_personal_details;
+        }
+
+        public async Task<UserDetailsEntity>  GetUserDetailsByUserId(Guid userId)
+        {
+            var userDetailsEntity = await _context?.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);
+            return userDetailsEntity;
+        }
+
+        public async Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate)
+        {
+            var details = await GetUserDetailsByUserId(toUpdate.UserId);
+            details.Weight = newParameters.Weight;
+            details.Height = newParameters.Height;
+            details.Target = newParameters.Target;
+            await _context.SaveChangesAsync();
         }
     }
 }
