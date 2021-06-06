@@ -36,7 +36,9 @@ namespace FoodDiary.Repositories.Implementations
 
         public  async Task AddProductToDataBase(ProductEntity productEntity)
         {
+            productEntity.Kcal = productEntity.Carb * 4 + productEntity.Protein * 4 + productEntity.Fat * 9;
             _context.ProductEntities.Add(productEntity);
+
             await _context.SaveChangesAsync();
         }
 

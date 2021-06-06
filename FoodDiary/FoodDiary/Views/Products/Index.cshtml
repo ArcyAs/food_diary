@@ -1,13 +1,14 @@
 ﻿@model FoodDiary.Repositories.Entities.ProductEntity;
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Add product";
 }
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>Add product to data base</h4>
+    <h3>Enter the nutritional values per 100g</h3>
 </div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Add" method="post">
