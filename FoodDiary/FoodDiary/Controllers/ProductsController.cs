@@ -22,21 +22,16 @@ namespace FoodDiary.Controllers
             _repositoryFactory = repositoryFactory;
             this._userManager = userManager;
         }
-
         public IActionResult Index()
         {
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var productDetails = _applicationDbContext.ProductDetailsEntity.All(x => x.ProductId > 0);
-
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UserDetailsEntity userDetailsEntity)
+        public async Task<IActionResult> AddAsync(ProductEntity productEntity)
         {
-            var userDetails = await _repositoryFactory.GetUserRepository().GetUserDetailsByUserId(userDetailsEntity.UserId);
-            await _repositoryFactory.GetUserRepository().UpdateUserDetails(userDetailsEntity, userDetails);
-
+            await _repositoryFactory.GetUserRepository().AddProductToDataBase(productEntity);
+            
             return RedirectToAction("Index");
         }
     }

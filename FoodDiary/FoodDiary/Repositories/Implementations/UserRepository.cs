@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodDiary.Data;
+using FoodDiary.Factories;
+using FoodDiary.Models;
+using FoodDiary.Models.Enums;
 using FoodDiary.Repositories.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
+using System.Security.Claims;
 
 namespace FoodDiary.Repositories.Implementations
 {
@@ -13,6 +19,8 @@ namespace FoodDiary.Repositories.Implementations
     {
         private readonly ApplicationDbContext _context;
         private DbSet<UserDetailsEntity> UserDetailsEntities { get; }
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IBmiBmrFactory _bmibmrFactory;
 
         public UserRepository(ApplicationDbContext context)
         {
@@ -23,6 +31,12 @@ namespace FoodDiary.Repositories.Implementations
         public async Task AddUserDetails(UserDetailsEntity userDetailsEntity)
         {
             _context.UserDetailsEntities.Add(userDetailsEntity);
+            await _context.SaveChangesAsync();
+        }
+
+        public  async Task AddProductToDataBase(ProductEntity productEntity)
+        {
+            _context.ProductEntities.Add(productEntity);
             await _context.SaveChangesAsync();
         }
 
@@ -57,11 +71,30 @@ namespace FoodDiary.Repositories.Implementations
 
         public async Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate)
         {
-            var details = await GetUserDetailsByUserId(toUpdate.UserId);
+            var details = await GetUserDetailsByUserId(newParameters.UserId);
+            //var userAppDetails = await _userManager.FindByIdAsync(newParameters.UserId.ToString());
+                 
+            
             details.Weight = newParameters.Weight;
             details.Height = newParameters.Height;
             details.Target = newParameters.Target;
+
+            //if (details.Target == 0)
+            //{
+            //    details.Bmr += 200;
+            //}
+            //else if (details.Target == 1)
+            //{
+            //    details.Bmr -= 200;
+            //}
+            //else if (details.Target == 2)
+            //{
+            //    details.Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
+            //}
+
             await _context.SaveChangesAsync();
         }
+
+
     }
 }

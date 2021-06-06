@@ -8,6 +8,10 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
+       
+        <li class="nav-item">
+            <a class="nav-link text-dark " asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="PersonalDetails" asp-action="PersonalDetails">Personal Details</a>
@@ -32,5 +36,6 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/CalculatorBMI">CalculatorBMI</a>
         </li>
+
     }
 </ul>

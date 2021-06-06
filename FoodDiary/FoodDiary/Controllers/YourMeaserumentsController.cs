@@ -6,6 +6,7 @@ using FoodDiary.Models.Enums;
 using FoodDiary.Repositories.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,45 +19,32 @@ namespace FoodDiary.Controllers
     public class YourMeaserumentsController : Controller
     {
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IRepositoryFactory _repositoryFactory;
         private readonly UserManager<AppUser> _userManager;
         private readonly IBmiBmrFactory _bmibmrFactory;
 
-        public YourMeaserumentsController(ApplicationDbContext applicationDbContext, UserManager<AppUser> userManager, IBmiBmrFactory bmibmrFactory)
+        public YourMeaserumentsController(ApplicationDbContext applicationDbContext, IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager, IBmiBmrFactory bmibmrFactory)
         {
-            this._applicationDbContext = applicationDbContext;
+            _repositoryFactory = repositoryFactory;
             this._userManager = userManager;
+            this._applicationDbContext = applicationDbContext;
             _bmibmrFactory = bmibmrFactory;
+
         }
         public IActionResult Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userDetails = _applicationDbContext.UserDetailsEntities.Where(x=>x.UserId == Guid.Parse(userId)).OrderByDescending(x => x.AddDate).FirstOrDefault();
+            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.UserId == Guid.Parse(userId)).OrderByDescending(x => x.AddDate).FirstOrDefault();
 
             return View(userDetails);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> EditAsync(UserDetailsEntity userDetailsEntity)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userAppDetails = await _userManager.FindByIdAsync(userId);
-            var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.Id == userDetailsEntity.Id).FirstOrDefault();
-            userDetails.Weight = userDetailsEntity.Weight;
-            userDetails.Height = userDetailsEntity.Height;
-            userDetails.Target = userDetailsEntity.Target;
-            if (userDetails.Target == 0)
-            {
-                userDetails.Bmr += 200;
-            }
-            else if (userDetails.Target == 1)
-            {
-                userDetails.Bmr -= 200;
-            }
-            else if (userDetails.Target == 2)
-            {
-                userDetails.Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), userDetails.Gender)).CalculateBMR(userDetails.Weight, userDetails.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
-            }
-
+            var userDetails = await _repositoryFactory.GetUserRepository().GetUserDetailsByUserId(userDetailsEntity.UserId);
+            await _repositoryFactory.GetUserRepository().UpdateUserDetails(userDetailsEntity, userDetails);
+           
             _applicationDbContext.SaveChanges();
 
             return RedirectToAction("Index");
