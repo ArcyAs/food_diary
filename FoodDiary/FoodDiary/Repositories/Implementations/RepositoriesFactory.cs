@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using FoodDiary.Data;
-using FoodDiary.Repositories.Entities;
 using Repositories.Abstract;
+using FoodDiary.Repositories.Abstract;
 
 namespace FoodDiary.Repositories.Implementations
 {
@@ -17,6 +17,11 @@ namespace FoodDiary.Repositories.Implementations
         public IUserRepository GetUserRepository()
         {
             return new UserRepository(_context);
+        }
+
+        public IProductsRepository GetProductsReposity()
+        {
+            return new ProductsRepository(_context);
         }
     }
 }

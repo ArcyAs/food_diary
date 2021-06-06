@@ -8,5 +8,6 @@ namespace FoodDiary.Requests
     public class GetAllUsersFromContextRequest: IRequest<IEnumerable<IdentityUserDto>>
     {
         
+
     }
 }

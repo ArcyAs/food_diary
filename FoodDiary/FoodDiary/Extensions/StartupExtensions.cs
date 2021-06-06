@@ -5,7 +5,10 @@ using FoodDiary.Data;
 using FoodDiary.Factories;
 using FoodDiary.MapperProfiles;
 using FoodDiary.Models;
+using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Implementations;
+using FoodDiary.Services.Abstract;
+using FoodDiary.Services.Implementation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +39,8 @@ namespace FoodDiary.Extensions
             services.AddTransient<IBmiBmrFactory, BmiBmrFactory>();
             services.AddTransient<IRepositoryFactory, RepositoriesFactory>();
             services.AddTransient<IUserRepository, UserRepository>();
-            
+            services.AddTransient<IProductsRepository, ProductsRepository>();
+
             return services;
         }
 

@@ -11,7 +11,7 @@ using FoodDiary.Repositories.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
-using System.Security.Claims;
+
 
 namespace FoodDiary.Repositories.Implementations
 {

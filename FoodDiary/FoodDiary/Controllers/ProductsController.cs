@@ -9,17 +9,18 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodDiary.Repositories.Entities;
 using Repositories.Abstract;
+using FoodDiary.Repositories.Abstract;
 
 namespace FoodDiary.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IProductsRepository _repositoryProduct;
         private readonly UserManager<AppUser> _userManager;
 
-        public ProductsController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager)
+        public ProductsController(IProductsRepository productsRepository , UserManager<AppUser> userManager)
         {
-            _repositoryFactory = repositoryFactory;
+            _repositoryProduct = productsRepository;
             this._userManager = userManager;
         }
         public IActionResult Index()
@@ -30,7 +31,7 @@ namespace FoodDiary.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync(ProductEntity productEntity)
         {
-            await _repositoryFactory.GetUserRepository().AddProductToDataBase(productEntity);
+            await _repositoryProduct.AddProductToDataBase(productEntity);
             
             return RedirectToAction("Index");
         }
