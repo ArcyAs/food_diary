@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
 
 
+
 namespace FoodDiary.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
@@ -22,10 +23,13 @@ namespace FoodDiary.Repositories.Implementations
         private readonly UserManager<AppUser> _userManager;
         private readonly IBmiBmrFactory _bmibmrFactory;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context, UserManager<AppUser> userManager, IBmiBmrFactory bmibmrFactory)
         {
             _context = context;
+            _userManager = userManager;
+            _bmibmrFactory = bmibmrFactory;
             UserDetailsEntities = _context.UserDetailsEntities;
+
         }
 
         public async Task AddUserDetails(UserDetailsEntity userDetailsEntity)
@@ -67,35 +71,42 @@ namespace FoodDiary.Repositories.Implementations
 
         public async Task<UserDetailsEntity>  GetUserDetailsByUserId(Guid userId)
         {
-            var userDetailsEntity = await _context?.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);
+            var userDetailsEntity = await _context.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);
             return userDetailsEntity;
         }
 
-        public async Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate)
+        public async Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate, Guid userId)
         {
-            var details = await GetUserDetailsByUserId(newParameters.UserId);
-            //var userAppDetails = await _userManager.FindByIdAsync(newParameters.UserId.ToString());
-                 
-            
+
+            var details = await _context.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);  // await GetUserDetailsByUserId(newParameters.UserId);
+            string userHelpId = userId.ToString();
+             var userAppDetails = await _userManager.FindByIdAsync(userHelpId);
+
+
+
+
             details.Weight = newParameters.Weight;
             details.Height = newParameters.Height;
             details.Target = newParameters.Target;
 
-            //if (details.Target == 0)
-            //{
-            //    details.Bmr += 200;
-            //}
-            //else if (details.Target == 1)
-            //{
-            //    details.Bmr -= 200;
-            //}
-            //else if (details.Target == 2)
-            //{
-            //    details.Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
-            //}
+            if (details.Target == 0)
+            {
+                details.Bmr=(_bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel)) + 200;
+            }
+            else if (details.Target == 1)
+            {
+                details.Bmr = (_bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel))-200;
+            }
+            else if (details.Target == 2)
+            {
+                details.Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
+            }
 
             await _context.SaveChangesAsync();
         }
+
+        //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //var userAppDetails = await _userManager.FindByIdAsync(userId);
 
 
     }

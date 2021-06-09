@@ -42,9 +42,11 @@ namespace FoodDiary.Controllers
         [HttpPost]
         public async Task<IActionResult> EditAsync(UserDetailsEntity userDetailsEntity)
         {
+            var userId = Guid.Parse( User.FindFirstValue(ClaimTypes.NameIdentifier));
             var userDetails = await _repositoryFactory.GetUserRepository().GetUserDetailsByUserId(userDetailsEntity.UserId);
-            await _repositoryFactory.GetUserRepository().UpdateUserDetails(userDetailsEntity, userDetails);
-           
+            await _repositoryFactory.GetUserRepository().UpdateUserDetails(userDetailsEntity, userDetails, userId);
+
+
             _applicationDbContext.SaveChanges();
 
             return RedirectToAction("Index");

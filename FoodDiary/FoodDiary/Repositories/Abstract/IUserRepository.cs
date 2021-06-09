@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FoodDiary.Repositories.Entities;
+using FoodDiary.Models;
 
 namespace Repositories.Abstract
 {
@@ -12,6 +13,6 @@ namespace Repositories.Abstract
         IEnumerable<UserDetailsEntity> GetAll();
         List<UserDetailsEntity> GetAllPersonals(); 
         Task<UserDetailsEntity> GetUserDetailsByUserId(Guid userId);
-        Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate);
+        Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate, Guid userId);
     }
 }
