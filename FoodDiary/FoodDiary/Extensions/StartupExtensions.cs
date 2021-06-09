@@ -62,7 +62,7 @@ namespace FoodDiary.Extensions
 
             return services;
         }
-        
+
         public static void SeedData(this IApplicationBuilder app)
         {
             SeedDefaultUsers(app);
@@ -79,16 +79,20 @@ namespace FoodDiary.Extensions
 
             foreach (var data in model.Where(d => d.NutritionPer100g != null).ToList())
             {
-                context?.ProductEntities.Add(new ProductEntity()
+                var result = context.ProductEntities.Where(x => x.ProductName == data.name);
+
+                if (result.Count() == 0)
                 {
-                    Id = Guid.NewGuid(),
-                    ProductName = data?.name ?? "Wrong entry",
-                    Carb = Convert.ToInt32(data?.NutritionPer100g?.carbohydrate ?? 0),
-                    Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
-                    Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
-                    Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
-                });
-            
+                    context?.ProductEntities.Add(new ProductEntity()
+                    {
+                        Id = Guid.NewGuid(),
+                        ProductName = data?.name ?? "Wrong entry",
+                        Carb = Convert.ToInt32(data?.NutritionPer100g?.carbohydrate ?? 0),
+                        Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
+                        Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
+                        Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
+                    });
+                }
             }
             context?.SaveChanges();
         }
@@ -112,7 +116,7 @@ namespace FoodDiary.Extensions
             var testUser = userManager.FindByEmailAsync(email).Result;
 
             if (testUser != null) return;
-            var administrator = new AppUser {Email = email, UserName = email, EmailConfirmed = true};
+            var administrator = new AppUser { Email = email, UserName = email, EmailConfirmed = true };
 
             var newUser = userManager.CreateAsync(administrator, "zaq1@WSX");
             newUser.Wait();
@@ -121,7 +125,7 @@ namespace FoodDiary.Extensions
             var newUserRole = userManager.AddToRoleAsync(administrator, "User");
             newUserRole.Wait();
         }
-        
+
         private static int KcalCalculator(double carb, double protein, double fat)
         {
             return Convert.ToInt32(carb * 4 + protein * 4 + fat * 9);

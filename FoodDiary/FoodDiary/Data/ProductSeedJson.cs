@@ -272,6 +272,21 @@ namespace FoodDiary.Data
         ""tags"": [""legume""]
     },
     {
+        ""id"": ""beans"",
+        ""name"": ""Beans"",
+        ""nutrition-per-100g"": {
+            ""energy"": 325,
+            ""protein"": 7.4,
+            ""fat"": 0.8,
+            ""saturated-fat"": 0.1,
+            ""carbohydrate"": 14,
+            ""sugars"": 1,
+            ""dietary-fibre"": 5.6,
+            ""sodium"": 298
+        },
+        ""tags"": [""legume""]
+    },
+    {
         ""id"": ""fruit-kiwifruit-fresh-raw"",
         ""name"": ""Kiwifruit"",
         ""nutrition-per-100g"": {
