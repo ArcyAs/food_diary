@@ -19,36 +19,8 @@ namespace FoodDiary.Data
             : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            //var productsJson = new ProductSeedJson().GetProductsJson();
-            var productsJson = new ProductSeedJson().GetProductsJson();
-            var model = JsonConvert.DeserializeObject<IEnumerable<Root>>(productsJson);
-
-            foreach (var data in model.Where(d => d.NutritionPer100g != null).ToList())
-            {
-                builder.Entity<ProductEntity>().HasData(new ProductEntity
-                {
-                    Id = Guid.NewGuid(),
-                    ProductName = data?.name ?? "Wrong entry",
-                    Carb = Convert.ToInt32(data?.NutritionPer100g?.carbohydrate ?? 0),
-                    Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
-                    Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
-                    Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
-
-                });
-
-            }
-
-
-        }
-
-        private int KcalCalculator(double carb, double protein, double fat)
-        {
-            return Convert.ToInt32(carb * 4 + protein * 4 + fat * 9);
-        }
+       
+       
 
     }
 

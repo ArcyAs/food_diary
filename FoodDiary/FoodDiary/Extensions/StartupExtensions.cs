@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FoodDiary.Builders;
 using FoodDiary.Data;
@@ -6,6 +9,7 @@ using FoodDiary.Factories;
 using FoodDiary.MapperProfiles;
 using FoodDiary.Models;
 using FoodDiary.Repositories.Abstract;
+using FoodDiary.Repositories.Entities;
 using FoodDiary.Repositories.Implementations;
 using FoodDiary.Services.Abstract;
 using FoodDiary.Services.Implementation;
@@ -15,6 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Repositories.Abstract;
 
 namespace FoodDiary.Extensions
@@ -61,8 +66,33 @@ namespace FoodDiary.Extensions
         public static void SeedData(this IApplicationBuilder app)
         {
             SeedDefaultUsers(app);
+            SeedProducts(app);
         }
-        
+
+        private static void SeedProducts(IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
+            var context = serviceScope?.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var productsJson = new ProductSeedJson().GetProductsJson();
+            var model = JsonConvert.DeserializeObject<IEnumerable<Root>>(productsJson);
+
+            foreach (var data in model.Where(d => d.NutritionPer100g != null).ToList())
+            {
+                context?.ProductEntities.Add(new ProductEntity()
+                {
+                    Id = Guid.NewGuid(),
+                    ProductName = data?.name ?? "Wrong entry",
+                    Carb = Convert.ToInt32(data?.NutritionPer100g?.carbohydrate ?? 0),
+                    Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
+                    Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
+                    Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
+                });
+            
+            }
+            context?.SaveChanges();
+        }
+
         private static void SeedDefaultUsers(IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
@@ -90,6 +120,11 @@ namespace FoodDiary.Extensions
             if (!newUser.Result.Succeeded) return;
             var newUserRole = userManager.AddToRoleAsync(administrator, "User");
             newUserRole.Wait();
+        }
+        
+        private static int KcalCalculator(double carb, double protein, double fat)
+        {
+            return Convert.ToInt32(carb * 4 + protein * 4 + fat * 9);
         }
 
     }
