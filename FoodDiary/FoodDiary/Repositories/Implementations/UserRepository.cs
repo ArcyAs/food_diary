@@ -80,10 +80,7 @@ namespace FoodDiary.Repositories.Implementations
 
             var details = await _context.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);  // await GetUserDetailsByUserId(newParameters.UserId);
             string userHelpId = userId.ToString();
-             var userAppDetails = await _userManager.FindByIdAsync(userHelpId);
-
-
-
+            var userAppDetails = await _userManager.FindByIdAsync(userHelpId);
 
             details.Weight = newParameters.Weight;
             details.Height = newParameters.Height;

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodDiary.Repositories.Entities;
+using FoodDiary.Repositories.Implementations;
 using Repositories.Abstract;
 
 namespace FoodDiary.Controllers
@@ -17,26 +18,19 @@ namespace FoodDiary.Controllers
         private readonly IRepositoryFactory _repositoryFactory;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly UserManager<AppUser> _userManager;
+        
 
-        public DiaryController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager)
+        public DiaryController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager, ApplicationDbContext applicationDbContext)
         {
             _repositoryFactory = repositoryFactory;
             this._userManager = userManager;
+            _applicationDbContext = applicationDbContext;
         }
         public IActionResult Index()
         {
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var userDetails = _applicationDbContext.UserDetailsEntities.Where(x => x.UserId == Guid.Parse(userId)).OrderByDescending(x => x.AddDate).FirstOrDefault();
-            return View();
-           // return View(userDetails);
+            var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();                                                                    
+            return View(productsList);
         }
-
-     //   [HttpPost]
-    //    public async Task<IActionResult> EditAsync(ProductEntity productEntity)
-    //    {
-    //        await _repositoryFactory.GetUserRepository().AddProductToDataBase(productEntity);
-            
-    //        return RedirectToAction("Index");
-    //    }
+       
     }
 }

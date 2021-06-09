@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using FoodDiary.Repositories.Implementations;
 
 namespace FoodDiary.Data
 {
@@ -14,7 +15,8 @@ namespace FoodDiary.Data
         public DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
         public DbSet<ProductEntity> ProductEntities { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
-
+       
+      
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -39,17 +41,12 @@ namespace FoodDiary.Data
                     Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
 
                 });
-
             }
-
-
         }
-
         private int KcalCalculator(double carb, double protein, double fat)
         {
             return Convert.ToInt32(carb * 4 + protein * 4 + fat * 9);
         }
-
     }
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 

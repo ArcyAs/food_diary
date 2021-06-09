@@ -14,6 +14,7 @@ namespace FoodDiary.Services.Implementation
         {
             int kcal = 0;
             return kcal = carb * 4 + protein * 4 + fat * 9;
+            
         }
     }
 }

@@ -14,6 +14,7 @@ namespace FoodDiary.Repositories.Implementations
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IBmiBmrFactory _bmibmrFactory;
+       
         public RepositoriesFactory(ApplicationDbContext context, UserManager<AppUser> userManager, IBmiBmrFactory bmibmrFactory)
         {
             _userManager = userManager;

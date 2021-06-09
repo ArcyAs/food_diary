@@ -112,7 +112,7 @@ namespace FoodDiary.Tests
             var t= userRepository.AddUserDetails(data);
 
             userRepository.GetAll().Should().HaveCount(3);
-            var newData = userRepository.GetAll().LastOrDefault();
+            var newData =  userRepository.GetAll().LastOrDefault();
             newData.Should().BeEquivalentTo(data);
             newData.Bmi.Should().Be(data.Bmi);
             newData.Bmr.Should().Be(data.Bmr);
