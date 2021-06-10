@@ -13,6 +13,7 @@ using Repositories.Abstract;
 
 namespace FoodDiary.Controllers
 {
+    
     public class DiaryController : Controller
     {
         private readonly IRepositoryFactory _repositoryFactory;
@@ -26,11 +27,22 @@ namespace FoodDiary.Controllers
             this._userManager = userManager;
             _applicationDbContext = applicationDbContext;
         }
+       
         public IActionResult Index()
         {
             var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();                                                                    
             return View(productsList);
         }
        
+        public async Task<IActionResult> Delete(Guid productId)
+        {
+            var product = await _repositoryFactory.GetProductRepository().GetProductById(productId);
+
+            var newprod = product.ProductName;
+            await _applicationDbContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -27,7 +27,7 @@ namespace FoodDiary.Repositories.Implementations
             return new UserRepository(_context,_userManager,_bmibmrFactory);
         }
 
-        public IProductsRepository GetProductsReposity()
+        public IProductsRepository GetProductRepository()
         {
             return new ProductsRepository(_context);
         }

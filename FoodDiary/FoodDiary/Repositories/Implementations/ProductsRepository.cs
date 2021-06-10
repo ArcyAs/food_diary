@@ -30,5 +30,12 @@ namespace FoodDiary.Repositories.Implementations
             var data = await _context.ProductEntities.ToListAsync();
             return data;
         }
+        public async Task<ProductEntity> GetProductById(Guid id)
+        {
+            var product =  await _context.ProductEntities.FirstOrDefaultAsync(x => x.Id == id);
+            
+            return product;
+
+        }
     }
 }
