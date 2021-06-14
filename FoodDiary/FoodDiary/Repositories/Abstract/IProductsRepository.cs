@@ -11,5 +11,6 @@ namespace FoodDiary.Repositories.Abstract
         Task AddProductToDataBase(ProductEntity productEntity);
         Task<List<ProductEntity>> GetAllProducts();
         Task<ProductEntity> GetProductById(Guid id);
+        Task EditProductInDataBase(ProductEntity productEntity,Guid id);
     }
 }

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace FoodDiary.Services.Implementation
 {
     public static class KcalCalculatorService
-
     {
         public static int KcalCalculator(int carb, int fat,int protein)
         {
