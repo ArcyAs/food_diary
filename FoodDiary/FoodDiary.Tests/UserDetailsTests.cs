@@ -5,9 +5,13 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Common;
 using FoodDiary.Data;
+using FoodDiary.Factories;
+using FoodDiary.Models;
 using FoodDiary.Repositories.Entities;
 using FoodDiary.Repositories.Implementations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Repositories.Abstract;
 using Xunit;
 
@@ -16,6 +20,12 @@ namespace FoodDiary.Tests
     public class UserDetailsTests
     {
         private ApplicationDbContext _context;
+
+        private List<AppUser> _users = new List<AppUser>
+        {
+            new() {Id = Guid.NewGuid().ToString()},
+            new() {Id = Guid.NewGuid().ToString()},
+        };
 
         private List<UserDetailsEntity> _userDetailsEntities = new()
         {
@@ -59,14 +69,14 @@ namespace FoodDiary.Tests
         [Fact]
         public void ShouldImplementIRepositoryFactoryInterface()
         {
-            var repositories = new RepositoriesFactory(_context);
+            var repositories = new RepositoriesFactory(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             repositories.Should().BeAssignableTo<IRepositoryFactory>();
         }
 
         [Fact]
         public void ShouldImplementIUserRepository()
         {
-            var userRepository = new UserRepository(_context);
+            var userRepository = new UserRepository(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             userRepository.Should().BeOfType<UserRepository>();
             userRepository.Should().BeAssignableTo<IUserRepository>();
         }
@@ -74,7 +84,7 @@ namespace FoodDiary.Tests
         [Fact]
         public void ShouldGetAllUsersFromContext()
         {
-            var userRepository = new UserRepository(_context);
+            var userRepository = new UserRepository(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             var result = userRepository.GetAll().ToList();
             result.Should().HaveCount(2);
             result.Should().BeOfType<List<UserDetailsEntity>>();
@@ -85,7 +95,7 @@ namespace FoodDiary.Tests
         [Fact]
         public void ShouldGetAllPersonals()
         {
-            var userRepository = new UserRepository(_context);
+            var userRepository = new UserRepository(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             var result = userRepository.GetAllPersonals().ToList();
             result.Should().HaveCount(2);
             result.Should().BeOfType<List<UserDetailsEntity>>();
@@ -108,11 +118,11 @@ namespace FoodDiary.Tests
                 UserId = Guid.NewGuid()
             };
 
-            var userRepository = new UserRepository(_context);
-            var t= userRepository.AddUserDetails(data);
+            var userRepository = new UserRepository(_context, MockUserManager(_users).Object, new BmiBmrFactory());
+            var t = userRepository.AddUserDetails(data);
 
             userRepository.GetAll().Should().HaveCount(3);
-            var newData =  userRepository.GetAll().LastOrDefault();
+            var newData = userRepository.GetAll().LastOrDefault();
             newData.Should().BeEquivalentTo(data);
             newData.Bmi.Should().Be(data.Bmi);
             newData.Bmr.Should().Be(data.Bmr);
@@ -128,12 +138,24 @@ namespace FoodDiary.Tests
         [Fact]
         public async Task ShouldReturnCorrectUser()
         {
-            var userRepository = new UserRepository(_context);
+            var userRepository = new UserRepository(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             var result = await userRepository.GetUserDetailsByUserId(_userDetailsEntities[0].UserId);
-            
-            result.Should().BeEquivalentTo(_userDetailsEntities[0]);
-            
 
+            result.Should().BeEquivalentTo(_userDetailsEntities[0]);
+        }
+
+        private static Mock<UserManager<AppUser>> MockUserManager(ICollection<AppUser> ls)
+        {
+            var store = new Mock<IUserStore<AppUser>>();
+            var mgr = new Mock<UserManager<AppUser>>(store.Object, null, null, null, null, null, null, null, null);
+            mgr.Object.UserValidators.Add(new UserValidator<AppUser>());
+            mgr.Object.PasswordValidators.Add(new PasswordValidator<AppUser>());
+
+            mgr.Setup(x => x.DeleteAsync(It.IsAny<AppUser>())).ReturnsAsync(IdentityResult.Success);
+            mgr.Setup(x => x.CreateAsync(It.IsAny<AppUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<AppUser, string>((x, y) => ls.Add(x));
+            mgr.Setup(x => x.UpdateAsync(It.IsAny<AppUser>())).ReturnsAsync(IdentityResult.Success);
+
+            return mgr;
         }
     }
 }
