@@ -18,7 +18,7 @@ namespace FoodDiary.Controllers
         private readonly IProductsRepository _repositoryProduct;
         private readonly UserManager<AppUser> _userManager;
 
-        public ProductsController(IProductsRepository productsRepository , UserManager<AppUser> userManager)
+        public ProductsController(IProductsRepository productsRepository, UserManager<AppUser> userManager)
         {
             _repositoryProduct = productsRepository;
             this._userManager = userManager;
@@ -35,11 +35,16 @@ namespace FoodDiary.Controllers
 
         public async Task<IActionResult> Update(ProductEntity product)
         {
-           
+
             await _repositoryProduct.EditProductInDataBase(product, product.Id);
             return RedirectToAction("Index", "Diary");
         }
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _repositoryProduct.DeleteProductFromDataBase(id);
+            return RedirectToAction("Index","Diary");
 
+        }
         [HttpPost]
         public async Task<IActionResult> AddAsync(ProductEntity productEntity)
         {

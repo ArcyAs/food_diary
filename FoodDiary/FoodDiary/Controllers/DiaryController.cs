@@ -31,15 +31,7 @@ namespace FoodDiary.Controllers
             var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();                                                                    
             return View(productsList);
         }
-        public async Task<IActionResult> Delete(Guid productId)
-        {
-            var product = await _repositoryFactory.GetProductRepository().GetProductById(productId);
-            _applicationDbContext.ProductEntities.Remove(product);
-            
-            await _applicationDbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-        
+       
         public IActionResult Edit(Guid id)
         {
             return  RedirectToAction("Edit", "Product", new { id = id });

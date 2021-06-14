@@ -50,9 +50,17 @@ namespace FoodDiary.Tests
         }
 
         [Fact]
-        public async Task ShouldGetRemovedProduct()
+        public async Task ShouldRemoveProduct()
         {
-           // productsRepository.
+            var lastProduct = productEntities.Last();
+            var productsRepository = new ProductsRepository(_context);
+            await productsRepository.DeleteProductFromDataBase(lastProduct.Id);
+            var products = await productsRepository.GetAllProducts();
+
+            products.Should().HaveCount(1);
+            products.Should().NotContain(lastProduct);
+            products[0].Should().BeEquivalentTo(productEntities[0]);
+            
         }
 
         [Fact]
@@ -77,7 +85,7 @@ namespace FoodDiary.Tests
                 Carb = 10,
                 Protein = 10,
                 Fat = 3,
-                Kcal = KcalCalculatorService.KcalCalculator(10, 10, 3)
+                Kcal = KcalCalculatorService.KcalCalculator(10,3,10)
             };
 
             var productsRepository = new ProductsRepository(_context);
@@ -86,16 +94,17 @@ namespace FoodDiary.Tests
 
             var allProducts = products.Should().HaveCount(3);
             products.LastOrDefault().Should().BeEquivalentTo(thirdObjest);
-            products.LastOrDefault().Kcal.Should().Be(KcalCalculatorService.KcalCalculator(10, 10, 3));
+            products.LastOrDefault().Kcal.Should().Be(KcalCalculatorService.KcalCalculator(10, 3, 10));
         }
 
         [Fact]
         public void ShouldGetProperValue()
         {
+            int exampel = 0;
             var result = KcalCalculatorService.KcalCalculator(2, 2, 2);
             result.Should().Be(34);
             result.Should().NotBe(36);
-            result.Should().BeOfType(Type.GetType("int"));
+            result.Should().BeOfType(exampel.GetType());
         }
     }
 }

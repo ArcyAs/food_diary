@@ -25,6 +25,13 @@ namespace FoodDiary.Repositories.Implementations
            
             await _context.SaveChangesAsync();
         }
+        public async Task DeleteProductFromDataBase(Guid id)
+        {
+            var product =_context.ProductEntities.FirstOrDefault(x => x.Id == id);
+            _context.ProductEntities.Remove(product);
+            await _context.SaveChangesAsync();
+        }
+
 
         public async Task EditProductInDataBase(ProductEntity newProductEntity,Guid id)
         {
