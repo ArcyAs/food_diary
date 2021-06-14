@@ -49,6 +49,11 @@ namespace FoodDiary.Tests
             _context.SaveChanges();
         }
 
+        [Fact]
+        public async Task ShouldGetRemovedProduct()
+        {
+           // productsRepository.
+        }
 
         [Fact]
         public async Task ShouldGetAllProductsFromContext()
@@ -82,6 +87,15 @@ namespace FoodDiary.Tests
             var allProducts = products.Should().HaveCount(3);
             products.LastOrDefault().Should().BeEquivalentTo(thirdObjest);
             products.LastOrDefault().Kcal.Should().Be(KcalCalculatorService.KcalCalculator(10, 10, 3));
+        }
+
+        [Fact]
+        public void ShouldGetProperValue()
+        {
+            var result = KcalCalculatorService.KcalCalculator(2, 2, 2);
+            result.Should().Be(34);
+            result.Should().NotBe(36);
+            result.Should().BeOfType(Type.GetType("int"));
         }
     }
 }

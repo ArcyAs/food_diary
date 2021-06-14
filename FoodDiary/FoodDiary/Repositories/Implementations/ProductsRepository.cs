@@ -39,6 +39,7 @@ namespace FoodDiary.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
+
         public async Task<List<ProductEntity>> GetAllProducts()
         {
             var data = await _context.ProductEntities.ToListAsync();
