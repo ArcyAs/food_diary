@@ -27,13 +27,25 @@ namespace FoodDiary.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var product = await _repositoryProduct.GetProductById(id);
+            return View(product);
+        }
+
+        public async Task<IActionResult> Update(ProductEntity product)
+        {
+           
+            await _repositoryProduct.EditProductInDataBase(product, product.Id);
+            return RedirectToAction("Index", "Diary");
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddAsync(ProductEntity productEntity)
         {
             await _repositoryProduct.AddProductToDataBase(productEntity);
-            
             return RedirectToAction("Index");
         }
+
     }
 }
