@@ -22,6 +22,7 @@ namespace FoodDiary.Tests
         {
             new ProductEntity()
             {
+               
                 ProductName ="Banana",
                 Carb = 10,
                 Protein = 10,
@@ -30,6 +31,7 @@ namespace FoodDiary.Tests
             },
             new ProductEntity()
             {
+                
                 ProductName ="Apple",
                 Carb = 10,
                 Protein = 10,
@@ -106,6 +108,29 @@ namespace FoodDiary.Tests
             result.Should().NotBe(36);
             result.Should().BeOfType(exampel.GetType());
         }
-        
+        [Fact]
+        public async Task  ShouldGetProductById()
+        {
+            var newObject = new ProductEntity()
+            {
+                Id = Guid.NewGuid(),
+                ProductName = "Orange",
+                Carb = 10,
+                Protein = 10,
+                Fat = 3,
+                Kcal = KcalCalculatorService.KcalCalculator(10, 3, 10)
+            };
+            
+            var productsRepository = new ProductsRepository(_context);
+            await productsRepository.AddProductToDataBase(newObject);
+            var id = (await productsRepository.GetProductById(newObject.Id));
+
+            id.Id.Should().Be(newObject.Id);
+            id.ProductName.Should().Be(newObject.ProductName);
+            id.Carb.Should().Be(newObject.Carb);
+            id.Protein.Should().Be(newObject.Protein);
+            id.Fat.Should().Be(newObject.Fat);
+
+        }
     }
 }
