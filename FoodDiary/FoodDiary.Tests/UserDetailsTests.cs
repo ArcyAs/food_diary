@@ -20,6 +20,7 @@ namespace FoodDiary.Tests
     public class UserDetailsTests
     {
         private ApplicationDbContext _context;
+        private readonly IRepositoryFactory _repositoryFactory;
 
         private List<AppUser> _users = new List<AppUser>
         {
@@ -72,7 +73,7 @@ namespace FoodDiary.Tests
             var repositories = new RepositoriesFactory(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             repositories.Should().BeAssignableTo<IRepositoryFactory>();
         }
-
+        
         [Fact]
         public void ShouldImplementIUserRepository()
         {
@@ -142,6 +143,32 @@ namespace FoodDiary.Tests
             var result = await userRepository.GetUserDetailsByUserId(_userDetailsEntities[0].UserId);
 
             result.Should().BeEquivalentTo(_userDetailsEntities[0]);
+        }
+        [Fact]
+        public async Task ShouldUpdateTargetNewUserDetails()
+        {
+            var new_data = new UserDetailsEntity()
+            {
+                Bmi = 20,
+                Bmr = 40,
+                Gender = 1,
+                Height = 12,
+                Id = Guid.NewGuid(),
+                Target = 0,
+                Weight = 12,
+                AddDate = DateTime.Now,
+                UserId = Guid.NewGuid()
+            };
+
+            var userRepository = new UserRepository(_context, MockUserManager(_users).Object, new BmiBmrFactory());
+            var t = userRepository.UpdateUserDetails(new_data, new_data, _userDetailsEntities[0].UserId);
+
+            userRepository.GetAll().Should().HaveCount(2);
+            _userDetailsEntities[0].Weight.Should().Be(12);
+            _userDetailsEntities[0].Height.Should().Be(12);
+            _userDetailsEntities[0].Target.Should().Be(0);
+
+
         }
 
         private static Mock<UserManager<AppUser>> MockUserManager(ICollection<AppUser> ls)
