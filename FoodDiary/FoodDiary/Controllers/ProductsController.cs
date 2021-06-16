@@ -17,15 +17,18 @@ namespace FoodDiary.Controllers
     {
         private readonly IProductsRepository _repositoryProduct;
         private readonly UserManager<AppUser> _userManager;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public ProductsController(IProductsRepository productsRepository, UserManager<AppUser> userManager)
+        public ProductsController(IProductsRepository productsRepository, UserManager<AppUser> userManager, ApplicationDbContext applicationDbContext)
         {
             _repositoryProduct = productsRepository;
             this._userManager = userManager;
+            _applicationDbContext = applicationDbContext;
         }
         public IActionResult Index()
         {
-            return View();
+            var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();
+            return View(productsList);
         }
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -37,16 +40,20 @@ namespace FoodDiary.Controllers
         {
 
             await _repositoryProduct.EditProductInDataBase(product, product.Id);
-            return RedirectToAction("Index", "Diary");
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(Guid id)
         {
             await _repositoryProduct.DeleteProductFromDataBase(id);
-            return RedirectToAction("Index","Diary");
+            return RedirectToAction("Index");
 
         }
-        [HttpPost]
-        public async Task<IActionResult> AddAsync(ProductEntity productEntity)
+        public IActionResult Add()
+        {
+            return View("Add");
+        }
+
+        public async Task<IActionResult> AddNew(ProductEntity productEntity)
         {
             await _repositoryProduct.AddProductToDataBase(productEntity);
             return RedirectToAction("Index");

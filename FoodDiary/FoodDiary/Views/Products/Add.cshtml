@@ -1,0 +1,40 @@
+﻿@model FoodDiary.Repositories.Entities.ProductEntity;
+
+@{
+    ViewData["Title"] = "Add product";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3>Enter the nutritional values per 100g</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddNew">
+            <input type="hidden" asp-for="Id">
+            <div class="form-group">
+                <label asp-for="ProductName" class="form-label"></label>
+                <input asp-for="ProductName" class="form-control">
+                <span asp-validation-for="ProductName" class="text-danger">
+                </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Protein" class="form-label"></label>
+                <input asp-for="Protein" class="form-control">
+                <span asp-validation-for="Protein" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Carb" class="form-label"></label>
+                <input asp-for="Carb" class="form-control">
+                <span asp-validation-for="Carb" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fat" class="form-label"></label>
+                <input asp-for="Fat" class="form-control">
+                <span asp-validation-for="Fat" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>

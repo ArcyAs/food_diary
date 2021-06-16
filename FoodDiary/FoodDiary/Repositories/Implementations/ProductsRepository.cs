@@ -58,6 +58,5 @@ namespace FoodDiary.Repositories.Implementations
             return product;
         }
     
-        
     }
 }

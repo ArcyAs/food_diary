@@ -31,7 +31,6 @@ namespace FoodDiary.Controllers
             var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();                                                                    
             return View(productsList);
         }
-       
         public IActionResult Edit(Guid id)
         {
             return  RedirectToAction("Edit", "Product", new { id = id });

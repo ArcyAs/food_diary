@@ -106,5 +106,6 @@ namespace FoodDiary.Tests
             result.Should().NotBe(36);
             result.Should().BeOfType(exampel.GetType());
         }
+        
     }
 }
