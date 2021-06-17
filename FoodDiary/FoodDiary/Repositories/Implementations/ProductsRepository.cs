@@ -57,6 +57,5 @@ namespace FoodDiary.Repositories.Implementations
             var product =  await _context.ProductEntities.FirstOrDefaultAsync(x => x.Id == id);
             return product;
         }
-    
     }
 }

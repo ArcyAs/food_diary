@@ -132,5 +132,30 @@ namespace FoodDiary.Tests
             id.Fat.Should().Be(newObject.Fat);
 
         }
+        [Fact]
+        public async Task ShouldGetUpdatedProduct()
+        {
+            var newObject = new ProductEntity()
+            {
+                Id = Guid.NewGuid(),
+                ProductName = "Orange",
+                Carb = 10,
+                Protein = 10,
+                Fat = 3,
+                Kcal = KcalCalculatorService.KcalCalculator(10, 3, 10)
+            };
+
+            var productsRepository = new ProductsRepository(_context);
+            var productsList = await productsRepository.GetAllProducts();
+            var productToUpdate = productsList.Last();
+            await productsRepository.EditProductInDataBase(newObject, productToUpdate.Id);
+
+            productToUpdate.ProductName.Should().Be("Orange");
+            productToUpdate.Carb.Should().Be(10);
+            productToUpdate.Protein.Should().Be(10);
+            productToUpdate.Fat.Should().Be(3);
+            productToUpdate.Kcal.Should().Be(newObject.Kcal);
+
+        }
     }
 }
