@@ -161,7 +161,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     {
                         Gender = Input.Gender,
                         Height = Input.Height,
-                        Weight = Input.Height,
+                        Weight = Input.Weight,
                         Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
                         Bmi = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height),
                         Id = Guid.NewGuid(),

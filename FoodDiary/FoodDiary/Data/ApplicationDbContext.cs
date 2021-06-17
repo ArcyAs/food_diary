@@ -15,8 +15,9 @@ namespace FoodDiary.Data
         public DbSet<UserDetailsEntity> UserDetailsEntities { get; set; }
         public DbSet<ProductEntity> ProductEntities { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
-       
-      
+        public DbSet<DiaryEntity> DiaryEntities { get; set; }
+
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

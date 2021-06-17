@@ -10,6 +10,7 @@ namespace FoodDiary.Repositories.Entities
         [Key]
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
+        public Guid DiaryId { get; set; }
         public int Gender { get; set; }
         
         [Display(Name = "Height[cm]")]
