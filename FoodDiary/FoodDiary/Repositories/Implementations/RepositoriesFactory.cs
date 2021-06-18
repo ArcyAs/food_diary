@@ -31,5 +31,10 @@ namespace FoodDiary.Repositories.Implementations
         {
             return new ProductsRepository(_context);
         }
+
+        public IDiaryRepository GetDiaryRepository()
+        {
+            return new DiaryRepository(_context);
+        }
     }
 }

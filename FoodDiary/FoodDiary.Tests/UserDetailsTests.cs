@@ -171,7 +171,7 @@ namespace FoodDiary.Tests
 
         }
 
-        private static Mock<UserManager<AppUser>> MockUserManager(ICollection<AppUser> ls)
+        public static Mock<UserManager<AppUser>> MockUserManager(ICollection<AppUser> ls)
         {
             var store = new Mock<IUserStore<AppUser>>();
             var mgr = new Mock<UserManager<AppUser>>(store.Object, null, null, null, null, null, null, null, null);

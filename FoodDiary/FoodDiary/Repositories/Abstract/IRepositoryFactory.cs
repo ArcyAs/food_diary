@@ -6,5 +6,6 @@ namespace Repositories.Abstract
     {
         IUserRepository GetUserRepository();
         IProductsRepository GetProductRepository();
+        IDiaryRepository GetDiaryRepository();
     }
 }

@@ -38,14 +38,6 @@ namespace FoodDiary.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public  async Task AddProductToDataBase(ProductEntity productEntity)
-        {
-            productEntity.Kcal = productEntity.Carb * 4 + productEntity.Protein * 4 + productEntity.Fat * 9;
-            _context.ProductEntities.Add(productEntity);
-
-            await _context.SaveChangesAsync();
-        }
-
         public IEnumerable<UserDetailsEntity> GetAll()
         {
             var userdetails = _context.UserDetailsEntities.ToList();
