@@ -12,11 +12,11 @@ namespace FoodDiary.Repositories.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid Id { get; set; }
+        public Guid DiaryId { get; set; }
         public Guid IdProduct { get; set; }
         public int Weight { get; set; }
         public int Kcal { get; set; }
         public DateTime AddDate { get; set; }
-
     }
 
 }
