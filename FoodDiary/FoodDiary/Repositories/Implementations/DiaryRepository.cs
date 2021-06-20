@@ -20,5 +20,10 @@ namespace FoodDiary.Repositories.Implementations
         {
             throw new NotImplementedException();
         }
+        public async Task AddDiary(DiaryEntity diaryEntity)
+        {
+            _context.DiaryEntities.Add(diaryEntity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

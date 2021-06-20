@@ -37,6 +37,11 @@ namespace FoodDiary.Repositories.Implementations
             _context.UserDetailsEntities.Add(userDetailsEntity);
             await _context.SaveChangesAsync();
         }
+        public async Task AddDiaryToUserDetails(Guid diaryId, Guid userId)
+        {
+            var user = _context.UserDetailsEntities.Last();
+            await _context.SaveChangesAsync();
+        }
 
         public IEnumerable<UserDetailsEntity> GetAll()
         {

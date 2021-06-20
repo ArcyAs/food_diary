@@ -11,6 +11,7 @@ using FoodDiary.Data;
 using FoodDiary.Factories;
 using FoodDiary.Models;
 using FoodDiary.Models.Enums;
+using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
 using Humanizer;
 using Microsoft.AspNetCore.Authentication;
@@ -35,6 +36,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         private readonly IUserNameBuilder _userNameBuilder;
         private readonly IBmiBmrFactory _bmibmrFactory;
         private readonly IRepositoryFactory _repositoryFactory;
+        private readonly IDiaryRepository _diaryRepository;
         private readonly ApplicationDbContext _context;
 
         public Register(
@@ -44,7 +46,8 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             IUserNameBuilder userNameBuilder,
             IBmiBmrFactory bmiFactory,
-            IRepositoryFactory repositoryFactory)
+            IRepositoryFactory repositoryFactory,
+            IDiaryRepository diaryRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -53,6 +56,7 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             _userNameBuilder = userNameBuilder;
             _bmibmrFactory = bmiFactory;
             _repositoryFactory = repositoryFactory;
+            _diaryRepository = diaryRepository;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -129,9 +133,11 @@ namespace FoodDiary.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+             
                 var user = new AppUser
                 {
                     UserName = Input.Email,
+                    
                     NormalizedUserName = _userNameBuilder.Build(Input),
                     Email = Input.Email,
                     Age = Input.Age,
@@ -157,11 +163,14 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    
+                    var DiaryGuid = Guid.NewGuid();
                     var userDetails = new UserDetailsEntity()
                     {
                         Gender = Input.Gender,
                         Height = Input.Height,
                         Weight = Input.Weight,
+                        DiaryId = DiaryGuid,
                         Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities),
                         Bmi = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height),
                         Id = Guid.NewGuid(),
@@ -170,7 +179,16 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                     };
 
                     await _repositoryFactory.GetUserRepository().AddUserDetails(userDetails);
+                   
+                    var diary = new DiaryEntity()
+                    {
+                        Id = Guid.NewGuid(),
+                        DiaryId = DiaryGuid,
+                        AddDate = DateTime.Now
+                    };
 
+                    await _diaryRepository.AddDiary(diary);
+                   
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
 

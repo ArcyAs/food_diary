@@ -18,7 +18,6 @@ namespace FoodDiary.Repositories.Entities
         public int Kcal { get; set; }
         public DateTime AddDate { get; set; }
     }
-
 }
 
 

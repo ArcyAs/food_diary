@@ -24,6 +24,7 @@ namespace FoodDiary.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+           
             base.OnModelCreating(builder);
 
             //var productsJson = new ProductSeedJson().GetProductsJson();
@@ -42,19 +43,14 @@ namespace FoodDiary.Data
                     Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
 
                 });
-
             }
-
-
         }
 
         private int KcalCalculator(double carb, double protein, double fat)
         {
             return Convert.ToInt32(carb * 4 + protein * 4 + fat * 9);
         }
-
     }
-
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class NutritionPer100g
     {

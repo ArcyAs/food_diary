@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FoodDiary.Repositories.Implementations;
+using FoodDiary.Repositories.Abstract;
 
 namespace FoodDiary
 {
@@ -38,6 +39,7 @@ namespace FoodDiary
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.ConfigureDependencies();
+            services.AddTransient<IDiaryRepository, DiaryRepository>();
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

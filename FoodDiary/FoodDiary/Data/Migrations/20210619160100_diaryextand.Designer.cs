@@ -3,14 +3,16 @@ using System;
 using FoodDiary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodDiary.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619160100_diaryextand")]
+    partial class diaryextand
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +148,7 @@ namespace FoodDiary.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6c23e458-0053-494a-901b-9c315b9e67de"),
+                            Id = new Guid("223b95c7-ee79-4fda-8cee-6fc7225236d4"),
                             Carb = 52,
                             Fat = 10,
                             Kcal = 345,
@@ -155,7 +157,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4edf9a5f-aa25-4d6a-a349-7927602d691b"),
+                            Id = new Guid("4b8a5fa3-8c47-4edb-a5b3-fa6937254347"),
                             Carb = 60,
                             Fat = 10,
                             Kcal = 383,
@@ -164,7 +166,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("51e4cab8-194a-43aa-8ba0-6f5ade840569"),
+                            Id = new Guid("6e0c0740-c809-4290-8ce8-20ca3612a7ca"),
                             Carb = 0,
                             Fat = 9,
                             Kcal = 144,
@@ -173,7 +175,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9952553e-889e-4bc4-b0b6-a689b8dca4a5"),
+                            Id = new Guid("916d4bc6-3982-40d5-abd6-7153568545bd"),
                             Carb = 5,
                             Fat = 11,
                             Kcal = 149,
@@ -182,7 +184,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b6cf197f-e6f3-47ad-8201-7208e0fb6166"),
+                            Id = new Guid("8b070d24-3b5f-4069-9a89-e4d929e69188"),
                             Carb = 16,
                             Fat = 9,
                             Kcal = 166,
@@ -191,7 +193,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("37f7631a-d3e1-4a0b-b25f-5c94a17d5470"),
+                            Id = new Guid("78f5788e-920c-4b97-a8cb-51425dc0e6cd"),
                             Carb = 17,
                             Fat = 19,
                             Kcal = 262,
@@ -200,7 +202,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a4b5f688-fd68-4f06-9dcf-1a0ea3633630"),
+                            Id = new Guid("20d1b75e-94c7-4503-b21a-d7ccbee9384d"),
                             Carb = 12,
                             Fat = 50,
                             Kcal = 610,
@@ -209,7 +211,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fb6dc119-0a9e-47a4-b38c-48d321cf88ba"),
+                            Id = new Guid("26253da1-4033-4574-9038-15982bf1807b"),
                             Carb = 18,
                             Fat = 51,
                             Kcal = 644,
@@ -218,7 +220,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e577c8cf-b1ab-4955-9abe-bbd728b8045f"),
+                            Id = new Guid("fff819ac-ac63-4b47-924c-6220274ebf3a"),
                             Carb = 12,
                             Fat = 57,
                             Kcal = 666,
@@ -227,7 +229,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7d571984-8e31-4b59-bb9a-32b701d9063a"),
+                            Id = new Guid("4e51d9cf-6e67-41f8-ac4c-4433d5deeeb1"),
                             Carb = 15,
                             Fat = 1,
                             Kcal = 98,
@@ -236,7 +238,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("af3363c6-fd4b-42da-b8df-f7b2aafd4ef2"),
+                            Id = new Guid("672b9cca-c2e1-4763-aee1-0778e2fa1688"),
                             Carb = 16,
                             Fat = 0,
                             Kcal = 89,
@@ -245,7 +247,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("12e31dc1-ffb4-4a06-aab9-402ba89ddb5d"),
+                            Id = new Guid("70818e23-2236-4660-9ca9-35d46825e3ed"),
                             Carb = 15,
                             Fat = 0,
                             Kcal = 96,
@@ -254,7 +256,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("01fd3fc8-66e1-4d4d-b3c6-b3375c69116a"),
+                            Id = new Guid("fb94a646-1460-4944-959f-5647a2fd953d"),
                             Carb = 11,
                             Fat = 1,
                             Kcal = 70,
@@ -263,7 +265,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("354d83a8-0eab-4038-88c0-c2cb80063b76"),
+                            Id = new Guid("28fd734c-f091-418e-989f-c558026f800e"),
                             Carb = 14,
                             Fat = 1,
                             Kcal = 93,
@@ -272,7 +274,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9ceaaadb-bbbc-40a3-b8bc-c54dfa5d1e01"),
+                            Id = new Guid("c90a778d-7bdf-4625-a6be-8e81b675352b"),
                             Carb = 14,
                             Fat = 1,
                             Kcal = 93,
@@ -281,7 +283,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("371b1e6f-1dac-46af-9757-1ddc4cc6d811"),
+                            Id = new Guid("b35474b4-0e51-42c8-9d20-1cbdbf7c5c73"),
                             Carb = 15,
                             Fat = 1,
                             Kcal = 68,
@@ -290,7 +292,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d433524e-fa48-4159-8a56-789ecbc70633"),
+                            Id = new Guid("37f41d07-1cb4-4f69-9e37-b14d284a2cd2"),
                             Carb = 14,
                             Fat = 0,
                             Kcal = 58,
@@ -299,7 +301,7 @@ namespace FoodDiary.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1a62fe57-e5d3-4c34-a2a7-a5b22b8947b5"),
+                            Id = new Guid("0b2fa161-654d-4805-b932-8f6bf4a1ea86"),
                             Carb = 14,
                             Fat = 0,
                             Kcal = 58,

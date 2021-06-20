@@ -22,12 +22,12 @@ namespace FoodDiary.Tests
         {
             new DiaryEntity()
             {
-                Id = Guid.NewGuid()
+                DiaryId = Guid.NewGuid()
 
             },
             new DiaryEntity()
             {
-                Id = Guid.NewGuid()
+                DiaryId = Guid.NewGuid()
             }
         };
 
@@ -62,14 +62,14 @@ namespace FoodDiary.Tests
                 AddDate = DateTime.Now,
                 UserId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
-                DiaryId = diaryEntities[0].Id
+                DiaryId = diaryEntities[0].DiaryId
 
             };
 
             var diaryRepository = new DiaryRepository(_context);
             var diaryId = await diaryRepository.GetDiaryByUserId(userDetails.Id);
 
-            diaryId.Id.Should().Be(diaryEntities[0].Id);
+            diaryId.DiaryId.Should().Be(diaryEntities[0].DiaryId);
 
         }
     }
