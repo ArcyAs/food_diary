@@ -53,7 +53,7 @@ namespace FoodDiary.Controllers
         private async Task<List<Diary>> ConvertToDto(IEnumerable<DiaryEntity> diaryByUserDiaryId)
         {
             var toReturn = new List<Diary>();
-            foreach (var diaryEntity in diaryByUserDiaryId)
+            foreach (var diaryEntity in diaryByUserDiaryId ?? new List<DiaryEntity>())
             {
                 toReturn.Add(new Diary()
                 {
@@ -62,7 +62,7 @@ namespace FoodDiary.Controllers
                     Weight = diaryEntity.Weight,
                     AddDate = diaryEntity.AddDate,
                     DiaryId = diaryEntity.DiaryId,
-                    ProductName = (await _productsRepository.GetProductById(diaryEntity.Id)).ProductName
+                    ProductName = (await _productsRepository.GetProductById(diaryEntity.IdProduct))?.ProductName ?? ""
                 });
             }
 

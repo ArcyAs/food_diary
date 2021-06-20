@@ -19,7 +19,7 @@ namespace FoodDiary.Repositories.Implementations
         }
         public async Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid userDiaryId)
         {
-            var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId).ToListAsync();
+            var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
 
             return data;
         }
