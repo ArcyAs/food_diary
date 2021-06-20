@@ -41,7 +41,7 @@ namespace FoodDiary.Data
                     Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
                     Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
                     Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
-
+                    Weight = 100
                 });
             }
         }

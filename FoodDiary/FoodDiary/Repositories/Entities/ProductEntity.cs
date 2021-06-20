@@ -21,6 +21,7 @@ namespace FoodDiary.Repositories.Entities
         public int  Carb { get; set; }
         public int Fat { get; set; }
         public int Kcal { get; set; }
+        public double Weight { get; set; }
         
     }
 }

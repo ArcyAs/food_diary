@@ -139,6 +139,9 @@ namespace FoodDiary.Data.Migrations
                     b.Property<int>("Protein")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("Weight")
+                        .HasColumnType("REAL");
+
                     b.HasKey("Id");
 
                     b.ToTable("ProductEntities");
@@ -146,165 +149,183 @@ namespace FoodDiary.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6c23e458-0053-494a-901b-9c315b9e67de"),
+                            Id = new Guid("d964a63f-cef3-485f-b123-183aef8f73e6"),
                             Carb = 52,
                             Fat = 10,
                             Kcal = 345,
                             ProductName = "Muesli (Almond)",
-                            Protein = 12
+                            Protein = 12,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("4edf9a5f-aa25-4d6a-a349-7927602d691b"),
+                            Id = new Guid("9adf38d9-f81d-406e-b8b5-1647c8addfce"),
                             Carb = 60,
                             Fat = 10,
                             Kcal = 383,
                             ProductName = "Wholegrain Rolled Oats",
-                            Protein = 13
+                            Protein = 13,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("51e4cab8-194a-43aa-8ba0-6f5ade840569"),
+                            Id = new Guid("5481db95-0bc3-4d56-b8d2-a4cab6d553da"),
                             Carb = 0,
                             Fat = 9,
                             Kcal = 144,
                             ProductName = "Firm Tofu",
-                            Protein = 16
+                            Protein = 16,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("9952553e-889e-4bc4-b0b6-a689b8dca4a5"),
+                            Id = new Guid("ef485af6-26c9-448a-b9c8-0ce71d60e141"),
                             Carb = 5,
                             Fat = 11,
                             Kcal = 149,
                             ProductName = "Hummus",
-                            Protein = 8
+                            Protein = 8,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("b6cf197f-e6f3-47ad-8201-7208e0fb6166"),
+                            Id = new Guid("a95da58f-c682-42ac-adcd-3a37e1c21abf"),
                             Carb = 16,
                             Fat = 9,
                             Kcal = 166,
                             ProductName = "Hummus (Lite)",
-                            Protein = 5
+                            Protein = 5,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("37f7631a-d3e1-4a0b-b25f-5c94a17d5470"),
+                            Id = new Guid("8b32f5a0-2c03-453f-85f1-dff55b68659b"),
                             Carb = 17,
                             Fat = 19,
                             Kcal = 262,
                             ProductName = "Hummus",
-                            Protein = 6
+                            Protein = 6,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("a4b5f688-fd68-4f06-9dcf-1a0ea3633630"),
+                            Id = new Guid("cced40b0-a01d-4378-a790-4fba64f41cec"),
                             Carb = 12,
                             Fat = 50,
                             Kcal = 610,
                             ProductName = "Peanut Butter",
-                            Protein = 28
+                            Protein = 28,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("fb6dc119-0a9e-47a4-b38c-48d321cf88ba"),
+                            Id = new Guid("b8889f37-b769-4a45-9e03-cb8652f563bb"),
                             Carb = 18,
                             Fat = 51,
                             Kcal = 644,
                             ProductName = "Peanut Butter",
-                            Protein = 28
+                            Protein = 28,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("e577c8cf-b1ab-4955-9abe-bbd728b8045f"),
+                            Id = new Guid("9fecb131-1eff-4d06-9942-f1eb3ddf22fd"),
                             Carb = 12,
                             Fat = 57,
                             Kcal = 666,
                             ProductName = "Tahini",
-                            Protein = 26
+                            Protein = 26,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("7d571984-8e31-4b59-bb9a-32b701d9063a"),
+                            Id = new Guid("cc0f13df-19a5-4d19-a5c7-1ca41b162c79"),
                             Carb = 15,
                             Fat = 1,
                             Kcal = 98,
                             ProductName = "Butter Beans",
-                            Protein = 7
+                            Protein = 7,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("af3363c6-fd4b-42da-b8df-f7b2aafd4ef2"),
+                            Id = new Guid("ccacce22-3460-4b11-9cac-fbe7093907cb"),
                             Carb = 16,
                             Fat = 0,
                             Kcal = 89,
                             ProductName = "Kidney Beans",
-                            Protein = 5
+                            Protein = 5,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("12e31dc1-ffb4-4a06-aab9-402ba89ddb5d"),
+                            Id = new Guid("0405c093-3d76-4b90-ac9c-1ba591034b3c"),
                             Carb = 15,
                             Fat = 0,
                             Kcal = 96,
                             ProductName = "Chickpeas",
-                            Protein = 8
+                            Protein = 8,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("01fd3fc8-66e1-4d4d-b3c6-b3375c69116a"),
+                            Id = new Guid("7063f9ef-26bc-43ca-acca-9b91d5ba1092"),
                             Carb = 11,
                             Fat = 1,
                             Kcal = 70,
                             ProductName = "Lentils",
-                            Protein = 4
+                            Protein = 4,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("354d83a8-0eab-4038-88c0-c2cb80063b76"),
+                            Id = new Guid("ba4ad949-6c06-49f6-bb3d-f7b13c0106bc"),
                             Carb = 14,
                             Fat = 1,
                             Kcal = 93,
                             ProductName = "Cannellini Beans",
-                            Protein = 7
+                            Protein = 7,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("9ceaaadb-bbbc-40a3-b8bc-c54dfa5d1e01"),
+                            Id = new Guid("ab830a76-934b-411c-97e3-2ea71126411b"),
                             Carb = 14,
                             Fat = 1,
                             Kcal = 93,
                             ProductName = "Beans",
-                            Protein = 7
+                            Protein = 7,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("371b1e6f-1dac-46af-9757-1ddc4cc6d811"),
+                            Id = new Guid("32388af9-962f-4881-b668-a3f0a61bdc59"),
                             Carb = 15,
                             Fat = 1,
                             Kcal = 68,
                             ProductName = "Kiwifruit",
-                            Protein = 1
+                            Protein = 1,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("d433524e-fa48-4159-8a56-789ecbc70633"),
+                            Id = new Guid("6906f912-8eb2-4c0f-b5a9-08288222b61e"),
                             Carb = 14,
                             Fat = 0,
                             Kcal = 58,
                             ProductName = "Apple (Granny Smith)",
-                            Protein = 0
+                            Protein = 0,
+                            Weight = 100.0
                         },
                         new
                         {
-                            Id = new Guid("1a62fe57-e5d3-4c34-a2a7-a5b22b8947b5"),
+                            Id = new Guid("9bec2c59-f035-4c13-9755-93c95c58bfc7"),
                             Carb = 14,
                             Fat = 0,
                             Kcal = 58,
                             ProductName = "Apple (Pink Lady)",
-                            Protein = 0
+                            Protein = 0,
+                            Weight = 100.0
                         });
                 });
 

@@ -25,11 +25,29 @@ namespace FoodDiary.Controllers
             this._userManager = userManager;
             _applicationDbContext = applicationDbContext;
         }
-        public IActionResult Index()
+
+        public IActionResult Index(Guid diaryId)
         {
-            var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();
-            return View(productsList);
+            if (diaryId == Guid.Empty)
+            {
+                var productsList = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList();
+                var viewModel = new ProductViewModel()
+                {
+                    ProductEntities = productsList,
+                    DiaryId = Guid.Empty
+                };
+                return View(viewModel);
+            }
+
+            var productViewModel = new ProductViewModel()
+            {
+                ProductEntities = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList(),
+                DiaryId = diaryId
+            };
+
+            return View(productViewModel);
         }
+
         public async Task<IActionResult> Edit(Guid id)
         {
             var product = await _repositoryProduct.GetProductById(id);
@@ -38,16 +56,16 @@ namespace FoodDiary.Controllers
 
         public async Task<IActionResult> Update(ProductEntity product)
         {
-
             await _repositoryProduct.EditProductInDataBase(product, product.Id);
             return RedirectToAction("Index");
         }
+
         public async Task<IActionResult> Delete(Guid id)
         {
             await _repositoryProduct.DeleteProductFromDataBase(id);
             return RedirectToAction("Index");
-
         }
+
         public IActionResult Add()
         {
             return View("Add");
@@ -58,6 +76,11 @@ namespace FoodDiary.Controllers
             await _repositoryProduct.AddProductToDataBase(productEntity);
             return RedirectToAction("Index");
         }
+    }
 
+    public class ProductViewModel
+    {
+        public List<ProductEntity> ProductEntities { get; set; }
+        public Guid DiaryId { get; set; }
     }
 }

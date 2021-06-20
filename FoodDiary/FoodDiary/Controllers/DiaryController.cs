@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
 using FoodDiary.Repositories.Implementations;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Abstract;
 
 
@@ -45,7 +46,8 @@ namespace FoodDiary.Controllers
             var viewModel = new DiaryViewModel()
             {
                 Diary = await ConvertToDto(diaryByUserDiaryId),
-                UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString())
+                UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
+                DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty
             };
             return View(viewModel);
         }
@@ -68,11 +70,18 @@ namespace FoodDiary.Controllers
 
             return toReturn;
         }
+
+        public async Task<IActionResult> Add(Guid diaryId, Guid productId, int productWeight)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
     }
 
     public class DiaryViewModel
     {
         public List<Diary> Diary { get; set; }
         public Guid UserId { get; set; }
+        public Guid DiaryId { get; set; }
     }
 }
