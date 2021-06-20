@@ -1,6 +1,7 @@
 ﻿using FoodDiary.Data;
 using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,11 @@ namespace FoodDiary.Repositories.Implementations
         {
             _context = context;
         }
-        public Task<DiaryEntity> GetDiaryByUserId(Guid id)
+        public async Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid userDiaryId)
         {
-            throw new NotImplementedException();
+            var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId).ToListAsync();
+
+            return data;
         }
         public async Task AddDiary(DiaryEntity diaryEntity)
         {

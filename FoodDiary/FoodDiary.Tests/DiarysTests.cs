@@ -67,9 +67,10 @@ namespace FoodDiary.Tests
             };
 
             var diaryRepository = new DiaryRepository(_context);
-            var diaryId = await diaryRepository.GetDiaryByUserId(userDetails.Id);
+            var diary = (await diaryRepository.GetDiaryByUserDiaryId(userDetails.DiaryId)).ToList();
 
-            diaryId.DiaryId.Should().Be(diaryEntities[0].DiaryId);
+            diary.All(x => x.DiaryId == diaryEntities[0].DiaryId).Should().BeTrue();
+            diary.Should().BeOfType<List<DiaryEntity>>();
 
         }
     }

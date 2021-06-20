@@ -8,7 +8,7 @@ namespace FoodDiary.Repositories.Abstract
 {
     public interface IDiaryRepository
     {
-        Task<DiaryEntity> GetDiaryByUserId(Guid id);
+        Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid id);
         Task AddDiary(DiaryEntity diaryEntity);
 
     }

@@ -186,7 +186,6 @@ namespace FoodDiary.Areas.Identity.Pages.Account
                         DiaryId = DiaryGuid,
                         AddDate = DateTime.Now
                     };
-
                     await _diaryRepository.AddDiary(diary);
                    
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
