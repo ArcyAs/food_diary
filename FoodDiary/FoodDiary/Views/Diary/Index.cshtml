@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FoodDiary.Repositories.Entities.ProductEntity>
+﻿@model FoodDiary.Controllers.DiaryViewModel
 
 @{
     ViewData["Title"] = "Products list";
@@ -7,53 +7,32 @@
 <h1>@ViewData["Title"]</h1>
 <br/>
 
-<p> 
-    <a asp-controller="Products" asp-action="Add">Create New Product</a>
+<p>
+    <a asp-controller="Products" asp-action="Index" asp-route-diaryId="">Add product to diary</a>
 </p>
+
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Protein)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Carb)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Kcal)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            Produkt
+        </th>
+        <th>
+            Kcal
+        </th>
+        <th>
+            Waga produktu
+        </th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model.Diary)
+    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Protein)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carb)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kcal)
-            </td>
-            <td>
-                <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id" >Delete</a>
-            </td>
+            <td>@item.ProductName</td>
+            <td>@item.Kcal</td>
+            <td>@item.Weight</td>
         </tr>
-}
+    }
     </tbody>
 </table>

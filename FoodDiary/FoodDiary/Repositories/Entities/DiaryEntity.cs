@@ -18,6 +18,17 @@ namespace FoodDiary.Repositories.Entities
         public int Kcal { get; set; }
         public DateTime AddDate { get; set; }
     }
+    public class Diary
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public Guid Id { get; set; }
+        public Guid DiaryId { get; set; }
+        public string ProductName { get; set; }
+        public int Weight { get; set; }
+        public int Kcal { get; set; }
+        public DateTime AddDate { get; set; }
+    }
 }
 
 
