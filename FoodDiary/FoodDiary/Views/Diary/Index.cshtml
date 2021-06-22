@@ -1,12 +1,11 @@
 ﻿@model FoodDiary.Controllers.DiaryViewModel
 
 @{
-    ViewData["Title"] = "Products list";
+    ViewData["Title"] = "Diary";
 }
 
 <h1>@ViewData["Title"]</h1>
 <br/>
-
 <p>
     <a asp-controller="Products" asp-action="Index" asp-route-diaryId="@Model.DiaryId" asp-route-pr="">Add product to diary</a>
 </p>
@@ -15,13 +14,13 @@
     <thead>
     <tr>
         <th>
-            Produkt
+            Product name
+        </th>
+        <th>
+            Weight
         </th>
         <th>
             Kcal
-        </th>
-        <th>
-            Waga produktu
         </th>
     </tr>
     </thead>
@@ -30,8 +29,8 @@
     {
         <tr>
             <td>@item.ProductName</td>
-            <td>@item.Kcal</td>
             <td>@item.Weight</td>
+            <td>@item.Kcal</td>
         </tr>
     }
     </tbody>

@@ -38,6 +38,7 @@ namespace FoodDiary.Repositories.Implementations
                 Id = Guid.NewGuid(),
                 IdProduct = productEntity.Id,
                 DiaryId = diaryId,
+                Weight = productEntity.Weight,
                 Kcal = Convert.ToInt32(scaledKcal),
                 AddDate = DateTime.Now
             };
@@ -47,7 +48,7 @@ namespace FoodDiary.Repositories.Implementations
 
         private double ScaleKcal(int kcal, double weight)
         {
-            return (kcal * 100) / weight;
+            return (kcal * weight) / 100;
         }
     }
 }

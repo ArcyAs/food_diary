@@ -14,7 +14,7 @@ namespace FoodDiary.Repositories.Entities
         public Guid Id { get; set; }
         public Guid DiaryId { get; set; }
         public Guid IdProduct { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
         public int Kcal { get; set; }
         public DateTime AddDate { get; set; }
     }
@@ -25,7 +25,7 @@ namespace FoodDiary.Repositories.Entities
         public Guid Id { get; set; }
         public Guid DiaryId { get; set; }
         public string ProductName { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
         public int Kcal { get; set; }
         public DateTime AddDate { get; set; }
     }
