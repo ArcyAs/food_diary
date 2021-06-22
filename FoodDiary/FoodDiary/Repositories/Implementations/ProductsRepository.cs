@@ -22,7 +22,7 @@ namespace FoodDiary.Repositories.Implementations
         {
             productEntity.Kcal =   KcalCalculatorService.KcalCalculator(productEntity.Carb, productEntity.Fat, productEntity.Protein);
             _context.ProductEntities.Add(productEntity);
-           
+          
             await _context.SaveChangesAsync();
         }
         public async Task DeleteProductFromDataBase(Guid id)

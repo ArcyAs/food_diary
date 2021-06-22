@@ -10,5 +10,6 @@ namespace FoodDiary.Repositories.Abstract
     {
         Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid id);
         Task AddDiary(DiaryEntity diaryEntity);
+        Task AddProductToDiary(ProductEntity productEntity, Guid userId, Guid diaryId);
     }
 }

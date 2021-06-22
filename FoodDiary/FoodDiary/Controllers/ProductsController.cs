@@ -42,7 +42,8 @@ namespace FoodDiary.Controllers
             var productViewModel = new ProductViewModel()
             {
                 ProductEntities = _applicationDbContext.ProductEntities.Where(x => x.Kcal > 0).ToList(),
-                DiaryId = diaryId
+                DiaryId = diaryId,
+                Weight = 100
             };
 
             return View(productViewModel);
@@ -54,33 +55,31 @@ namespace FoodDiary.Controllers
             return View(product);
         }
 
+
         public async Task<IActionResult> Update(ProductEntity product)
         {
             await _repositoryProduct.EditProductInDataBase(product, product.Id);
             return RedirectToAction("Index");
         }
-
         public async Task<IActionResult> Delete(Guid id)
         {
             await _repositoryProduct.DeleteProductFromDataBase(id);
             return RedirectToAction("Index");
         }
-
         public IActionResult Add()
         {
             return View("Add");
         }
-
         public async Task<IActionResult> AddNew(ProductEntity productEntity)
         {
             await _repositoryProduct.AddProductToDataBase(productEntity);
             return RedirectToAction("Index");
         }
     }
-
     public class ProductViewModel
     {
         public List<ProductEntity> ProductEntities { get; set; }
         public Guid DiaryId { get; set; }
+        public int Weight { get; set; }
     }
 }

@@ -28,5 +28,26 @@ namespace FoodDiary.Repositories.Implementations
             _context.DiaryEntities.Add(diaryEntity);
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddProductToDiary(ProductEntity productEntity, Guid userId, Guid diaryId)
+        {
+            var scaledKcal = ScaleKcal(productEntity.Kcal,productEntity.Weight);
+            
+            var newDiaryEntity = new DiaryEntity()
+            {
+                Id = Guid.NewGuid(),
+                IdProduct = productEntity.Id,
+                DiaryId = diaryId,
+                Kcal = Convert.ToInt32(scaledKcal),
+                AddDate = DateTime.Now
+            };
+            _context.DiaryEntities.Add(newDiaryEntity);
+            await _context.SaveChangesAsync();
+        }
+
+        private double ScaleKcal(int kcal, double weight)
+        {
+            return (kcal * 100) / weight;
+        }
     }
 }

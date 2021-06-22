@@ -24,6 +24,7 @@ namespace FoodDiary.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IProductsRepository _productsRepository;
         private readonly UserManager<AppUser> _userManager;
+        
 
         public DiaryController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager, ApplicationDbContext applicationDbContext, IDiaryRepository diaryRepository,
             ApplicationDbContext context, IProductsRepository productsRepository)
@@ -47,7 +48,8 @@ namespace FoodDiary.Controllers
             {
                 Diary = await ConvertToDto(diaryByUserDiaryId),
                 UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
-                DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty
+                DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty,
+              
             };
             return View(viewModel);
         }
@@ -70,11 +72,23 @@ namespace FoodDiary.Controllers
 
             return toReturn;
         }
-
-        public async Task<IActionResult> Add(Guid diaryId, Guid productId, int productWeight)
+        public async Task<IActionResult> AddNew(ProductEntity productEntity)
         {
-            // TODO
-            throw new NotImplementedException();
+            var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
+            var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
+            var userId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString());
+           
+            var diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty);
+            var diaryId = userDetailsEntity?.DiaryId ?? Guid.Empty;
+
+            await _diaryRepository.AddProductToDiary(productEntity,userId,diaryId);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Add(Guid productId)
+        {
+            var product = await _productsRepository.GetProductById(productId);
+            return View("Add",product);
         }
     }
 
