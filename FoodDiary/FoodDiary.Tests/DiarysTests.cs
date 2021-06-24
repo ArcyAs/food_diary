@@ -10,6 +10,7 @@ using Xunit;
 using FluentAssertions;
 using FoodDiary.Repositories.Implementations;
 using FoodDiary.Factories;
+using FoodDiary.Services.Implementation;
 using FoodDiary.Models;
 
 namespace FoodDiary.Tests
@@ -17,6 +18,7 @@ namespace FoodDiary.Tests
     public class DiarysTests
     {
         private ApplicationDbContext _context;
+
 
         private List<DiaryEntity> diaryEntities = new List<DiaryEntity>()
         {
@@ -71,7 +73,15 @@ namespace FoodDiary.Tests
 
             diary.All(x => x.DiaryId == diaryEntities[0].DiaryId).Should().BeTrue();
             diary.Should().BeOfType<List<DiaryEntity>>();
+        }
 
+        public async Task ShouldGetRescaledKcal()
+        {
+            var result = RescalingKcalService.RescaleKcal(100, 150);
+
+            result.Should().Be(150);
+            result.Should().NotBe(100);
+            result.Should().BePositive();
         }
     }
 }

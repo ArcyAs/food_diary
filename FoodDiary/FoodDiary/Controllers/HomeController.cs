@@ -57,7 +57,6 @@ namespace FoodDiary.Controllers
                 userDetailsEntity = result_user,
 
             };
-
             return View(model);
         }
         
