@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,4 +8,83 @@
     <h1 class="display-4">Welcome</h1>
     
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
 </div>
+@if (SignInManager.IsSignedIn(User)){
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="text-center">
+                        Daily Values
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas class="my-4 h-25" id="bar"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="text-center">
+                        Weekly Accomplishments
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas class="my-4 h-25" id="pie"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js%22%3E"></script>
+<script type="text/javascript">
+        var chart = document.getElementById('bar').getContext('2d');
+        var mybarchart = new Chart(chart, {
+            type: 'bar',
+            data: {
+                labels: ['Day-1', 'Day-2', 'Day-3', 'Day-4', 'Day-5', 'Day-6', 'Day-7'],
+                datasets: [{
+                    label: 'Bar Chart',
+                    data: [100, 200, 300],
+                    backgroundcolor:'rgba(6,128,249)'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+
+        })
+        var piechart = document.getElementById('pie').getContext('2d');
+        var mypiechart = new Chart(piechart, {
+            type: 'pie',
+            data: {
+                labels: ['Day-1', 'Day-2', 'Day-3', 'Day-4', 'Day-5', 'Day-6', 'Day-7'],
+                datasets: [{
+                    label: 'Pie Chart',
+                    data: [100,200,300],
+                    backgroundcolor: 'rgba(6,128,249)'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+
+        })
+    </script>
+}
+
+
