@@ -6,12 +6,12 @@
 
 <h1>@ViewData["Title"]</h1>
 <br />
-
+<link href="~/css/site.css" rel="stylesheet" />
 <p>
-    <a asp-controller="Products" asp-action="Add">Create New Product</a>
+    <a class="btn btn-dark" asp-controller="Products" asp-action="Add">Create New Product</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-bordered">
+    <thead class="thead-dark">
         <tr>
             <th>
                 Product Name
@@ -35,22 +35,22 @@
         @foreach (var item in Model.ProductEntities)
         {
             <tr>
-                <td>
+                <td class="table-active font-weight-bold">
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.Protein)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.Carb)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.Fat)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.Kcal)
                 </td>
-                <td>
+                <td class="text-center">
                     @if (Model.DiaryId != Guid.Empty)
                     {
                         <a asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary </a>
@@ -65,4 +65,8 @@
         }
     </tbody>
 </table>
+
+
+
+
 
