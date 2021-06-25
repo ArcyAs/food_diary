@@ -49,11 +49,11 @@ function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["", "", { role: "style" } ],
         ["Today", @Model.sumKcal, "#787878"],
-        ["Yesterday", 0, "#686868"],
-        ["2 Days Ago", 19.30, "#606060"],
-        ["3 Days Ago", 21.45, "#505050"],
-        ["4 Days Ago", 21.45, "#484848"],
-        ["5 Days Ago", 21.45, "#202020"]
+        ["Yesterday", @Model.totalKcalDaily1, "#686868"],
+        ["2 Days Ago", @Model.totalKcalDaily2, "#606060"],
+        ["3 Days Ago", @Model.totalKcalDaily3, "#505050"],
+        ["4 Days Ago", @Model.totalKcalDaily4, "#484848"],
+        ["5 Days Ago", @Model.totalKcalDaily5, "#202020"]
       ]);
 
       var view = new google.visualization.DataView(data);
