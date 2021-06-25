@@ -55,6 +55,10 @@ namespace FoodDiary.Controllers
                 var sumKcalDaily4 = data4.AsEnumerable().Sum(row => row.Kcal);
                 var sumKcalDaily5 = data5.AsEnumerable().Sum(row => row.Kcal);
                 var userBmr = userDetailsEntity.Bmr - totalKcal;
+                if (totalKcal>userDetailsEntity.Bmr)
+                {
+                    userBmr = 0;
+                }
                 var viewModel = new HomeViewModel()
                 {
                     sumKcal = totalKcal,
