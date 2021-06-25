@@ -38,9 +38,18 @@ namespace FoodDiary.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
+            var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
+            var data = _context.DiaryEntities.Where(x => x.DiaryId ==  userDetailsEntity.DiaryId && x.AddDate.Date == DateTime.Today && x.IdProduct != Guid.Empty).ToList();
+            var totalKcal = data.AsEnumerable().Sum(row => row.Kcal);
+            var userBmr = userDetailsEntity.Bmr-totalKcal;
+            var viewModel = new HomeViewModel()
+            {
+                sumKcal = totalKcal,
+                userbmr = Convert.ToInt32(userBmr)
+            };
+            return View(viewModel);
         }
-
         public IActionResult Privacy()
         {
             return View();
@@ -72,5 +81,10 @@ namespace FoodDiary.Controllers
     {
         public AppUser appUser { get; set; }
         public UserDetailsEntity userDetailsEntity { get; set; }
+    }
+    public class HomeViewModel
+    {
+        public int userbmr { get; set; }
+        public int sumKcal { get; set; }
     }
 }

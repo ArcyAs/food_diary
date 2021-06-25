@@ -21,9 +21,16 @@ namespace FoodDiary.Repositories.Implementations
         public async Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid userDiaryId)
         {
             var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
-
             return data;
         }
+        public async Task<int> GetKcal(Guid userDiaryId)
+        {
+            var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
+            var data1 = data.Where(x => x.AddDate.Date == DateTime.Today).ToList();
+            var totalKcal = data1.AsEnumerable().Sum(row => row.Kcal);
+            return totalKcal;
+        }
+
         public async Task AddDiary(DiaryEntity diaryEntity)
         {
             _context.DiaryEntities.Add(diaryEntity);
