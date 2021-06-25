@@ -33,7 +33,7 @@ namespace FoodDiary.Controllers
             UserDetailsEntities = _context.UserDetailsEntities;
 
         }
-        public async Task<IActionResult> PersonalDetailsAsync()
+        public async Task<IActionResult> IndexAsync()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result_user = _context.UserDetailsEntities.FirstOrDefault(x => x.UserId == Guid.Parse(userId));
