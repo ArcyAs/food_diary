@@ -3,25 +3,24 @@
 @{ ViewData["Title"] = "Personal Details"; }
 
 <h2>Personal Details</h2>
-<table class="table table-hover">
-
+<table class="table table-hover table-bordered">
+    <thead class="thead-dark">
     <tr>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>BMI </td>
-        <td>BMR </td>
-        <td>Weight </td>
-        <td>Height </td>
-
-
+        <th>First name</th>
+        <th>Last name</th>
+        <th>BMI</th>
+        <th>BMR</th>
+        <th>Weight</th>
+        <th>Height</th>
     </tr>
+    </thead>
     <tr>
         <td>@Model.appUser.FirstName.ToUpper()</td>
         <td>@Model.appUser.LastName.ToUpper()</td>
-        <td>@Model.userDetailsEntity.Bmi.ToString("0.00")</td>
-        <td>@Model.userDetailsEntity.Bmr.ToString("0.0" + " kcal")</td>
-        <td>@Model.userDetailsEntity.Weight</td>
-        <td>@Model.userDetailsEntity.Height</td>
+        <td class="text-center">@Model.userDetailsEntity.Bmi.ToString("0.00")</td>
+        <td class="text-center">@Model.userDetailsEntity.Bmr.ToString("0.0" + " kcal")</td>
+        <td class="text-center">@Model.userDetailsEntity.Weight</td>
+        <td class="text-center">@Model.userDetailsEntity.Height</td>
 
     </tr>
 </table>

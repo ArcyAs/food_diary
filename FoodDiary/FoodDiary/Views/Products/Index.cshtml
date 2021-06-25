@@ -13,22 +13,12 @@
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
-            <th>
-                Product Name
-            </th>
-            <th>
-                Proteins
-            </th>
-            <th>
-                Carbohydrates
-            </th>
-            <th>
-                Fat
-            </th>
-            <th>
-                Kcal
-            </th>
-            <th></th>
+            <th>Product name</th>
+            <th>Proteins</th>
+            <th>Carbohydrates</th>
+            <th>Fat</th>
+            <th>Kcal</th>
+            <th>Modification</th>
         </tr>
     </thead>
     <tbody>
@@ -38,27 +28,27 @@
                 <td class="table-active font-weight-bold">
                     @Html.DisplayFor(modelItem => item.ProductName)
                 </td>
-                <td >
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Protein)
                 </td>
-                <td >
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Carb)
                 </td>
-                <td >
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Fat)
                 </td>
-                <td >
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.Kcal)
                 </td>
                 <td class="text-center">
                     @if (Model.DiaryId != Guid.Empty)
                     {
-                        <a asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary </a>
+                        <a class="btn btn-dark" asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary </a>
                     }
                     @if(Model.DiaryId == Guid.Empty)
                     {
-                        <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
-                        <a asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"> Delete </a >
+                        <a class="btn btn-dark" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
+                        <a class="btn btn-dark" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"> Delete </a >
                     }
                 </td>
             </tr>
