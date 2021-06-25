@@ -74,14 +74,37 @@ namespace FoodDiary.Tests
             diary.All(x => x.DiaryId == diaryEntities[0].DiaryId).Should().BeTrue();
             diary.Should().BeOfType<List<DiaryEntity>>();
         }
-
-        public async Task ShouldGetRescaledKcal()
+        
+        [Fact]
+        public void ShouldGetRescaledKcal()
         {
             var result = RescalingKcalService.RescaleKcal(100, 150);
 
             result.Should().Be(150);
             result.Should().NotBe(100);
             result.Should().BePositive();
+        }
+        [Fact]
+        public async Task ShouldGetAddedDiaryEntity()
+        {
+            var product = new ProductEntity()
+            {
+                Id = Guid.NewGuid(),
+                Weight = 150,
+                Kcal = 100
+            };
+
+            var diaryId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+
+            var _diaryRepository = new DiaryRepository(_context);
+            await _diaryRepository.AddProductToDiary(product,userId,diaryId);
+            var diary = await _diaryRepository.GetDiaryByUserDiaryId(diaryId);
+
+            diary.Should().HaveCount(1);
+            diary.LastOrDefault().IdProduct.Should().Be(product.Id);
+            diary.LastOrDefault().Kcal.Should().Be(Convert.ToInt32(RescalingKcalService.RescaleKcal(product.Kcal,product.Weight)));
+
         }
     }
 }

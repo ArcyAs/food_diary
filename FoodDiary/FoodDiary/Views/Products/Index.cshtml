@@ -14,13 +14,13 @@
     <thead>
         <tr>
             <th>
-                Name
+                Product Name
             </th>
             <th>
                 Proteins
             </th>
             <th>
-                Carb
+                Carbohydrates
             </th>
             <th>
                 Fat
@@ -53,10 +53,13 @@
                 <td>
                     @if (Model.DiaryId != Guid.Empty)
                     {
-                        <a asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary |</a> 
+                        <a asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary </a>
                     }
-                    <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if(Model.DiaryId == Guid.Empty)
+                    {
+                        <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
+                        <a asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"> Delete </a >
+                    }
                 </td>
             </tr>
         }
