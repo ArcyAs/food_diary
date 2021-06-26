@@ -43,18 +43,18 @@ namespace FoodDiary.Controllers
             {
                 var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
                 var data = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date == DateTime.Today && x.IdProduct != Guid.Empty).ToList();
+                var totalKcal = data.AsEnumerable().Sum(row => row.Kcal);
+                var userBmr = userDetailsEntity.Bmr - totalKcal;
                 var data1 = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date.Day == DateTime.Today.Day-1 && x.IdProduct != Guid.Empty).ToList();
                 var data2 = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date.Day == DateTime.Today.Day-2 && x.IdProduct != Guid.Empty).ToList();
                 var data3 = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date.Day == DateTime.Today.Day-3 && x.IdProduct != Guid.Empty).ToList();
                 var data4 = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date.Day == DateTime.Today.Day-4 && x.IdProduct != Guid.Empty).ToList();
                 var data5 = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date.Day == DateTime.Today.Day-5 && x.IdProduct != Guid.Empty).ToList();
-                var totalKcal = data.AsEnumerable().Sum(row => row.Kcal);
                 var sumKcalDaily1 = data1.AsEnumerable().Sum(row => row.Kcal);
                 var sumKcalDaily2 = data2.AsEnumerable().Sum(row => row.Kcal);
                 var sumKcalDaily3 = data3.AsEnumerable().Sum(row => row.Kcal);
                 var sumKcalDaily4 = data4.AsEnumerable().Sum(row => row.Kcal);
                 var sumKcalDaily5 = data5.AsEnumerable().Sum(row => row.Kcal);
-                var userBmr = userDetailsEntity.Bmr - totalKcal;
                 if (totalKcal>userDetailsEntity.Bmr)
                 {
                     userBmr = 0;

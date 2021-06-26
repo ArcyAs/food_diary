@@ -16,7 +16,7 @@
         <div class="input-group mb-3">
             <input type="date" asp-for="StartDate" class="form-control" > 
             <input  type="date" asp-for="EndDate" class="form-control" >
-            <button class="btn btn-secondary input-group-text">Search</button>
+            <button class="btn btn-dark">Search</button>
         </div>
     </form>
 </div>
@@ -34,7 +34,7 @@
     {
         <tr>
             <td class="table-active font-weight-bold text-left">@item.ProductName</td>
-            <td class="text-center">@item.Weight</td>
+            <td class="text-center">@item.Weight&nbsp g</td>
             <td class="text-center">@item.Kcal</td>
         </tr>
     }

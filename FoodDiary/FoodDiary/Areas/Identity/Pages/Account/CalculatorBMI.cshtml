@@ -12,57 +12,59 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <br />
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+        <section>
+            <h4>Personal data</h4>
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <hr/>
+                <div asp-validation-summary="All" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Input.Age"></label>
-                <input asp-for="Input.Age" class="form-control" />
-                <span asp-validation-for="Input.Age" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Input.Age"></label>
+                    <input asp-for="Input.Age" class="form-control"/>
+                    <span asp-validation-for="Input.Age" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label>Height[cm]</label>
-                <input asp-for="Input.Height" class="form-control" />
-                <span asp-validation-for="Input.Height" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label>Height[cm]</label>
+                    <input asp-for="Input.Height" class="form-control"/>
+                    <span asp-validation-for="Input.Height" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label>Weight[kg]</label>
-                <input asp-for="Input.Weight" class="form-control" />
-                <span asp-validation-for="Input.Weight" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label>Weight[kg]</label>
+                    <input asp-for="Input.Weight" class="form-control"/>
+                    <span asp-validation-for="Input.Weight" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label>Gender</label>
-                <br />
-                @Html.RadioButtonFor(m => m.Input.Gender, (int)Gender.Male) Man
+                <div class="form-group">
+                    <label>Gender</label>
+                    <br/>
+                    @Html.RadioButtonFor(m => m.Input.Gender, (int) Gender.Male) Man
 
-                @Html.RadioButtonFor(m => m.Input.Gender, (int)Gender.Female) Woman
-                <span asp-validation-for="Input.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label><a class="hasTooltip">Activities <span>Low - Sitting work and zero training <br> Medium - Sitting work and 1h training 1-3 times a week <br> High - Phisical work and 1h training 5 times a week</span></a></label>
-                <br />
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.2) Low
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.5) Medium
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.8) High
-                <span asp-validation-for="Input.Activities" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-dark">Show</button>
-        </form>
+                    @Html.RadioButtonFor(m => m.Input.Gender, (int) Gender.Female) Woman
+                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label><a class="hasTooltip">Activities <span><b>Low</b> - Sitting work and zero training <br> <b>Medium</b> - Sitting work and 1h training 1-3 times a week <br> <b>High</b> - Phisical work and 1h training 5 times a week</span></a></label>
+                    <br/>
+                    @Html.RadioButtonFor(m => m.Input.Activities, 1.2) Low
+                    @Html.RadioButtonFor(m => m.Input.Activities, 1.5) Medium
+                    @Html.RadioButtonFor(m => m.Input.Activities, 1.8) High
+                    <span asp-validation-for="Input.Activities" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-dark">Show</button>
+            </form>
+        </section>
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Info</h4>
-            <hr />
-            <label><a class="hasTooltip">BMI: <span>Body mass index (BMI) is a value derived from the mass (weight) and height of a person</span></a></label> @Html.ValueFor(v => v.showBMI)
-            <br />
-            <label><a class="hasTooltip">BMR: <span>Basal metabolic rate (BMR) is the rate of energy expenditure per unit time</span></a></label>@Html.ValueFor(v => v.showBMR)
-            <br />
-            <label>Information: </label>@Html.ValueFor(v => v.showInformation)
+            <h4>Calculated values</h4>
+            <hr/>
+            <label><a class="hasTooltip">BMI:&nbsp<span>Body mass index (<b>BMI</b>) is a value derived from the mass (weight) and height of a person</span></a></label> @Html.ValueFor(v => v.showBMI)
+            <br/>
+            <label><a class="hasTooltip">BMR:&nbsp<span>Basal metabolic rate (<b>BMR</b>) is the rate of energy expenditure per unit time</span></a></label>@Html.ValueFor(v => v.showBMR)
+            <br/>
+            <label>Information &nbsp</label>@Html.ValueFor(v => v.showInformation)
 
         </section>
     </div>

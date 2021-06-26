@@ -2,7 +2,7 @@
 
 @{ ViewData["Title"] = "Personal Details"; }
 
-<h2>Personal Details</h2>
+<h1>Personal Details</h1>
 <table class="table table-hover table-bordered">
     <thead class="thead-dark">
     <tr>
@@ -19,8 +19,8 @@
         <td>@Model.appUser.LastName.ToUpper()</td>
         <td class="text-center">@Model.userDetailsEntity.Bmi.ToString("0.00")</td>
         <td class="text-center">@Model.userDetailsEntity.Bmr.ToString("0.0" + " kcal")</td>
-        <td class="text-center">@Model.userDetailsEntity.Weight</td>
-        <td class="text-center">@Model.userDetailsEntity.Height</td>
+        <td class="text-center">@Model.userDetailsEntity.Weight&nbsp kg</td>
+        <td class="text-center">@Model.userDetailsEntity.Height&nbsp cm</td>
 
     </tr>
 </table>

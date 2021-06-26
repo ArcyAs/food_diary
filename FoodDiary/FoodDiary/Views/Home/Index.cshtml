@@ -4,10 +4,17 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<br>
+<br>
+<br>
+<br>
 
 @if (SignInManager.IsSignedIn(User)){
     <div class="text-center">
-        <h1 class="display-4">Welcome @User.Identity.Name!</h1>
+        <h1 class="display-4">Welcome @User.Identity.Name!
+            <br>
+            <br>
+        </h1>
     </div>
      <table class="columns" style="border: none ">
           <tr>
@@ -79,10 +86,13 @@ function drawChart() {
 else
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome!</h1>
+            <h1 class="display-4">Welcome!
+                <br>
+                <br>
+            </h1>
     </div>
     <div class="text-center">
-        <span style="font-size: 144%; ">A food diary is a daily log of what you eat and drink each day.
+        <span style="font-size: 144%; ">A food diary is a daily log of what you eat each day.
             <br> The diary helps you and your doctor understand your eating habits.
             <br> It can help you realize what you consume.
             <br> Once you know this, you can make changes to your diet to improve your weight.

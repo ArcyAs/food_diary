@@ -25,7 +25,7 @@ namespace FoodDiary.Repositories.Implementations
             if (fromDate == null && endDate == null)
                 return await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
 
-            return await _context.DiaryEntities.Where(p => p.DiaryId == userDiaryId && p.IdProduct != Guid.Empty && p.AddDate >= fromDate && p.AddDate <= endDate).ToListAsync();
+            return await _context.DiaryEntities.Where(p => p.DiaryId == userDiaryId && p.IdProduct != Guid.Empty && p.AddDate.Date >= fromDate.GetValueOrDefault() && p.AddDate.Date <= endDate.GetValueOrDefault()).ToListAsync();
         }
 
         public async Task<int> GetKcal(Guid userDiaryId)
