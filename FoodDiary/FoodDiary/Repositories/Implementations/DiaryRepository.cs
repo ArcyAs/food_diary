@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SQLitePCL;
 
 namespace FoodDiary.Repositories.Implementations
 {
@@ -18,11 +19,15 @@ namespace FoodDiary.Repositories.Implementations
         {
             _context = context;
         }
-        public async Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid userDiaryId)
+
+        public async Task<List<DiaryEntity>> GetDiaryByUserDiaryId(Guid userDiaryId, DateTime? fromDate, DateTime? endDate)
         {
-            var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
-            return data;
+            if (fromDate == null && endDate == null)
+                return await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
+
+            return await _context.DiaryEntities.Where(p => p.DiaryId == userDiaryId && p.IdProduct != Guid.Empty && p.AddDate >= fromDate && p.AddDate <= endDate).ToListAsync();
         }
+
         public async Task<int> GetKcal(Guid userDiaryId)
         {
             var data = await _context.DiaryEntities.Where(x => x.DiaryId == userDiaryId && x.IdProduct != Guid.Empty).ToListAsync();
@@ -30,6 +35,7 @@ namespace FoodDiary.Repositories.Implementations
             var totalKcal = data1.AsEnumerable().Sum(row => row.Kcal);
             return totalKcal;
         }
+
 
         public async Task AddDiary(DiaryEntity diaryEntity)
         {
@@ -39,8 +45,8 @@ namespace FoodDiary.Repositories.Implementations
 
         public async Task AddProductToDiary(ProductEntity productEntity, Guid userId, Guid diaryId)
         {
-            var rescaledKcal = RescalingKcalService.RescaleKcal(productEntity.Kcal,productEntity.Weight);
-            
+            var rescaledKcal = RescalingKcalService.RescaleKcal(productEntity.Kcal, productEntity.Weight);
+
             var newDiaryEntity = new DiaryEntity()
             {
                 Id = Guid.NewGuid(),
@@ -53,9 +59,15 @@ namespace FoodDiary.Repositories.Implementations
             _context.DiaryEntities.Add(newDiaryEntity);
             await _context.SaveChangesAsync();
         }
-        public async Task<List<DiaryEntity>> GetDiaryByDate(DateTime from,DateTime to)
+
+        public Task<List<DiaryEntity>> GetDiaryByDate(DateTime? @from, DateTime? to)
         {
-           var data= await _context.DiaryEntities.Where(x => x.AddDate >= from && x.AddDate <= to).ToListAsync();
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<DiaryEntity>> GetDiaryByDate(DateTime from, DateTime to)
+        {
+            var data = await _context.DiaryEntities.Where(x => x.AddDate >= from && x.AddDate <= to).ToListAsync();
             return data;
         }
     }

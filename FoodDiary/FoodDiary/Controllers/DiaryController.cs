@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace FoodDiary.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IProductsRepository _productsRepository;
         private readonly UserManager<AppUser> _userManager;
-        
+
 
         public DiaryController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager, ApplicationDbContext applicationDbContext, IDiaryRepository diaryRepository,
             ApplicationDbContext context, IProductsRepository productsRepository)
@@ -37,20 +38,36 @@ namespace FoodDiary.Controllers
             _productsRepository = productsRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
         {
             var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
             var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
+            List<DiaryEntity> diaryByUserDiaryId;
+            DiaryViewModel viewModel;
+            if (startDate == DateTime.MinValue || endDate == DateTime.MinValue)
+            {
+                diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty, null, null);
+            
+                viewModel = new DiaryViewModel()
+                {
+                    Diary = await ConvertToDto(diaryByUserDiaryId),
+                    UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
+                    DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty,
+                    EndDate = DateTime.Now,
+                    StartDate =  DateTime.Now
+                };
+                return View(viewModel);
+            }
 
-            var diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty);
+            diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty, startDate, endDate);
 
-            var viewModel = new DiaryViewModel()
+            viewModel = new DiaryViewModel()
             {
                 Diary = await ConvertToDto(diaryByUserDiaryId),
                 UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
                 DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty,
-
-                
+                EndDate = endDate,
+                StartDate = startDate
             };
             return View(viewModel);
         }
@@ -73,17 +90,16 @@ namespace FoodDiary.Controllers
 
             return toReturn;
         }
+
         public async Task<IActionResult> AddNew(ProductEntity productEntity)
         {
             var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
             var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
             var userId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString());
-           
-            var diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty);
+
             var diaryId = userDetailsEntity?.DiaryId ?? Guid.Empty;
 
-            await _diaryRepository.AddProductToDiary(productEntity,userId,diaryId);
-
+            await _diaryRepository.AddProductToDiary(productEntity, userId, diaryId);
 
             return RedirectToAction("Index");
         }
@@ -91,14 +107,8 @@ namespace FoodDiary.Controllers
         public async Task<IActionResult> Add(Guid productId)
         {
             var product = await _productsRepository.GetProductById(productId);
-            return View("Add",product);
+            return View("Add", product);
         }
-        public async Task<IActionResult> Show(DateTime from,DateTime to)
-        {           
-            await _diaryRepository.GetDiaryByDate(from, to);
-            return RedirectToAction("Index");
-        }
-
     }
 
     public class DiaryViewModel
@@ -106,7 +116,9 @@ namespace FoodDiary.Controllers
         public List<Diary> Diary { get; set; }
         public Guid UserId { get; set; }
         public Guid DiaryId { get; set; }
+        
         public DateTime StartDate { get; set; }
+
         public DateTime EndDate { get; set; }
         public DateTime HelpTime { get; set; }
     }

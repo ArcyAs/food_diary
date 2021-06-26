@@ -25,7 +25,6 @@ namespace FoodDiary.Tests
             new DiaryEntity()
             {
                 DiaryId = Guid.NewGuid()
-
             },
             new DiaryEntity()
             {
@@ -42,8 +41,8 @@ namespace FoodDiary.Tests
         public DiarysTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-             .Options;
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
 
             _context = new ApplicationDbContext(options);
             _context.DiaryEntities.AddRange(diaryEntities);
@@ -65,16 +64,15 @@ namespace FoodDiary.Tests
                 UserId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 DiaryId = diaryEntities[0].DiaryId
-
             };
 
             var diaryRepository = new DiaryRepository(_context);
-            var diary = (await diaryRepository.GetDiaryByUserDiaryId(userDetails.DiaryId)).ToList();
+            var diary = (await diaryRepository.GetDiaryByUserDiaryId(userDetails.DiaryId, null, null)).ToList();
 
             diary.All(x => x.DiaryId == diaryEntities[0].DiaryId).Should().BeTrue();
             diary.Should().BeOfType<List<DiaryEntity>>();
         }
-        
+
         [Fact]
         public void ShouldGetRescaledKcal()
         {
@@ -84,6 +82,7 @@ namespace FoodDiary.Tests
             result.Should().NotBe(100);
             result.Should().BePositive();
         }
+
         [Fact]
         public async Task ShouldGetAddedDiaryEntity()
         {
@@ -98,13 +97,12 @@ namespace FoodDiary.Tests
             var userId = Guid.NewGuid();
 
             var _diaryRepository = new DiaryRepository(_context);
-            await _diaryRepository.AddProductToDiary(product,userId,diaryId);
-            var diary = await _diaryRepository.GetDiaryByUserDiaryId(diaryId);
+            await _diaryRepository.AddProductToDiary(product, userId, diaryId);
+            var diary = await _diaryRepository.GetDiaryByUserDiaryId(diaryId, null, null);
 
             diary.Should().HaveCount(1);
             diary.LastOrDefault().IdProduct.Should().Be(product.Id);
-            diary.LastOrDefault().Kcal.Should().Be(Convert.ToInt32(RescalingKcalService.RescaleKcal(product.Kcal,product.Weight)));
-
+            diary.LastOrDefault().Kcal.Should().Be(Convert.ToInt32(RescalingKcalService.RescaleKcal(product.Kcal, product.Weight)));
         }
     }
 }

@@ -7,19 +7,19 @@
 <h1>@ViewData["Title"]</h1>
 <br/>
 <p>
-    <a class="btn btn-dark" asp-controller="Products" asp-action="Index" asp-route-diaryId="@Model.DiaryId" asp-route-pr="">Add product to diary</a>
-    <br />
-    <br />
+<a class="btn btn-dark" asp-controller="Products" asp-action="Index" asp-route-diaryId="@Model.DiaryId" asp-route-pr="">Add product to diary</a>
+<br/>
+<br/>
 
-
-    <a>From Date:</a>
-    <input asp-for="StartDate" name="from" type="date" />
-    <br />
-    <a>To Date:</a>
-    <input asp-for="EndDate" name="to" type="date" />
-    <br />
-    <a class="btn btn-dark" asp-controller="Diary" asp-action="Show">Show</a>
-</p>
+<div class="mb-3">
+    <form asp-action="Index" method="get" asp-route-startDate="startDate" asp-route-endDate="endDate">
+        <div class="input-group mb-3">
+            <input type="date" asp-for="StartDate" class="form-control" > 
+            <input  type="date" asp-for="EndDate" class="form-control" >
+            <button class="btn btn-secondary input-group-text">Search</button>
+        </div>
+    </form>
+</div>
 
 <table class="table table-bordered">
     <thead class="thead-dark">
@@ -32,7 +32,6 @@
     <tbody>
     @foreach (var item in Model.Diary)
     {
-        
         <tr>
             <td class="table-active font-weight-bold text-left">@item.ProductName</td>
             <td class="text-center">@item.Weight</td>

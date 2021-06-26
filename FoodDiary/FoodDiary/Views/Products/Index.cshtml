@@ -5,58 +5,53 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<br />
-<link href="~/css/site.css" rel="stylesheet" />
+<br/>
+<link href="~/css/site.css" rel="stylesheet"/>
 <p>
     <a class="btn btn-dark" asp-controller="Products" asp-action="Add">Create New Product</a>
 </p>
 <table class="table table-bordered">
     <thead class="thead-dark">
-        <tr>
-            <th>Product name</th>
-            <th>Proteins</th>
-            <th>Carbohydrates</th>
-            <th>Fat</th>
-            <th>Kcal</th>
-            <th>Modification</th>
-        </tr>
+    <tr>
+        <th>Product name</th>
+        <th>Proteins</th>
+        <th>Carbohydrates</th>
+        <th>Fat</th>
+        <th>Kcal</th>
+        <th>Modification</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ProductEntities)
-        {
-            <tr>
-                <td class="table-active font-weight-bold text-left">
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Protein)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Carb)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Fat)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Kcal)
-                </td>
-                <td class="text-center">
-                    @if (Model.DiaryId != Guid.Empty)
-                    {
-                        <a class="btn btn-dark" asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary </a>
-                    }
-                    @if(Model.DiaryId == Guid.Empty)
-                    {
-                        <a class="btn btn-dark" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
-                        <a class="btn btn-dark" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"> Delete </a >
-                    }
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model.ProductEntities)
+    {
+        <tr>
+            <td class="table-active font-weight-bold text-left">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Protein)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Carb)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Fat)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Kcal)
+            </td>
+            <td class="text-center">
+                @if (Model.DiaryId != Guid.Empty)
+                {
+                    <a class="btn btn-dark" asp-controller="Diary" asp-action="Add" asp-route-productId="@item.Id">Add to diary </a>
+                }
+                @if (Model.DiaryId == Guid.Empty)
+                {
+                    <a class="btn btn-dark" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-dark" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id">Delete </a>
+                }
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
-
-
-
-
-
