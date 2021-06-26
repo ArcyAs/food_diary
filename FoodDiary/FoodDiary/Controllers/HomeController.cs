@@ -36,38 +36,32 @@ namespace FoodDiary.Controllers
             UserDetailsEntities = _context.UserDetailsEntities;
 
         }
-        public IActionResult Index()
+        public IActionResult IndexAsync()
         {
             var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
-            var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
-            var data = _context.DiaryEntities.Where(x => x.DiaryId ==  userDetailsEntity.DiaryId && x.AddDate.Date == DateTime.Today && x.IdProduct != Guid.Empty).ToList();
-            var totalKcal = data.AsEnumerable().Sum(row => row.Kcal);
-            var userBmr = userDetailsEntity.Bmr-totalKcal;
-            var viewModel = new HomeViewModel()
+            if (currentUser != null)
             {
-                sumKcal = totalKcal,
-                userbmr = Convert.ToInt32(userBmr)
-            };
-            return View(viewModel);
+                var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
+                var data = _context.DiaryEntities.Where(x => x.DiaryId == userDetailsEntity.DiaryId && x.AddDate.Date == DateTime.Today && x.IdProduct != Guid.Empty).ToList();
+                var totalKcal = data.AsEnumerable().Sum(row => row.Kcal);
+                var userBmr = userDetailsEntity.Bmr - totalKcal;
+                var viewModel = new HomeViewModel()
+                {
+                    sumKcal = totalKcal,
+                    userbmr = Convert.ToInt32(userBmr)
+                };
+                return View(viewModel);
+            }
+            else
+                return View();
         }
+
         public IActionResult Privacy()
         {
             return View();
         }
 
-        public async Task<IActionResult> PersonalDetailsAsync()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result_user = _context.UserDetailsEntities.FirstOrDefault(x => x.UserId == Guid.Parse(userId));
-            var result = await _userManager.FindByIdAsync(userId);
-            var model = new UserDetailsEntities_view()
-            {
-                appUser = result,
-                userDetailsEntity = result_user,
 
-            };
-            return View(model);
-        }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -77,11 +71,7 @@ namespace FoodDiary.Controllers
 
         
     }
-    public class UserDetailsEntities_view
-    {
-        public AppUser appUser { get; set; }
-        public UserDetailsEntity userDetailsEntity { get; set; }
-    }
+
     public class HomeViewModel
     {
         public int userbmr { get; set; }

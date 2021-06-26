@@ -53,5 +53,10 @@ namespace FoodDiary.Repositories.Implementations
             _context.DiaryEntities.Add(newDiaryEntity);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<DiaryEntity>> GetDiaryByDate(DateTime from,DateTime to)
+        {
+           var data= await _context.DiaryEntities.Where(x => x.AddDate >= from && x.AddDate <= to).ToListAsync();
+            return data;
+        }
     }
 }

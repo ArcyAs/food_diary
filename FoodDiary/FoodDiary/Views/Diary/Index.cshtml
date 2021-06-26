@@ -8,6 +8,17 @@
 <br/>
 <p>
     <a class="btn btn-dark" asp-controller="Products" asp-action="Index" asp-route-diaryId="@Model.DiaryId" asp-route-pr="">Add product to diary</a>
+    <br />
+    <br />
+
+
+    <a>From Date:</a>
+    <input asp-for="StartDate" name="from" type="date" />
+    <br />
+    <a>To Date:</a>
+    <input asp-for="EndDate" name="to" type="date" />
+    <br />
+    <a class="btn btn-dark" asp-controller="Diary" asp-action="Show">Show</a>
 </p>
 
 <table class="table table-bordered">
@@ -21,6 +32,7 @@
     <tbody>
     @foreach (var item in Model.Diary)
     {
+        
         <tr>
             <td class="table-active font-weight-bold">@item.ProductName</td>
             <td class="text-center">@item.Weight</td>

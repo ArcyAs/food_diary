@@ -49,7 +49,8 @@ namespace FoodDiary.Controllers
                 Diary = await ConvertToDto(diaryByUserDiaryId),
                 UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
                 DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty,
-              
+
+                
             };
             return View(viewModel);
         }
@@ -82,6 +83,8 @@ namespace FoodDiary.Controllers
             var diaryId = userDetailsEntity?.DiaryId ?? Guid.Empty;
 
             await _diaryRepository.AddProductToDiary(productEntity,userId,diaryId);
+
+
             return RedirectToAction("Index");
         }
 
@@ -90,6 +93,12 @@ namespace FoodDiary.Controllers
             var product = await _productsRepository.GetProductById(productId);
             return View("Add",product);
         }
+        public async Task<IActionResult> Show(DateTime from,DateTime to)
+        {           
+            await _diaryRepository.GetDiaryByDate(from, to);
+            return RedirectToAction("Index");
+        }
+
     }
 
     public class DiaryViewModel
@@ -97,5 +106,8 @@ namespace FoodDiary.Controllers
         public List<Diary> Diary { get; set; }
         public Guid UserId { get; set; }
         public Guid DiaryId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime HelpTime { get; set; }
     }
 }
