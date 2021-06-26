@@ -6,10 +6,15 @@
 }
 
 @if (SignInManager.IsSignedIn(User)){
- <div class="text-center">
-  <h1 class="display-4">Welcome @User.Identity.Name!</h1>
- </div>
-    <div id="piechart"></div>
+    <div class="text-center">
+        <h1 class="display-4">Welcome @User.Identity.Name!</h1>
+    </div>
+     <table class="columns" style="border: none ">
+          <tr>
+            <td style="border: none "><div id="piechart"></div></td>
+            <td style="border: none "><div id="barchart_values"></div></td>
+          </tr>
+        </table>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -21,23 +26,69 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
   ['', 'Kcal'],
-  ['Eaten', @Model.sumKcal],
-  ['Free', @Model.userbmr],
+  ['Eaten so far', @Model.sumKcal],
+  ['Before reaching the suggested value', @Model.userbmr],
 ]);
 
-  var options = {'title':'Daily results', 'width':550, 'height':400};
+  var options = {
+        title: "Daily results",
+        width:500, 
+        height:500,
+        legend: { position: "none" },
+        colors: ['#787878', '#505050']
+  };
 
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
 }
 </script>
+    <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["", "", { role: "style" } ],
+        ["Today", @Model.sumKcal, "#787878"],
+        ["Yesterday", @Model.totalKcalDaily1, "#686868"],
+        ["2 Days Ago", @Model.totalKcalDaily2, "#606060"],
+        ["3 Days Ago", @Model.totalKcalDaily3, "#505050"],
+        ["4 Days Ago", @Model.totalKcalDaily4, "#484848"],
+        ["5 Days Ago", @Model.totalKcalDaily5, "#202020"]
+      ]);
 
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Recent accomplishments",
+        width: 500,
+        height: 500,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
 }
 else
 {
     <div class="text-center">
         <h1 class="display-4">Welcome!</h1>
     </div>
-}
+    <div class="text-center">
+        <span style="font-size: 144%; ">A food diary is a daily log of what you eat and drink each day.
+            <br> The diary helps you and your doctor understand your eating habits.
+            <br> It can help you realize what you consume.
+            <br> Once you know this, you can make changes to your diet to improve your weight.
+            <br> You can use BMI calculator freely, but for the whole functionality
+            <br> you have to make an account and log into the application.</span>
+    </div>
+    }
 
 

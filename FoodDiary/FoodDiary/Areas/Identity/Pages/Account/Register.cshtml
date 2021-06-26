@@ -57,17 +57,17 @@
             <div class="form-group">
                 <label>Gender</label>
                 <br />
-                @Html.RadioButtonFor(m => m.Input.Gender, (int)Gender.Male)Man
+                @Html.RadioButtonFor(m => m.Input.Gender, (int)Gender.Male) Man
 
-                @Html.RadioButtonFor(m => m.Input.Gender, (int)Gender.Female)Woman
+                @Html.RadioButtonFor(m => m.Input.Gender, (int)Gender.Female) Woman
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Activities</label>
+                <label class="control-label"><a class="hasTooltip">Activities <span>Low - Sitting work and zero training <br> Medium - Sitting work and 1h training 1-3 times a week <br> High - Phisical work and 1h training 5 times a week</span></a></label>
                 <br />
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.2)Low
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.5)Medium
-                @Html.RadioButtonFor(m => m.Input.Activities, 1.8)High
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.2) Low
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.5) Medium
+                @Html.RadioButtonFor(m => m.Input.Activities, 1.8) High
                 <span asp-validation-for="Input.Activities" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-dark">Register</button>
