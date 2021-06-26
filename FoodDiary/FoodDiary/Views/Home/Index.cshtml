@@ -5,15 +5,9 @@
     ViewData["Title"] = "Home Page";
 }
 <br>
-<br>
-<br>
-<br>
-
 @if (SignInManager.IsSignedIn(User)){
     <div class="text-center">
         <h1 class="display-4">Welcome @User.Identity.Name!
-            <br>
-            <br>
         </h1>
     </div>
      <table class="columns" style="border: none ">

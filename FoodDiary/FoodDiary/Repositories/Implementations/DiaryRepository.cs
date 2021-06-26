@@ -65,6 +65,12 @@ namespace FoodDiary.Repositories.Implementations
             throw new NotImplementedException();
         }
 
+        public async Task<DateTime> GetLastDate()
+        {
+            var lastDate = _context.DiaryEntities.OrderByDescending(x => x.AddDate).FirstOrDefault().AddDate;
+            return lastDate;
+        }
+
         public async Task<List<DiaryEntity>> GetDiaryByDate(DateTime from, DateTime to)
         {
             var data = await _context.DiaryEntities.Where(x => x.AddDate >= from && x.AddDate <= to).ToListAsync();
