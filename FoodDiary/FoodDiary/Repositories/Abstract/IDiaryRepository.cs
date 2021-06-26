@@ -12,6 +12,6 @@ namespace FoodDiary.Repositories.Abstract
         Task AddDiary(DiaryEntity diaryEntity);
         Task AddProductToDiary(ProductEntity productEntity, Guid userId, Guid diaryId);
         Task<List<DiaryEntity>> GetDiaryByDate(DateTime? from, DateTime? to);
-        Task<DateTime> GetLastDate();
+        Task<DateTime> GetLastDate(Guid userId);
     }
 }

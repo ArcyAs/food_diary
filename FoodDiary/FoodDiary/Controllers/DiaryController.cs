@@ -54,7 +54,7 @@ namespace FoodDiary.Controllers
                     UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
                     DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty,
                     EndDate = DateTime.Now,
-                    StartDate = await _diaryRepository.GetLastDate()
+                    StartDate = await _diaryRepository.GetLastDate(userDetailsEntity.DiaryId)
                 };
                 return View(viewModel);
             }
@@ -67,7 +67,7 @@ namespace FoodDiary.Controllers
                 UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
                 DiaryId = userDetailsEntity?.DiaryId ?? Guid.Empty,
                 EndDate = endDate,
-                StartDate = await _diaryRepository.GetLastDate()
+                StartDate = startDate
             };
             return View(viewModel);
         }
