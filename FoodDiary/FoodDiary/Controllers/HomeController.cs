@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using FoodDiary.Models;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
-using FoodDiary.Data;
-using FoodDiary.Repositories.Entities;
-using System.Net;
-using Newtonsoft.Json;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using FoodDiary.Data;
+using FoodDiary.Models;
+using FoodDiary.Repositories.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace FoodDiary.Controllers
 {
