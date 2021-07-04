@@ -1,6 +1,4 @@
-using FoodDiary.Repositories.Abstract;
-
-namespace Repositories.Abstract
+namespace FoodDiary.Repositories.Abstract
 {
     public interface IRepositoryFactory
     {

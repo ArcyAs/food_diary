@@ -4,14 +4,13 @@ using FoodDiary.Handlers;
 using FoodDiary.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDiary.Controllers
 {
     // api dostępne z poziomu Postmana. w url wpisujemy https://localhost:5001/api/example
-    [Route("api/example")]  
-    public class MediatRExampleController: Controller
+    [Route("api/example")]
+    public class MediatRExampleController : Controller
     {
         private readonly IMediator _mediator;
 
@@ -19,7 +18,7 @@ namespace FoodDiary.Controllers
         {
             _mediator = mediator;
         }
-        
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<IdentityUserDto>> GetAllUsersFromContext(GetAllUsersFromContextRequest request)

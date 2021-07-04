@@ -4,7 +4,7 @@ using FoodDiary.Models.Enums;
 
 namespace FoodDiary.Factories
 {
-    public class BmiBmrFactory: IBmiBmrFactory
+    public class BmiBmrFactory : IBmiBmrFactory
     {
         public IBmiBmrCalculator GetCalculator(Gender gender)
         {

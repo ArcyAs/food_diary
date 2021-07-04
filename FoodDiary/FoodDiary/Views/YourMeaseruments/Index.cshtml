@@ -22,7 +22,9 @@
                 <span asp-validation-for="Height" class="text-danger"></span>
             </div>
             <div id="divL" class="form-group">
-                <p style="font-size:xx-large"><label asp-for="Target" class="form-label"></label><br></p>
+                <p style="font-size:xx-large">
+                    <label asp-for="Target" class="form-label"></label><br>
+                </p>
                 <input type="radio" asp-for="Target" name="target" value="0">
                 <label for="0">Gain mass</label><br>
                 <input type="radio" asp-for="Target" name="target" value="1">
@@ -35,6 +37,3 @@
         </form>
     </div>
 </div>
-
-
-

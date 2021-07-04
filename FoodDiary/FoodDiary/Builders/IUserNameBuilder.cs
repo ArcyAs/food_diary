@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using FoodDiary.Areas.Identity.Pages.Account;
-using FoodDiary.Models;
+﻿using FoodDiary.Areas.Identity.Pages.Account;
 
 namespace FoodDiary.Builders
 {

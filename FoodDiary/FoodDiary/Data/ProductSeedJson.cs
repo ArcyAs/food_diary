@@ -1,14 +1,10 @@
-﻿using System.IO;
-using System.Reflection;
-
-namespace FoodDiary.Data
+﻿namespace FoodDiary.Data
 {
     internal class ProductSeedJson
     {
-        public ProductSeedJson()
+        public string GetProductsJson()
         {
-        }
-        public string GetProductsJson() => @"[
+            return @"[
     {
         ""id"": ""coles-muslie-almond"",
         ""name"": ""Muesli (Almond)"",
@@ -338,5 +334,6 @@ namespace FoodDiary.Data
         },
         ""tags"": [""fruit""]
     }]";
+        }
     }
 }

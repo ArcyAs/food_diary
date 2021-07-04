@@ -1,6 +1,6 @@
 ﻿@page
-@model CalculatorBMI
 @using FoodDiary.Models.Enums
+@model CalculatorBMI
 
 
 @{
@@ -45,7 +45,9 @@
                     <span asp-validation-for="Input.Gender" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label><a class="hasTooltip">Activities <span><b>Low</b> - Sitting work and zero training <br> <b>Medium</b> - Sitting work and 1h training 1-3 times a week <br> <b>High</b> - Phisical work and 1h training 5 times a week</span></a></label>
+                    <label>
+                        <a class="hasTooltip">Activities <span><b>Low</b> - Sitting work and zero training <br> <b>Medium</b> - Sitting work and 1h training 1-3 times a week <br> <b>High</b> - Phisical work and 1h training 5 times a week</span></a>
+                    </label>
                     <br/>
                     @Html.RadioButtonFor(m => m.Input.Activities, 1.2) Low
                     @Html.RadioButtonFor(m => m.Input.Activities, 1.5) Medium
@@ -60,13 +62,16 @@
         <section>
             <h4>Calculated values</h4>
             <hr/>
-            <label><a class="hasTooltip">BMI:&nbsp<span>Body mass index (<b>BMI</b>) is a value derived from the mass (weight) and height of a person</span></a></label> @Html.ValueFor(v => v.showBMI)
+            <label>
+                <a class="hasTooltip">BMI:&nbsp<span>Body mass index (<b>BMI</b>) is a value derived from the mass (weight) and height of a person</span></a>
+            </label> @Html.ValueFor(v => v.showBMI)
             <br/>
-            <label><a class="hasTooltip">BMR:&nbsp<span>Basal metabolic rate (<b>BMR</b>) is the rate of energy expenditure per unit time</span></a></label>@Html.ValueFor(v => v.showBMR)
+            <label>
+                <a class="hasTooltip">BMR:&nbsp<span>Basal metabolic rate (<b>BMR</b>) is the rate of energy expenditure per unit time</span></a>
+            </label>@Html.ValueFor(v => v.showBMR)
             <br/>
             <label>Information &nbsp</label>@Html.ValueFor(v => v.showInformation)
 
         </section>
     </div>
 </div>
-

@@ -1,47 +1,45 @@
-﻿using FoodDiary.Data;
-using FoodDiary.Repositories.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xunit;
 using FluentAssertions;
-using FoodDiary.Repositories.Implementations;
-using FoodDiary.Factories;
-using FoodDiary.Services.Implementation;
+using FoodDiary.Data;
 using FoodDiary.Models;
+using FoodDiary.Repositories.Entities;
+using FoodDiary.Repositories.Implementations;
+using FoodDiary.Services.Implementation;
+using Microsoft.EntityFrameworkCore;
+using Xunit;
 
 namespace FoodDiary.Tests
 {
     public class DiarysTests
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-
-        private List<DiaryEntity> diaryEntities = new List<DiaryEntity>()
+        private List<AppUser> _users = new()
         {
-            new DiaryEntity()
+            new AppUser {Id = Guid.NewGuid().ToString()},
+            new AppUser() {Id = Guid.NewGuid().ToString()}
+        };
+
+
+        private readonly List<DiaryEntity> diaryEntities = new()
+        {
+            new()
             {
                 DiaryId = Guid.NewGuid()
             },
-            new DiaryEntity()
+            new()
             {
                 DiaryId = Guid.NewGuid()
             }
         };
 
-        private List<AppUser> _users = new List<AppUser>
-        {
-            new() {Id = Guid.NewGuid().ToString()},
-            new() {Id = Guid.NewGuid().ToString()},
-        };
-
         public DiarysTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             _context = new ApplicationDbContext(options);
@@ -52,7 +50,7 @@ namespace FoodDiary.Tests
         [Fact]
         public async Task ShouldGetIdDiaryByUserId()
         {
-            UserDetailsEntity userDetails = new UserDetailsEntity()
+            var userDetails = new UserDetailsEntity
             {
                 Bmr = 12,
                 Bmi = 12,
@@ -86,7 +84,7 @@ namespace FoodDiary.Tests
         [Fact]
         public async Task ShouldGetAddedDiaryEntity()
         {
-            var product = new ProductEntity()
+            var product = new ProductEntity
             {
                 Id = Guid.NewGuid(),
                 Weight = 150,
@@ -102,7 +100,8 @@ namespace FoodDiary.Tests
 
             diary.Should().HaveCount(1);
             diary.LastOrDefault().IdProduct.Should().Be(product.Id);
-            diary.LastOrDefault().Kcal.Should().Be(Convert.ToInt32(RescalingKcalService.RescaleKcal(product.Kcal, product.Weight)));
+            diary.LastOrDefault().Kcal.Should()
+                .Be(Convert.ToInt32(RescalingKcalService.RescaleKcal(product.Kcal, product.Weight)));
         }
     }
 }

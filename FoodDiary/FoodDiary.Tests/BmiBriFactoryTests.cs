@@ -3,8 +3,6 @@ using FluentAssertions;
 using FoodDiary.Factories;
 using FoodDiary.Factories.BmiBmrCalculator;
 using FoodDiary.Models.Enums;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using Xunit;
 
 namespace FoodDiary.Tests
@@ -46,8 +44,8 @@ namespace FoodDiary.Tests
             result.Should().BeGreaterThan(27);
             result.Should().BeLessThan(28);
             result.Should().Be(27.777777777777775);
-        }  
-        
+        }
+
         [Fact]
         public void GetBmiCalculatorForMale_ShouldProperlyCalculateBmi()
         {
@@ -65,9 +63,10 @@ namespace FoodDiary.Tests
         {
             Action act = () => _factory.GetCalculator(Gender.TestValue);
             act.Should().Throw<ArgumentOutOfRangeException>();
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("Selected gender is not supported (Parameter 'gender')");
-        } 
-        
+            act.Should().Throw<ArgumentOutOfRangeException>()
+                .WithMessage("Selected gender is not supported (Parameter 'gender')");
+        }
+
         [Fact]
         public void GetBmrCalculatorForMale_ShouldProperlyCalculateBmi()
         {
@@ -77,7 +76,7 @@ namespace FoodDiary.Tests
             result.Should().NotBeOfType(typeof(decimal));
             result.Should().Be(2287.3199999999997);
         }
-        
+
         [Fact]
         public void GetBmrCalculatorForFemale_ShouldProperlyCalculateBmi()
         {

@@ -1,24 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using FoodDiary.Data;
 using FoodDiary.Extensions;
-using FoodDiary.MapperProfiles;
-using MediatR;
+using FoodDiary.Repositories.Abstract;
+using FoodDiary.Repositories.Implementations;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FoodDiary.Repositories.Implementations;
-using FoodDiary.Repositories.Abstract;
 
 namespace FoodDiary
 {
@@ -35,13 +25,14 @@ namespace FoodDiary
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureDatabaseContext(Configuration);
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.ConfigureDependencies();
             services.AddTransient<IDiaryRepository, DiaryRepository>();
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
@@ -69,8 +60,8 @@ namespace FoodDiary
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
             serviceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();

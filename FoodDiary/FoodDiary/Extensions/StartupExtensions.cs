@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using FoodDiary.Builders;
 using FoodDiary.Data;
 using FoodDiary.Factories;
@@ -11,8 +11,6 @@ using FoodDiary.Models;
 using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
 using FoodDiary.Repositories.Implementations;
-using FoodDiary.Services.Abstract;
-using FoodDiary.Services.Implementation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +18,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Repositories.Abstract;
 
 namespace FoodDiary.Extensions
 {
@@ -49,7 +46,8 @@ namespace FoodDiary.Extensions
             return services;
         }
 
-        public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
@@ -79,21 +77,26 @@ namespace FoodDiary.Extensions
 
             foreach (var data in model.Where(d => d.NutritionPer100g != null).ToList())
             {
+                Debug.Assert(context != null, nameof(context) + " != null");
                 var result = context.ProductEntities.Where(x => x.ProductName == data.name);
 
-                if (result.Count() == 0)
-                {
-                    context?.ProductEntities.Add(new ProductEntity()
+                if (!result.Any())
+                    if (data != null)
                     {
-                        Id = Guid.NewGuid(),
-                        ProductName = data?.name ?? "Wrong entry",
-                        Carb = Convert.ToInt32(data?.NutritionPer100g?.carbohydrate ?? 0),
-                        Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
-                        Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
-                        Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein, data.NutritionPer100g.fat),
-                    });
-                }
+                        Debug.Assert(data.NutritionPer100g != null, "data.NutritionPer100g != null");
+                        context?.ProductEntities.Add(new ProductEntity
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductName = data?.name ?? "Wrong entry",
+                            Carb = Convert.ToInt32(data?.NutritionPer100g?.carbohydrate ?? 0),
+                            Protein = Convert.ToInt32(data?.NutritionPer100g?.protein ?? 0),
+                            Fat = Convert.ToInt32(data?.NutritionPer100g?.fat ?? 0),
+                            Kcal = KcalCalculator(data.NutritionPer100g.carbohydrate, data.NutritionPer100g.protein,
+                                data.NutritionPer100g.fat)
+                        });
+                    }
             }
+
             context?.SaveChanges();
         }
 
@@ -102,21 +105,21 @@ namespace FoodDiary.Extensions
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
             var roleManager = serviceScope?.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceScope?.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-            Task<IdentityResult> roleResult;
             const string email = "user@user.com";
 
+            Debug.Assert(roleManager != null, nameof(roleManager) + " != null");
             var hasAdminRole = roleManager.RoleExistsAsync("User").Result;
 
             if (!hasAdminRole)
             {
-                roleResult = roleManager.CreateAsync(new IdentityRole("User"));
+                var roleResult = roleManager.CreateAsync(new IdentityRole("User"));
                 roleResult.Wait();
             }
 
             var testUser = userManager.FindByEmailAsync(email).Result;
 
             if (testUser != null) return;
-            var administrator = new AppUser { Email = email, UserName = email, EmailConfirmed = true };
+            var administrator = new AppUser {Email = email, UserName = email, EmailConfirmed = true};
 
             var newUser = userManager.CreateAsync(administrator, "zaq1@WSX");
             newUser.Wait();
@@ -130,6 +133,5 @@ namespace FoodDiary.Extensions
         {
             return Convert.ToInt32(carb * 4 + protein * 4 + fat * 9);
         }
-
     }
 }

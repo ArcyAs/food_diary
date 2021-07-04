@@ -1,6 +1,4 @@
-﻿using Humanizer;
-
-namespace FoodDiary.Models.Enums
+﻿namespace FoodDiary.Models.Enums
 {
     public enum Gender
     {

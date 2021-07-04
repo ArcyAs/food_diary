@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using FoodDiary.Areas.Identity.Pages.Account;
-using FoodDiary.Models;
 
 namespace FoodDiary.Builders
 {

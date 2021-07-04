@@ -1,33 +1,29 @@
-﻿using FoodDiary.Data;
-using FoodDiary.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FoodDiary.Data;
+using FoodDiary.Models;
 using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
-using FoodDiary.Repositories.Implementations;
-using Microsoft.EntityFrameworkCore;
-using Repositories.Abstract;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDiary.Controllers
 {
     public class DiaryController : Controller
     {
-        private readonly IRepositoryFactory _repositoryFactory;
         private readonly ApplicationDbContext _applicationDbContext;
-        private readonly IDiaryRepository _diaryRepository;
         private readonly ApplicationDbContext _context;
+        private readonly IDiaryRepository _diaryRepository;
         private readonly IProductsRepository _productsRepository;
+        private readonly IRepositoryFactory _repositoryFactory;
         private readonly UserManager<AppUser> _userManager;
 
 
-        public DiaryController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager, ApplicationDbContext applicationDbContext, IDiaryRepository diaryRepository,
+        public DiaryController(IRepositoryFactory repositoryFactory, UserManager<AppUser> userManager,
+            ApplicationDbContext applicationDbContext, IDiaryRepository diaryRepository,
             ApplicationDbContext context, IProductsRepository productsRepository)
         {
             _repositoryFactory = repositoryFactory;
@@ -41,14 +37,16 @@ namespace FoodDiary.Controllers
         public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
         {
             var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
-            var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
+            var userDetailsEntity =
+                _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
             List<DiaryEntity> diaryByUserDiaryId;
             DiaryViewModel viewModel;
             if (startDate == DateTime.MinValue || endDate == DateTime.MinValue)
             {
-                diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty, null, null);
-            
-                viewModel = new DiaryViewModel()
+                diaryByUserDiaryId =
+                    await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty, null, null);
+
+                viewModel = new DiaryViewModel
                 {
                     Diary = await ConvertToDto(diaryByUserDiaryId),
                     UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
@@ -59,9 +57,11 @@ namespace FoodDiary.Controllers
                 return View(viewModel);
             }
 
-            diaryByUserDiaryId = await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty, startDate, endDate);
+            diaryByUserDiaryId =
+                await _diaryRepository.GetDiaryByUserDiaryId(userDetailsEntity?.DiaryId ?? Guid.Empty, startDate,
+                    endDate);
 
-            viewModel = new DiaryViewModel()
+            viewModel = new DiaryViewModel
             {
                 Diary = await ConvertToDto(diaryByUserDiaryId),
                 UserId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString()),
@@ -76,8 +76,7 @@ namespace FoodDiary.Controllers
         {
             var toReturn = new List<Diary>();
             foreach (var diaryEntity in diaryByUserDiaryId ?? new List<DiaryEntity>())
-            {
-                toReturn.Add(new Diary()
+                toReturn.Add(new Diary
                 {
                     Id = diaryEntity.Id,
                     Kcal = diaryEntity.Kcal,
@@ -86,7 +85,6 @@ namespace FoodDiary.Controllers
                     DiaryId = diaryEntity.DiaryId,
                     ProductName = (await _productsRepository.GetProductById(diaryEntity.IdProduct))?.ProductName ?? ""
                 });
-            }
 
             return toReturn;
         }
@@ -94,7 +92,8 @@ namespace FoodDiary.Controllers
         public async Task<IActionResult> AddNew(ProductEntity productEntity)
         {
             var currentUser = _userManager.Users.FirstOrDefault(p => p.Email == User.FindFirstValue(ClaimTypes.Email));
-            var userDetailsEntity = _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
+            var userDetailsEntity =
+                _context.UserDetailsEntities.FirstOrDefault(p => p.UserId == Guid.Parse(currentUser.Id));
             var userId = Guid.Parse(currentUser?.Id ?? Guid.Empty.ToString());
 
             var diaryId = userDetailsEntity?.DiaryId ?? Guid.Empty;
@@ -116,7 +115,7 @@ namespace FoodDiary.Controllers
         public List<Diary> Diary { get; set; }
         public Guid UserId { get; set; }
         public Guid DiaryId { get; set; }
-        
+
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }

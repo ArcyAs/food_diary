@@ -1,50 +1,46 @@
-﻿using FluentAssertions;
-using FluentAssertions.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FoodDiary.Data;
 using FoodDiary.Repositories.Entities;
 using FoodDiary.Repositories.Implementations;
-using FoodDiary.Services.Abstract;
 using FoodDiary.Services.Implementation;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace FoodDiary.Tests
 {
     public class ProductsTests
     {
-        private ApplicationDbContext _context;
-        private List<ProductEntity> productEntities = new List<ProductEntity>()
+        private readonly ApplicationDbContext _context;
+
+        private readonly List<ProductEntity> productEntities = new()
         {
-            new ProductEntity()
+            new()
             {
-               
-                ProductName ="Banana",
+                ProductName = "Banana",
                 Carb = 10,
                 Protein = 10,
                 Fat = 3,
-                Kcal =  KcalCalculatorService.KcalCalculator(10, 10, 3)
+                Kcal = KcalCalculatorService.KcalCalculator(10, 10, 3)
             },
-            new ProductEntity()
+            new()
             {
-                
-                ProductName ="Apple",
+                ProductName = "Apple",
                 Carb = 10,
                 Protein = 10,
                 Fat = 3,
-                Kcal = KcalCalculatorService.KcalCalculator(10,10,3)
+                Kcal = KcalCalculatorService.KcalCalculator(10, 10, 3)
             }
         };
 
         public ProductsTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-             .Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
 
             _context = new ApplicationDbContext(options);
             _context.ProductEntities.AddRange(productEntities);
@@ -62,7 +58,6 @@ namespace FoodDiary.Tests
             products.Should().HaveCount(1);
             products.Should().NotContain(lastProduct);
             products[0].Should().BeEquivalentTo(productEntities[0]);
-            
         }
 
         [Fact]
@@ -75,19 +70,18 @@ namespace FoodDiary.Tests
             result.Should().BeOfType<List<ProductEntity>>();
             result[0].Should().BeEquivalentTo(productEntities[0]);
             result[1].Should().BeEquivalentTo(productEntities[1]);
-           
         }
 
         [Fact]
         public async Task ShouldGetSavedProduct()
         {
-            var thirdObjest = new ProductEntity()
+            var thirdObjest = new ProductEntity
             {
                 ProductName = "Orange",
                 Carb = 10,
                 Protein = 10,
                 Fat = 3,
-                Kcal = KcalCalculatorService.KcalCalculator(10,3,10)
+                Kcal = KcalCalculatorService.KcalCalculator(10, 3, 10)
             };
 
             var productsRepository = new ProductsRepository(_context);
@@ -102,16 +96,17 @@ namespace FoodDiary.Tests
         [Fact]
         public void ShouldGetProperValue()
         {
-            int exampel = 0;
+            var exampel = 0;
             var result = KcalCalculatorService.KcalCalculator(2, 2, 2);
             result.Should().Be(34);
             result.Should().NotBe(36);
             result.Should().BeOfType(exampel.GetType());
         }
+
         [Fact]
-        public async Task  ShouldGetProductById()
+        public async Task ShouldGetProductById()
         {
-            var newObject = new ProductEntity()
+            var newObject = new ProductEntity
             {
                 Id = Guid.NewGuid(),
                 ProductName = "Orange",
@@ -120,22 +115,22 @@ namespace FoodDiary.Tests
                 Fat = 3,
                 Kcal = KcalCalculatorService.KcalCalculator(10, 3, 10)
             };
-            
+
             var productsRepository = new ProductsRepository(_context);
             await productsRepository.AddProductToDataBase(newObject);
-            var id = (await productsRepository.GetProductById(newObject.Id));
+            var id = await productsRepository.GetProductById(newObject.Id);
 
             id.Id.Should().Be(newObject.Id);
             id.ProductName.Should().Be(newObject.ProductName);
             id.Carb.Should().Be(newObject.Carb);
             id.Protein.Should().Be(newObject.Protein);
             id.Fat.Should().Be(newObject.Fat);
-
         }
+
         [Fact]
         public async Task ShouldGetUpdatedProduct()
         {
-            var newObject = new ProductEntity()
+            var newObject = new ProductEntity
             {
                 Id = Guid.NewGuid(),
                 ProductName = "Orange",
@@ -155,7 +150,6 @@ namespace FoodDiary.Tests
             productToUpdate.Protein.Should().Be(10);
             productToUpdate.Fat.Should().Be(3);
             productToUpdate.Kcal.Should().Be(newObject.Kcal);
-
         }
     }
 }

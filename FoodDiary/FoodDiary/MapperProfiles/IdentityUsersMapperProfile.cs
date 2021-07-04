@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FoodDiary.Handlers;
 using FoodDiary.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace FoodDiary.MapperProfiles
 {

@@ -1,45 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodDiary.Data;
 using FoodDiary.Factories;
 using FoodDiary.Models;
 using FoodDiary.Models.Enums;
+using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Repositories.Abstract;
-
-
 
 namespace FoodDiary.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ApplicationDbContext _context;
-        private DbSet<UserDetailsEntity> UserDetailsEntities { get; }
-        private readonly UserManager<AppUser> _userManager;
         private readonly IBmiBmrFactory _bmibmrFactory;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UserRepository(ApplicationDbContext context, UserManager<AppUser> userManager, IBmiBmrFactory bmibmrFactory)
+        public UserRepository(ApplicationDbContext context, UserManager<AppUser> userManager,
+            IBmiBmrFactory bmibmrFactory)
         {
             _context = context;
             _userManager = userManager;
             _bmibmrFactory = bmibmrFactory;
             UserDetailsEntities = _context.UserDetailsEntities;
-
         }
+
+        private DbSet<UserDetailsEntity> UserDetailsEntities { get; }
 
         public async Task AddUserDetails(UserDetailsEntity userDetailsEntity)
         {
             _context.UserDetailsEntities.Add(userDetailsEntity);
-            await _context.SaveChangesAsync();
-        }
-        public async Task AddDiaryToUserDetails(Guid diaryId, Guid userId)
-        {
-            var user = _context.UserDetailsEntities.Last();
             await _context.SaveChangesAsync();
         }
 
@@ -49,10 +42,10 @@ namespace FoodDiary.Repositories.Implementations
             return userdetails;
         }
 
-        public List<UserDetailsEntity> GetAllPersonals()
+        public IEnumerable<UserDetailsEntity> GetAllPersonals()
         {
             var user_personal_details = _context.UserDetailsEntities
-                .Select(x => new UserDetailsEntity()
+                .Select(x => new UserDetailsEntity
                 {
                     Id = x.Id,
                     UserId = x.UserId,
@@ -66,7 +59,7 @@ namespace FoodDiary.Repositories.Implementations
             return user_personal_details;
         }
 
-        public async Task<UserDetailsEntity>  GetUserDetailsByUserId(Guid userId)
+        public async Task<UserDetailsEntity> GetUserDetailsByUserId(Guid userId)
         {
             var userDetailsEntity = await _context.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);
             return userDetailsEntity;
@@ -74,9 +67,10 @@ namespace FoodDiary.Repositories.Implementations
 
         public async Task UpdateUserDetails(UserDetailsEntity newParameters, UserDetailsEntity toUpdate, Guid userId)
         {
-
-            var details = await _context.UserDetailsEntities?.FirstOrDefaultAsync(p => p.UserId == userId);  // await GetUserDetailsByUserId(newParameters.UserId);
-            string userHelpId = userId.ToString();
+            var details =
+                await _context.UserDetailsEntities?.FirstOrDefaultAsync(p =>
+                    p.UserId == userId); // await GetUserDetailsByUserId(newParameters.UserId);
+            var userHelpId = userId.ToString();
             var userAppDetails = await _userManager.FindByIdAsync(userHelpId);
 
             details.Weight = newParameters.Weight;
@@ -84,24 +78,29 @@ namespace FoodDiary.Repositories.Implementations
             details.Target = newParameters.Target;
 
             if (details.Target == 0)
-            {
-                details.Bmr=(_bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel)) + 200;
-            }
+                details.Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), details.Gender))
+                                  .CalculateBMR(details.Weight, details.Height, userAppDetails.Age,
+                                      userAppDetails.ActivityLevel) +
+                              200;
             else if (details.Target == 1)
-            {
-                details.Bmr = (_bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel))-200;
-            }
+                details.Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), details.Gender))
+                                  .CalculateBMR(details.Weight, details.Height, userAppDetails.Age,
+                                      userAppDetails.ActivityLevel) -
+                              200;
             else if (details.Target == 2)
-            {
-                details.Bmr = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), details.Gender)).CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
-            }
+                details.Bmr = _bmibmrFactory.GetCalculator((Gender) Enum.ToObject(typeof(Gender), details.Gender))
+                    .CalculateBMR(details.Weight, details.Height, userAppDetails.Age, userAppDetails.ActivityLevel);
 
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddDiaryToUserDetails(Guid diaryId, Guid userId)
+        {
+            var user = _context.UserDetailsEntities.Last();
             await _context.SaveChangesAsync();
         }
 
         //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         //var userAppDetails = await _userManager.FindByIdAsync(userId);
-
-
     }
 }

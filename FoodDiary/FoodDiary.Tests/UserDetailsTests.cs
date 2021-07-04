@@ -3,34 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FluentAssertions.Common;
 using FoodDiary.Data;
 using FoodDiary.Factories;
 using FoodDiary.Models;
+using FoodDiary.Repositories.Abstract;
 using FoodDiary.Repositories.Entities;
 using FoodDiary.Repositories.Implementations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Repositories.Abstract;
 using Xunit;
 
 namespace FoodDiary.Tests
 {
     public class UserDetailsTests
     {
-        private ApplicationDbContext _context;
         private readonly IRepositoryFactory _repositoryFactory;
+        private readonly ApplicationDbContext _context;
 
-        private List<AppUser> _users = new List<AppUser>
+        private readonly List<UserDetailsEntity> _userDetailsEntities = new()
         {
-            new() {Id = Guid.NewGuid().ToString()},
-            new() {Id = Guid.NewGuid().ToString()},
-        };
-
-        private List<UserDetailsEntity> _userDetailsEntities = new()
-        {
-            new()
+            new UserDetailsEntity()
             {
                 Bmr = 12,
                 Bmi = 12,
@@ -42,7 +35,7 @@ namespace FoodDiary.Tests
                 UserId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             },
-            new UserDetailsEntity()
+            new UserDetailsEntity
             {
                 Bmr = 122,
                 Bmi = 122,
@@ -56,10 +49,16 @@ namespace FoodDiary.Tests
             }
         };
 
+        private readonly List<AppUser> _users = new()
+        {
+            new() {Id = Guid.NewGuid().ToString()},
+            new() {Id = Guid.NewGuid().ToString()}
+        };
+
         public UserDetailsTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             _context = new ApplicationDbContext(options);
@@ -73,7 +72,7 @@ namespace FoodDiary.Tests
             var repositories = new RepositoriesFactory(_context, MockUserManager(_users).Object, new BmiBmrFactory());
             repositories.Should().BeAssignableTo<IRepositoryFactory>();
         }
-        
+
         [Fact]
         public void ShouldImplementIUserRepository()
         {
@@ -106,7 +105,7 @@ namespace FoodDiary.Tests
         [Fact]
         public async Task ShouldAddNewUserDetails()
         {
-            var data = new UserDetailsEntity()
+            var data = new UserDetailsEntity
             {
                 Bmi = 20,
                 Bmr = 40,
@@ -144,10 +143,11 @@ namespace FoodDiary.Tests
 
             result.Should().BeEquivalentTo(_userDetailsEntities[0]);
         }
+
         [Fact]
         public async Task ShouldUpdateTargetNewUserDetails()
         {
-            var new_data = new UserDetailsEntity()
+            var new_data = new UserDetailsEntity
             {
                 Bmi = 20,
                 Bmr = 40,
@@ -167,8 +167,6 @@ namespace FoodDiary.Tests
             _userDetailsEntities[0].Weight.Should().Be(12);
             _userDetailsEntities[0].Height.Should().Be(12);
             _userDetailsEntities[0].Target.Should().Be(0);
-
-
         }
 
         public static Mock<UserManager<AppUser>> MockUserManager(ICollection<AppUser> ls)
@@ -179,7 +177,8 @@ namespace FoodDiary.Tests
             mgr.Object.PasswordValidators.Add(new PasswordValidator<AppUser>());
 
             mgr.Setup(x => x.DeleteAsync(It.IsAny<AppUser>())).ReturnsAsync(IdentityResult.Success);
-            mgr.Setup(x => x.CreateAsync(It.IsAny<AppUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<AppUser, string>((x, y) => ls.Add(x));
+            mgr.Setup(x => x.CreateAsync(It.IsAny<AppUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success)
+                .Callback<AppUser, string>((x, y) => ls.Add(x));
             mgr.Setup(x => x.UpdateAsync(It.IsAny<AppUser>())).ReturnsAsync(IdentityResult.Success);
 
             return mgr;

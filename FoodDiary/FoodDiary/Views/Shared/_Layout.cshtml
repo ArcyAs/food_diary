@@ -24,6 +24,10 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+                    </li>
+
 
                 </ul>
                 <partial name="_LoginPartial"/>
@@ -47,8 +51,8 @@
         
                 function refreshTime() {
                   var dateString = new Date().toLocaleString("PL", {timeZone: "Poland"});
-                  var formattedString = dateString.replace(", ", " ");
-                  timeDisplay.innerHTML = formattedString;
+                  
+                  timeDisplay.innerHTML = dateString.replace(", ", " ");
                 }
                 setInterval(refreshTime, 1000);
                 </script>

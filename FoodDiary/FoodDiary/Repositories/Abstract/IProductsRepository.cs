@@ -1,8 +1,7 @@
-﻿using FoodDiary.Repositories.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using FoodDiary.Repositories.Entities;
 
 namespace FoodDiary.Repositories.Abstract
 {
@@ -12,6 +11,6 @@ namespace FoodDiary.Repositories.Abstract
         Task DeleteProductFromDataBase(Guid id);
         Task<List<ProductEntity>> GetAllProducts();
         Task<ProductEntity> GetProductById(Guid id);
-        Task EditProductInDataBase(ProductEntity productEntity,Guid id);
+        Task EditProductInDataBase(ProductEntity productEntity, Guid id);
     }
 }
