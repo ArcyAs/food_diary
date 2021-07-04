@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using AutoMapper;
 using FoodDiary.Factories;
 using FoodDiary.Models;
-using FoodDiary.Models.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -80,44 +77,5 @@ namespace FoodDiary.Areas.Identity.Pages.Account
 
 
         }
-
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
-            returnUrl ??= Url.Content("~/");
-
-            if (ModelState.IsValid)
-            {
-
-              showBMI = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMI(Input.Weight, Input.Height).ToString("0.00");
-              showBMR = _bmibmrFactory.GetCalculator((Gender)Enum.ToObject(typeof(Gender), Input.Gender)).CalculateBMR(Input.Weight, Input.Height, Input.Age, Input.Activities).ToString("0.0" + " kcal");
-
-                var showBMI_value = double.Parse(showBMI);
-
-       
-                    if (showBMI_value>25)
-                    {
-                        information = " Overweight , normal BMI in range 18-25";
-                        showInformation = information;
-                    }
-                else if (showBMI_value<18)
-                {
-                    information = "Underweight ,normal BMI in range 18-25";
-                    showInformation = information;
-                }
-                else
-                {
-                    information = "Normal BMI";
-                    showInformation = information;
-                }
-       
-
-       
-            }
-
-            // If we got this far, something failed, redisplay form
-            return Page();
-        }
-
-
     }
 }

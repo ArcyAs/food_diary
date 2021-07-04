@@ -1,5 +1,3 @@
-using System;
-
 namespace FoodDiary.Models
 {
     public class ErrorViewModel

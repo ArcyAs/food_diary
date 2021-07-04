@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FoodDiary.Builders;
-using FoodDiary.Data;
 using FoodDiary.Factories;
 using FoodDiary.Models;
 using FoodDiary.Models.Enums;
@@ -37,7 +36,6 @@ namespace FoodDiary.Areas.Identity.Pages.Account
         private readonly IBmiBmrFactory _bmibmrFactory;
         private readonly IRepositoryFactory _repositoryFactory;
         private readonly IDiaryRepository _diaryRepository;
-        private readonly ApplicationDbContext _context;
 
         public Register(
             UserManager<AppUser> userManager,

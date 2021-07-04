@@ -21,13 +21,14 @@ namespace FoodDiary.Handlers
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<IdentityUserDto>> Handle(GetAllUsersFromContextRequest request, CancellationToken cancellationToken)
+        public Task<IEnumerable<IdentityUserDto>> Handle(GetAllUsersFromContextRequest request, CancellationToken cancellationToken)
         {
             //domyślnie encja zawiera bardzo dużo informacji o użytkownikach. Zamiast tworzyć ręczne mapowanie, możemy wykorzystać mappera i profile mapowania.
             //to mapowanie jeste zdefiniowane IdentityUsersMapperProfile. W wyniku mapowania ograniczymy ilość prezentowanych użytkownikowi informacji.
-            var users = _userManager.Users.ToList();
+            var users = new List<AppUser>();
+            foreach (var user in _userManager.Users) users.Add(user);
             var mappedUsers = _mapper.Map<IEnumerable<IdentityUserDto>>(users);
-            return mappedUsers;
+            return Task.FromResult(mappedUsers);
         }
     }
 }
